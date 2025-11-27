@@ -93,18 +93,22 @@ export default function AITutorPage() {
 
     const userMessage = { role: "user", content: input };
     const questionText = input;
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInput("");
     setLoading(true);
     setIsTyping(true);
 
     try {
+      // Send the entire conversation history to maintain context
       const res = await fetch("/api/ai", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           prompt: questionText,
+          messages: updatedMessages, // Send full conversation history
           mode: "chatbot",
+          userId: user?.id, // Pass user ID for quiz question detection
         }),
       });
 
@@ -145,8 +149,8 @@ export default function AITutorPage() {
   };
 
   return (
-    <div className="min-h-screen w-full flex flex-col items-center justify-center bg-gradient-to-br from-[#0D1117] via-[#161B22] to-[#0D1117] px-3 sm:px-6 py-4 sm:py-6">
-      <div className="w-full max-w-4xl bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 flex flex-col h-[85vh] sm:h-[82vh] overflow-hidden">
+    <div className="min-h-screen w-full  flex flex-col items-center justify-center bg-gradient-to-br from-[#0D1117] via-[#161B22] to-[#0D1117] px-1 md:px-3 sm:px-6 py-4 sm:py-6">
+      <div className="w-full max-w-4xl bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 flex flex-col h-[85vh]  sm:h-[82vh] overflow-hidden">
         {/* Header Section */}
         <div className="bg-gradient-to-r from-green-600/20 via-emerald-600/20 to-green-500/20 border-b border-gray-700/50 px-4 sm:px-6 py-4 sm:py-5">
           <div className="flex items-center justify-center gap-3">

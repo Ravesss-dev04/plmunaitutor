@@ -1,4 +1,5 @@
 "use client";
+import { useState, useEffect } from "react";
 import {
   BarChart,
   Bar,
@@ -13,37 +14,74 @@ import {
   Line,
   CartesianGrid,
 } from "recharts";
+import { Loader2, RefreshCw } from "lucide-react";
 
 export default function AnalyticsOverview() {
-  const barData = [
-    { name: "Basic Geometry", Completed: 75, "In Progress": 25 },
-    { name: "Advanced Probability", Completed: 60, "In Progress": 40 },
-  ];
-
-  const pieData = [
-    { name: "Grade A", value: 28 },
-    { name: "Grade B", value: 41 },
-    { name: "Grade C", value: 21 },
-    { name: "Grade D", value: 7 },
-    { name: "Grade F", value: 3 },
-  ];
+  const [barData, setBarData] = useState([]);
+  const [pieData, setPieData] = useState([]);
+  const [lineData, setLineData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [refreshing, setRefreshing] = useState(false);
 
   const COLORS = ["#22c55e", "#16a34a", "#4ade80", "#86efac", "#bbf7d0"];
 
-  const lineData = [
-    { name: "Mon", mins: 90 },
-    { name: "Tue", mins: 110 },
-    { name: "Wed", mins: 100 },
-    { name: "Thu", mins: 140 },
-    { name: "Fri", mins: 120 },
-    { name: "Sat", mins: 180 },
-    { name: "Sun", mins: 160 },
-  ];
+  const fetchAnalytics = async () => {
+    try {
+      setRefreshing(true);
+      
+      // Fetch all analytics data in parallel
+      const [completionResponse, scoresResponse, studyTimeResponse] = await Promise.all([
+        fetch('/api/teacher/lesson-completion-rate'),
+        fetch('/api/teacher/quiz-scores-distribution'),
+        fetch('/api/teacher/daily-study-time')
+      ]);
+
+      if (completionResponse.ok) {
+        const completionData = await completionResponse.json();
+        setBarData(completionData.length > 0 ? completionData : [
+          { name: "No courses", Completed: 0, "In Progress": 0 }
+        ]);
+      }
+
+      if (scoresResponse.ok) {
+        const scoresData = await scoresResponse.json();
+        setPieData(scoresData);
+      }
+
+      if (studyTimeResponse.ok) {
+        const studyTimeData = await studyTimeResponse.json();
+        setLineData(studyTimeData);
+      }
+    } catch (error) {
+      console.error('Error fetching analytics:', error);
+    } finally {
+      setLoading(false);
+      setRefreshing(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchAnalytics();
+    
+    // Auto-refresh every 30 seconds
+    const interval = setInterval(fetchAnalytics, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
   return (
     <div className="p-6 w-full min-h-screen bg-[#0d1117] text-gray-200">
       <div className="text-center mb-8">
-        <h1 className="text-3xl font-bold text-white">Analytics Overview</h1>
+        <div className="flex items-center justify-center gap-3 mb-2">
+          <h1 className="text-3xl font-bold text-white">Analytics Overview</h1>
+          <button
+            onClick={fetchAnalytics}
+            disabled={refreshing}
+            className="p-2 rounded-lg bg-[#161b22] border border-gray-800 hover:bg-[#1f2937] transition-colors disabled:opacity-50"
+            title="Refresh data"
+          >
+            <RefreshCw className={`h-5 w-5 text-gray-400 ${refreshing ? 'animate-spin' : ''}`} />
+          </button>
+        </div>
         <p className="text-gray-400 max-w-2xl mx-auto">
           Gain in-depth insights into student performance and course engagement.
           Monitor key metrics to understand learning patterns and identify areas
@@ -60,22 +98,28 @@ export default function AnalyticsOverview() {
           <p className="text-sm text-gray-400 mb-4">
             Percentage of students completing lessons across different courses.
           </p>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={barData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
-              <XAxis dataKey="name" stroke="#8b949e" />
-              <YAxis stroke="#8b949e" />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#161b22",
-                  border: "1px solid #30363d",
-                  color: "#fff",
-                }}
-              />
-              <Bar dataKey="Completed" fill="#22c55e" radius={[6, 6, 0, 0]} />
-              <Bar dataKey="In Progress" fill="#4ade80" radius={[6, 6, 0, 0]} />
-            </BarChart>
-          </ResponsiveContainer>
+          {loading ? (
+            <div className="h-[250px] flex items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-green-500" />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={250}>
+              <BarChart data={barData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
+                <XAxis dataKey="name" stroke="#8b949e" />
+                <YAxis stroke="#8b949e" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#161b22",
+                    border: "1px solid #30363d",
+                    color: "#fff",
+                  }}
+                />
+                <Bar dataKey="Completed" fill="#22c55e" radius={[6, 6, 0, 0]} />
+                <Bar dataKey="In Progress" fill="#4ade80" radius={[6, 6, 0, 0]} />
+              </BarChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Quiz Scores Distribution */}
@@ -87,50 +131,56 @@ export default function AnalyticsOverview() {
             Breakdown of student grades across all quizzes.
           </p>
 
-          <div className="flex flex-col items-center">
-            <ResponsiveContainer width="100%" height={250}>
-              <PieChart>
-                <Pie
-                  data={pieData}
-                  dataKey="value"
-                  cx="50%"
-                  cy="50%"
-                  innerRadius={60}
-                  outerRadius={90}
-                  label={({ name, value }) => `${name}: ${value}%`}
-                  labelLine={false}
-                >
-                  {pieData.map((entry, index) => (
-                    <Cell
-                      key={`cell-${index}`}
-                      fill={COLORS[index % COLORS.length]}
-                    />
-                  ))}
-                </Pie>
-                <Tooltip
-                  formatter={(value, name) => [`${value}%`, name]}
-                  contentStyle={{
-                    backgroundColor: "#161b22",
-                    border: "1px solid #30363d",
-                    color: "#fff",
-                  }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-
-            {/* Legend */}
-            <div className="flex flex-wrap justify-center gap-4 mt-4 text-sm">
-              {pieData.map((entry, index) => (
-                <div key={index} className="flex items-center gap-2">
-                  <div
-                    className="w-3 h-3 rounded-full"
-                    style={{ backgroundColor: COLORS[index % COLORS.length] }}
-                  ></div>
-                  <span className="text-gray-400">{entry.name}</span>
-                </div>
-              ))}
+          {loading ? (
+            <div className="h-[250px] flex items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-green-500" />
             </div>
-          </div>
+          ) : (
+            <div className="flex flex-col items-center">
+              <ResponsiveContainer width="100%" height={250}>
+                <PieChart>
+                  <Pie
+                    data={pieData}
+                    dataKey="value"
+                    cx="50%"
+                    cy="50%"
+                    innerRadius={60}
+                    outerRadius={90}
+                    label={({ name, value }) => `${name}: ${value}%`}
+                    labelLine={false}
+                  >
+                    {pieData.map((entry, index) => (
+                      <Cell
+                        key={`cell-${index}`}
+                        fill={COLORS[index % COLORS.length]}
+                      />
+                    ))}
+                  </Pie>
+                  <Tooltip
+                    formatter={(value, name) => [`${value}%`, name]}
+                    contentStyle={{
+                      backgroundColor: "#161b22",
+                      border: "1px solid #30363d",
+                      color: "#fff",
+                    }}
+                  />
+                </PieChart>
+              </ResponsiveContainer>
+
+              {/* Legend */}
+              <div className="flex flex-wrap justify-center gap-4 mt-4 text-sm">
+                {pieData.map((entry, index) => (
+                  <div key={index} className="flex items-center gap-2">
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: COLORS[index % COLORS.length] }}
+                    ></div>
+                    <span className="text-gray-400">{entry.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
         </div>
 
         {/* Daily Student Study Time */}
@@ -141,27 +191,33 @@ export default function AnalyticsOverview() {
           <p className="text-sm text-gray-400 mb-4">
             Average minutes students spend studying per day.
           </p>
-          <ResponsiveContainer width="100%" height={250}>
-            <LineChart data={lineData}>
-              <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
-              <XAxis dataKey="name" stroke="#8b949e" />
-              <YAxis stroke="#8b949e" />
-              <Tooltip
-                contentStyle={{
-                  backgroundColor: "#161b22",
-                  border: "1px solid #30363d",
-                  color: "#fff",
-                }}
-              />
-              <Line
-                type="monotone"
-                dataKey="mins"
-                stroke="#22c55e"
-                strokeWidth={3}
-                dot
-              />
-            </LineChart>
-          </ResponsiveContainer>
+          {loading ? (
+            <div className="h-[250px] flex items-center justify-center">
+              <Loader2 className="h-8 w-8 animate-spin text-green-500" />
+            </div>
+          ) : (
+            <ResponsiveContainer width="100%" height={250}>
+              <LineChart data={lineData}>
+                <CartesianGrid strokeDasharray="3 3" stroke="#30363d" />
+                <XAxis dataKey="name" stroke="#8b949e" />
+                <YAxis stroke="#8b949e" />
+                <Tooltip
+                  contentStyle={{
+                    backgroundColor: "#161b22",
+                    border: "1px solid #30363d",
+                    color: "#fff",
+                  }}
+                />
+                <Line
+                  type="monotone"
+                  dataKey="mins"
+                  stroke="#22c55e"
+                  strokeWidth={3}
+                  dot
+                />
+              </LineChart>
+            </ResponsiveContainer>
+          )}
         </div>
 
         {/* Engagement Metrics */}

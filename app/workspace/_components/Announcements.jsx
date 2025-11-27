@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import { useUser } from '@clerk/nextjs'
-import { Bell, CheckCircle, BookOpen, FileText, MessageSquare } from 'lucide-react'
+import { Bell, CheckCircle, BookOpen, FileText, MessageSquare, Mail } from 'lucide-react'
 
 function Announcements() {
   const { user, isLoaded } = useUser();
@@ -83,6 +83,23 @@ function Announcements() {
     }
   };
 
+  const createMailtoLink = (notification) => {
+    const teacherEmail = notification.teacher_email || '';
+    const studentEmail = user?.primaryEmailAddress?.emailAddress || '';
+    const subject = encodeURIComponent(
+      `Re: ${notification.message} - ${notification.course_title || 'Course'}`
+    );
+    const body = encodeURIComponent(
+      `Hello ${notification.teacher_name || 'Teacher'},\n\n` +
+      `Regarding: ${notification.message}\n` +
+      `Course: ${notification.course_title || 'Course'}\n\n` +
+      `[Your message here]`
+    );
+    
+    // mailto link that opens student's email client
+    return `mailto:${teacherEmail}?subject=${subject}&body=${body}`;
+  };
+
   if (loading) {
     return (
       <div className="bg-[#13181F] p-6 rounded-xl shadow-sm md:w-full md:ml-0 w-82 -ml-6">
@@ -141,13 +158,25 @@ function Announcements() {
                       {getTimeAgo(notification.created_at)}
                     </p>
                   </div>
-                  <button
-                    onClick={() => markAsRead(notification.id)}
-                    className="ml-2 opacity-0 group-hover:opacity-100 transition-opacity"
-                    title="Mark as read"
-                  >
-                    <CheckCircle size={16} className="text-green-500 hover:text-green-400" />
-                  </button>
+                  <div className="flex items-center gap-2 ml-2">
+                    {notification.teacher_email && (
+                      <a
+                        href={createMailtoLink(notification)}
+                        onClick={(e) => e.stopPropagation()}
+                        className="opacity-0 group-hover:opacity-100 transition-opacity p-1 rounded hover:bg-[#2d3748]"
+                        title="Open email client to contact teacher"
+                      >
+                        <Mail size={16} className="text-blue-400 hover:text-blue-300" />
+                      </a>
+                    )}
+                    <button
+                      onClick={() => markAsRead(notification.id)}
+                      className="opacity-0 group-hover:opacity-100 transition-opacity"
+                      title="Mark as read"
+                    >
+                      <CheckCircle size={16} className="text-green-500 hover:text-green-400" />
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>

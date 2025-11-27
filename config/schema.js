@@ -110,6 +110,8 @@ export const lessonsTable = pgTable('lessons', {
 });
 
 
+
+
 export const quizzesTable = pgTable('quizzes', {
   id: serial('id').primaryKey(),
   course_id: integer('course_id').notNull().references(() => coursesTable.id),
@@ -122,14 +124,13 @@ export const quizzesTable = pgTable('quizzes', {
 });
 
 
-
-
 export const assignmentsTable = pgTable('assignments', {
   id: serial('id').primaryKey(),
   course_id: integer('course_id').notNull().references(() => coursesTable.id),
   title: varchar('title', { length: 255 }).notNull(),
   description: text('description'),
   deadline: timestamp('deadline'),
+  attachment_url: varchar('attachment_url', { length: 500 }),
   max_score: integer('max_score').default(100),
   created_at: timestamp('created_at').defaultNow(),
   updated_at: timestamp('updated_at').defaultNow(),

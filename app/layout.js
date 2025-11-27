@@ -7,6 +7,7 @@ import { Toaster } from "react-hot-toast";
 import AuthWatcher from "./workspace/_components/AuthWatcher";
 import ChatBot from "./workspace/_components/ChatBot";
 import AdminShortcutProvider from "./admin/components/AdminShortcutProvider";
+import ClerkWatermarkRemover from "./workspace/_components/ClerkWatermarkRemover";
 
 
 const geistSans = Geist({
@@ -27,12 +28,49 @@ const clearAppearance = {
   variables: {
     colorPrimary: "#22c55e",
     colorText: "#ffffff",
+    colorTextSecondary: "#e5e7eb",
     colorBackground: "#1d1f2b",
     colorInputBackground: "#2a2d3c",
     colorInputText: "#ffffff",
     colorBorder: "#ffffff",
     colorInputText: "#fff",
-    socialButtonsBlackButton: "#fff"
+    socialButtonsBlackButton: "#fff",
+    // UserButton menu colors
+    colorTextOnPrimaryBackground: "#ffffff",
+    colorNeutral: "#ffffff",
+    colorDanger: "#ef4444",
+    // Menu item colors
+    colorShimmer: "rgba(255, 255, 255, 0.1)",
+    borderRadius: "0.5rem"
+  },
+  elements: {
+    userButtonPopoverCard: {
+      backgroundColor: "#161b22",
+      borderColor: "#30363d",
+      color: "#ffffff"
+    },
+    userButtonPopoverActions: {
+      color: "#ffffff"
+    },
+    userButtonPopoverActionButton: {
+      color: "#ffffff",
+      "&:hover": {
+        backgroundColor: "#1f2937"
+      }
+    },
+    userButtonPopoverActionButtonText: {
+      color: "#ffffff"
+    },
+    userButtonPopoverActionButtonIcon: {
+      color: "#ffffff"
+    },
+    userButtonPopoverFooter: {
+      display: "none",
+      visibility: "hidden",
+      height: "0",
+      padding: "0",
+      margin: "0"
+    }
   }
 }
 export default function RootLayout({ children }) {
@@ -48,6 +86,7 @@ export default function RootLayout({ children }) {
          </AdminShortcutProvider>
          <AuthWatcher/>
          <ChatBot/>
+         <ClerkWatermarkRemover/>
         <Toaster
          position="top-right"
             toastOptions={{

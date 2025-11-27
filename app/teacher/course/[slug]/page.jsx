@@ -18,6 +18,7 @@ const CoursePage = () => {
   // Modal states
   const [showAddLessonModal, setShowAddLessonModal] = useState(false);
   const [showAddQuizModal, setShowAddQuizModal] = useState(false);
+  const [showAddAssignmentModal, setShowAddAssignmentModal] = useState(false);
   const [newLesson, setNewLesson] = useState({
     title: "",
     content: "",
@@ -34,12 +35,25 @@ const CoursePage = () => {
     difficulty: "beginner",
     numberOfQuestions: 5
   });
+
+
   const [generatedQuiz, setGeneratedQuiz] = useState(null);
   const [generatingQuiz, setGeneratingQuiz] = useState(false);
+  
+  // Assignment states
+  const [assignmentData, setAssignmentData] = useState({
+    title: "",
+    description: "",
+    deadline: "",
+    attachment: null
+  });
+  const [generatingAssignment, setGeneratingAssignment] = useState(false);
 
   useEffect(() => {
     fetchCourseData();
   }, [slug]);
+
+  
 
   const fetchCourseData = async () => {
     try {
@@ -55,7 +69,6 @@ const CoursePage = () => {
           fetch(`/api/courses/${courseData[0].id}/announcements`),
           fetch(`/api/courses/${courseData[0].id}/students`)
         ]);
-
         if (lessonsRes.ok) setLessons(await lessonsRes.json());
         if (quizzesRes.ok) setQuizzes(await quizzesRes.json());
         if (assignmentsRes.ok) setAssignments(await assignmentsRes.json());
@@ -69,10 +82,12 @@ const CoursePage = () => {
     }
   };
 
+
   // Lesson Functions
   const handleAddLesson = () => {
     setShowAddLessonModal(true);
   };
+
 
   const handleSubmitLesson = async (lessonData) => {
     if (!lessonData.title.trim()) {
@@ -110,24 +125,72 @@ const CoursePage = () => {
 
   const notifyStudentsAboutNewLesson = async (lessonTitle) => {
     try {
-      const response = await fetch('/api/student-notifications', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          course_id: course.id,
-          course_title: course.title,
-          teacher_name: course.teacher_name || "Teacher",
-          lesson_title: lessonTitle,
-          type: 'new_lesson'
-        })
-      });
-
-      if (response.ok) {
-        console.log("✅ Students notified about new lesson");
+      console.log(`📧 Starting notification process for lesson: ${lessonTitle}`);
+      
+      // Get all students enrolled in this course
+      const studentsResponse = await fetch(`/api/courses/${course.id}/students`);
+      if (!studentsResponse.ok) {
+        console.error('❌ Failed to fetch students:', studentsResponse.status);
+        return;
       }
+      
+      const students = await studentsResponse.json();
+      console.log(`📧 Found ${students.length} enrolled students to notify`);
+      
+      if (students.length === 0) {
+        console.log('⚠️ No enrolled students found for this course');
+        return;
+      }
+      
+      // Create notifications and send emails for each student
+      const notificationResults = await Promise.allSettled(
+        students.map(async (student) => {
+          if (!student.student_email) {
+            console.warn(`⚠️ Student ${student.student_name} has no email address`);
+            return { success: false, reason: 'No email address' };
+          }
+          
+          try {
+            const response = await fetch('/api/student-notifications', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                student_id: student.student_id,
+                student_email: student.student_email,
+                course_id: course.id,
+                course_title: course.title,
+                teacher_name: course.teacher_name || "Teacher",
+                teacher_email: course.assigned_teacher_id || course.teacher_email || null, // Add teacher email for mailto
+                lesson_title: lessonTitle,
+                type: 'new_lesson',
+                message: `New lesson available: ${lessonTitle}`
+              })
+            });
+            
+            if (response.ok) {
+              const result = await response.json();
+              console.log(`✅ Notification and email sent to ${student.student_name} (${student.student_email})`);
+              return { success: true, student: student.student_name, email: student.student_email };
+            } else {
+              const errorData = await response.json();
+              console.error(`❌ Failed to notify ${student.student_name}:`, errorData);
+              return { success: false, student: student.student_name, error: errorData };
+            }
+          } catch (error) {
+            console.error(`❌ Error notifying ${student.student_name}:`, error);
+            return { success: false, student: student.student_name, error: error.message };
+          }
+        })
+      );
+      
+      const successful = notificationResults.filter(r => r.status === 'fulfilled' && r.value.success).length;
+      const failed = notificationResults.length - successful;
+      console.log(`✅ Notification complete: ${successful} successful, ${failed} failed`);
+      console.log("✅ All enrolled students have been notified about the new lesson (dashboard + email)");
     } catch (error) {
-      console.error('Error notifying students:', error);
+      console.error('❌ Error in notifyStudentsAboutNewLesson:', error);
     }
+
   };
 
   const handleDeleteLesson = async (lessonId) => {
@@ -150,6 +213,8 @@ const CoursePage = () => {
       }
     }
   };
+
+
 
   const handleEditLesson = (lesson) => {
     const newTitle = prompt("Enter new lesson title:", lesson.title);
@@ -250,22 +315,42 @@ const CoursePage = () => {
 
  const notifyStudentsAboutNewQuiz = async (quizTitle) => {
   try {
+    console.log(`📧 Starting notification process for quiz: ${quizTitle}`);
+    
     // Get all students enrolled in this course
     const studentsResponse = await fetch(`/api/courses/${course.id}/students`);
-    if (studentsResponse.ok) {
-      const students = await studentsResponse.json();
-      
-      // Create notifications for each student
-      await Promise.all(
-        students.map(async (student) => {
+    if (!studentsResponse.ok) {
+      console.error('❌ Failed to fetch students:', studentsResponse.status);
+      return;
+    }
+    
+    const students = await studentsResponse.json();
+    console.log(`📧 Found ${students.length} enrolled students to notify`);
+    
+    if (students.length === 0) {
+      console.log('⚠️ No enrolled students found for this course');
+      return;
+    }
+    
+    // Create notifications and send emails for each student
+    const notificationResults = await Promise.allSettled(
+      students.map(async (student) => {
+        if (!student.student_email) {
+          console.warn(`⚠️ Student ${student.student_name} has no email address`);
+          return { success: false, reason: 'No email address' };
+        }
+        
+        try {
           const response = await fetch('/api/student-notifications', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               student_id: student.student_id,
+              student_email: student.student_email,
               course_id: course.id,
               course_title: course.title,
               teacher_name: course.teacher_name || "Teacher",
+              teacher_email: course.assigned_teacher_id || course.teacher_email || null, // Add teacher email for mailto
               quiz_title: quizTitle,
               type: 'new_quiz',
               deadline: quizData.deadline,
@@ -274,15 +359,28 @@ const CoursePage = () => {
           });
           
           if (response.ok) {
-            console.log(`✅ Notification sent to student ${student.student_name}`);
+            const result = await response.json();
+            console.log(`✅ Notification and email sent to ${student.student_name} (${student.student_email})`);
+            return { success: true, student: student.student_name, email: student.student_email };
+          } else {
+            const errorData = await response.json();
+            console.error(`❌ Failed to notify ${student.student_name}:`, errorData);
+            return { success: false, student: student.student_name, error: errorData };
           }
-        })
-      );
-      
-      console.log("✅ All students notified about new quiz");
-    }
+        } catch (error) {
+          console.error(`❌ Error notifying ${student.student_name}:`, error);
+          return { success: false, student: student.student_name, error: error.message };
+        }
+      })
+    );
+    
+    const successful = notificationResults.filter(r => r.status === 'fulfilled' && r.value.success).length;
+    const failed = notificationResults.length - successful;
+    
+    console.log(`✅ Notification complete: ${successful} successful, ${failed} failed`);
+    console.log("✅ All enrolled students have been notified about the new quiz (dashboard + email)");
   } catch (error) {
-    console.error('Error notifying students:', error);
+    console.error('❌ Error in notifyStudentsAboutNewQuiz:', error);
   }
 };
 
@@ -303,6 +401,186 @@ const CoursePage = () => {
       } catch (error) {
         console.error('Error deleting quiz:', error);
         alert("Error deleting quiz. Please try again.");
+      }
+    }
+  };
+
+  // Assignment Functions
+  const generateAssignmentDocument = async () => {
+    if (!assignmentData.title.trim()) {
+      alert("Please enter an assignment name");
+      return;
+    }
+
+    try {
+      setGeneratingAssignment(true);
+      const response = await fetch('/api/ai/generate-assignment-doc', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          title: assignmentData.title,
+          topic: assignmentData.title
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate document');
+      }
+
+      // Get the blob from response
+      const blob = await response.blob();
+      
+      // Create download link
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${assignmentData.title.replace(/\s+/g, '_')}_Assignment.docx`;
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+
+      alert("Assignment document generated and downloaded successfully!");
+    } catch (error) {
+      console.error('Error generating assignment document:', error);
+      alert("Error generating assignment document. Please try again.");
+    } finally {
+      setGeneratingAssignment(false);
+    }
+  };
+
+  const handleSubmitAssignment = async () => {
+    if (!assignmentData.title.trim() || !assignmentData.description.trim()) {
+      alert("Please fill in all required fields");
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('title', assignmentData.title);
+      formData.append('description', assignmentData.description);
+      formData.append('deadline', assignmentData.deadline);
+      if (assignmentData.attachment) {
+        formData.append('attachment', assignmentData.attachment);
+      }
+
+      const response = await fetch(`/api/courses/${course.id}/assignments`, {
+        method: 'POST',
+        body: formData
+      });
+      
+      if (response.ok) {
+        const createdAssignment = await response.json();
+        setAssignments(prev => [...prev, createdAssignment]);
+        setShowAddAssignmentModal(false);
+        setAssignmentData({
+          title: "",
+          description: "",
+          deadline: "",
+          attachment: null
+        });
+        
+        // Notify students about new assignment
+        await notifyStudentsAboutNewAssignment(assignmentData.title);
+        
+        alert("Assignment created successfully!");
+      } else {
+        const errorData = await response.json();
+        alert(`Error: ${errorData.error}`);
+      }
+    } catch (error) {
+      console.error('Error creating assignment:', error);
+      alert("Error creating assignment. Please try again.");
+    }
+  };
+
+  const notifyStudentsAboutNewAssignment = async (assignmentTitle) => {
+    try {
+      console.log(`📧 Starting notification process for assignment: ${assignmentTitle}`);
+      
+      const studentsResponse = await fetch(`/api/courses/${course.id}/students`);
+      if (!studentsResponse.ok) {
+        console.error('❌ Failed to fetch students:', studentsResponse.status);
+        return;
+      }
+      
+      const students = await studentsResponse.json();
+      console.log(`📧 Found ${students.length} enrolled students to notify`);
+      
+      if (students.length === 0) {
+        console.log('⚠️ No enrolled students found for this course');
+        return;
+      }
+      
+      // Create notifications and send emails for each student
+      const notificationResults = await Promise.allSettled(
+        students.map(async (student) => {
+          if (!student.student_email) {
+            console.warn(`⚠️ Student ${student.student_name} has no email address`);
+            return { success: false, reason: 'No email address' };
+          }
+          
+          try {
+            const response = await fetch('/api/student-notifications', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                student_id: student.student_id,
+                student_email: student.student_email,
+                course_id: course.id,
+                course_title: course.title,
+                teacher_name: course.teacher_name || "Teacher",
+                teacher_email: course.assigned_teacher_id || course.teacher_email || null, // Add teacher email for mailto
+                assignment_title: assignmentTitle,
+                type: 'new_assignment',
+                deadline: assignmentData.deadline,
+                message: `New assignment available: ${assignmentTitle}${assignmentData.deadline ? ` - Due ${new Date(assignmentData.deadline).toLocaleDateString()}` : ''}`
+              })
+            });
+            
+            if (response.ok) {
+              const result = await response.json();
+              console.log(`✅ Notification and email sent to ${student.student_name} (${student.student_email})`);
+              return { success: true, student: student.student_name, email: student.student_email };
+            } else {
+              const errorData = await response.json();
+              console.error(`❌ Failed to notify ${student.student_name}:`, errorData);
+              return { success: false, student: student.student_name, error: errorData };
+            }
+          } catch (error) {
+            console.error(`❌ Error notifying ${student.student_name}:`, error);
+            return { success: false, student: student.student_name, error: error.message };
+          }
+        })
+      );
+      
+      const successful = notificationResults.filter(r => r.status === 'fulfilled' && r.value.success).length;
+      const failed = notificationResults.length - successful;
+      
+      console.log(`✅ Notification complete: ${successful} successful, ${failed} failed`);
+      console.log("✅ All enrolled students have been notified about the new assignment (dashboard + email)");
+    } catch (error) {
+      console.error('❌ Error in notifyStudentsAboutNewAssignment:', error);
+    }
+  };
+
+  const handleDeleteAssignment = async (assignmentId) => {
+    if (confirm("Are you sure you want to delete this assignment?")) {
+      try {
+        const response = await fetch(`/api/courses/${course.id}/assignments/${assignmentId}`, {
+          method: 'DELETE'
+        });
+        
+        if (response.ok) {
+          setAssignments(prev => prev.filter(assignment => assignment.id !== assignmentId));
+          alert("Assignment deleted successfully!");
+        } else {
+          const errorData = await response.json();
+          alert(`Error: ${errorData.error}`);
+        }
+      } catch (error) {
+        console.error('Error deleting assignment:', error);
+        alert("Error deleting assignment. Please try again.");
       }
     }
   };
@@ -397,6 +675,157 @@ const CoursePage = () => {
               <BookOpen size={16} />
               Create Lesson
             </button>
+          </div>
+        </div>
+      </div>
+    );
+  };
+
+  // Add Assignment Modal Component
+  const AddAssignmentModal = () => {
+    if (!showAddAssignmentModal) return null;
+
+    return (
+      <div className="fixed inset-0 bg-black/70 bg-opacity-50 flex items-center justify-center z-50 p-4">
+        <div className="bg-[#161b22] border border-gray-700 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-y-auto">
+          {/* Modal Header */}
+          <div className="flex items-center justify-between p-6 border-b border-gray-700">
+            <div>
+              <h2 className="text-xl font-bold text-white">Add Assignment</h2>
+              <p className="text-sm text-gray-400 mt-1">Please add assignment contents below</p>
+            </div>
+            <button 
+              onClick={() => setShowAddAssignmentModal(false)}
+              className="text-gray-400 hover:text-white transition-colors"
+            >
+              <X size={24} />
+            </button>
+          </div>
+          
+          {/* Modal Body */}
+          <div className="p-6 space-y-6">
+            {/* Assignment Name */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Assignment Name *
+              </label>
+              <input
+                type="text"
+                value={assignmentData.title}
+                onChange={(e) => setAssignmentData({...assignmentData, title: e.target.value})}
+                className="w-full bg-[#0d1117] border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500"
+                placeholder="Enter assignment name"
+                required
+              />
+            </div>
+
+            {/* Description */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Add Description *
+              </label>
+              <textarea
+                value={assignmentData.description}
+                onChange={(e) => setAssignmentData({...assignmentData, description: e.target.value})}
+                className="w-full bg-[#0d1117] border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500 min-h-[120px]"
+                placeholder="Enter assignment description"
+                rows="5"
+                required
+              />
+            </div>
+
+            {/* Time Duration / Deadline */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Time Duration (Deadline) *
+              </label>
+              <input
+                type="datetime-local"
+                value={assignmentData.deadline}
+                onChange={(e) => setAssignmentData({...assignmentData, deadline: e.target.value})}
+                className="w-full bg-[#0d1117] border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500"
+                required
+              />
+            </div>
+
+            {/* Attachment File */}
+            <div>
+              <label className="block text-sm font-medium text-gray-300 mb-2">
+                Attachment File
+              </label>
+              <div className="border-2 border-dashed border-gray-600 rounded-lg p-8 text-center hover:border-green-500 transition-colors">
+                <input
+                  type="file"
+                  id="assignment-file"
+                  onChange={(e) => setAssignmentData({...assignmentData, attachment: e.target.files[0]})}
+                  className="hidden"
+                  accept=".png,.jpeg,.jpg,.gif,.plain,.html,.docx,.pdf"
+                />
+                <label htmlFor="assignment-file" className="cursor-pointer">
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="text-4xl text-gray-400">📎</div>
+                    <p className="text-gray-300 text-sm">
+                      Drag and drop a file, or <span className="text-blue-400 font-semibold">Browse</span>
+                    </p>
+                    <p className="text-gray-500 text-xs mt-2">
+                      Allowed file types: PNG, JPEG, JPG, GIF, PLAIN, HTML, DOCX, PDF
+                    </p>
+                    <p className="text-gray-500 text-xs">
+                      Maximum file size 1GB
+                    </p>
+                    {assignmentData.attachment && (
+                      <p className="text-green-400 text-sm mt-2">
+                        Selected: {assignmentData.attachment.name}
+                      </p>
+                    )}
+                  </div>
+                </label>
+              </div>
+            </div>
+          </div>
+          
+          {/* Modal Footer */}
+          <div className="flex justify-between items-center gap-3 p-6 border-t border-gray-700">
+            <button
+              type="button"
+              onClick={generateAssignmentDocument}
+              disabled={generatingAssignment || !assignmentData.title.trim()}
+              className={`p-2 rounded-lg transition-colors ${
+                generatingAssignment 
+                  ? 'bg-green-700 cursor-not-allowed text-white' 
+                  : 'bg-green-600 hover:bg-green-700 text-white'
+              }`}
+              title="Generate Assignment Document with AI"
+            >
+              {generatingAssignment ? (
+                <div className="animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+              ) : (
+                <Sparkles size={20} />
+              )}
+            </button>
+            <div className="flex gap-3">
+              <button
+                type="button"
+                onClick={() => {
+                  setShowAddAssignmentModal(false);
+                  setAssignmentData({
+                    title: "",
+                    description: "",
+                    deadline: "",
+                    attachment: null
+                  });
+                }}
+                className="px-4 py-2 text-gray-300 hover:text-white transition-colors bg-[#0d1117] rounded-lg"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleSubmitAssignment}
+                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition-colors"
+              >
+                Save Assignment
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -725,17 +1154,54 @@ const CoursePage = () => {
       case "Assignments":
         return (
           <div className="p-4">
+            <div className="flex justify-between items-center mb-4">
+              <h3 className="text-lg font-semibold text-white">Assignments</h3>
+              <button
+                onClick={() => setShowAddAssignmentModal(true)}
+                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                <Plus size={16} />
+                Add Assignment
+              </button>
+            </div>
             {assignments.length === 0 ? (
               <div className="text-center py-8 text-gray-500">
                 <FileText size={48} className="mx-auto mb-4 text-gray-600" />
                 <p>No assignments created yet</p>
+                <button
+                  onClick={() => setShowAddAssignmentModal(true)}
+                  className="mt-4 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm"
+                >
+                  Create Your First Assignment
+                </button>
               </div>
             ) : (
               <div className="space-y-4">
                 {assignments.map((assignment) => (
-                  <div key={assignment.id} className="bg-[#1a1f29] border border-gray-700 rounded-lg p-4">
-                    <h3 className="text-lg font-semibold text-white mb-2">{assignment.title}</h3>
-                    <p className="text-gray-400 text-sm">{assignment.description}</p>
+                  <div key={assignment.id} className="bg-[#1a1f29] border border-gray-700 rounded-lg p-4 hover:border-green-500 transition-colors">
+                    <div className="flex justify-between items-start">
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-white mb-2">{assignment.title}</h3>
+                        <p className="text-gray-400 text-sm mb-3">{assignment.description}</p>
+                        <div className="flex items-center gap-4 text-sm text-gray-500">
+                          {assignment.deadline && (
+                            <div className="flex items-center gap-1">
+                              <Clock size={14} />
+                              <span>Due: {new Date(assignment.deadline).toLocaleDateString()}</span>
+                            </div>
+                          )}
+                          <div className="flex items-center gap-1">
+                            <span>Created: {new Date(assignment.created_at).toLocaleDateString()}</span>
+                          </div>
+                        </div>
+                      </div>
+                      <button 
+                        onClick={() => handleDeleteAssignment(assignment.id)}
+                        className="text-red-400 hover:text-red-300 transition-colors"
+                      >
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -868,35 +1334,6 @@ const CoursePage = () => {
               />
             </div>
             
-            {/* Progress */}
-            <div className="mt-6">
-              <div className="text-sm text-gray-300 mb-2 flex justify-between">
-                <span>Course Progress</span>
-                <span>65% complete</span>
-              </div>
-              <div className="w-full bg-gray-700 rounded-full h-2">
-                <div className="bg-green-500 h-2 rounded-full" style={{ width: "65%" }}></div>
-              </div>
-            </div>
-            
-            {/* Buttons */}
-            <div className="flex flex-wrap gap-4 mt-6">
-              <button 
-                onClick={handleAddLesson}
-                className="flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                <BookOpen size={16} /> Add Lesson
-              </button>
-              <button 
-                onClick={handleAddQuiz}
-                className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
-              >
-                <FileText size={16} /> Add Quiz
-              </button>
-              <button className="flex items-center gap-2 border border-green-600 text-green-500 hover:bg-green-600 hover:text-white px-4 py-2 rounded-md text-sm font-medium transition-colors">
-                <Megaphone size={16} /> Add Announcement
-              </button>
-            </div>
           </div>
 
           {/* Tabs */}
@@ -978,6 +1415,9 @@ const CoursePage = () => {
 
       {/* Add Quiz Modal */}
       <AddQuizModal />
+
+      {/* Add Assignment Modal */}
+      <AddAssignmentModal />
     </>
   );
 };

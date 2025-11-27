@@ -2,6 +2,8 @@ import { db } from '@/config/db';
 import { assignmentsTable } from '@/config/schema';
 import { eq } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
 
 export async function GET(request, { params }) {
   try {
@@ -23,16 +25,50 @@ export async function GET(request, { params }) {
 export async function POST(request, { params }) {
   try {
     const { id } = await params; // Add await here
-    const { title, description, deadline, max_score } = await request.json();
+    const formData = await request.formData();
+    
+    const title = formData.get('title');
+    const description = formData.get('description');
+    const deadline = formData.get('deadline');
+    const max_score = formData.get('max_score');
+    const file = formData.get('attachment');
+
+    let attachmentUrl = null;
+
+    // Handle file upload
+    if (file && file instanceof File) {
+      const bytes = await file.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      // Create uploads directory if it doesn't exist
+      const uploadsDir = join(process.cwd(), 'public', 'uploads', 'assignments');
+      try {
+        await mkdir(uploadsDir, { recursive: true });
+      } catch (error) {
+        // Directory might already exist
+      }
+
+      // Generate unique filename
+      const timestamp = Date.now();
+      const filename = `${timestamp}-${file.name}`;
+      const filepath = join(uploadsDir, filename);
+
+      // Save file
+      await writeFile(filepath, buffer);
+
+      // Store URL path (relative to public folder)
+      attachmentUrl = `/uploads/assignments/${filename}`;
+    }
 
     const newAssignment = await db
       .insert(assignmentsTable)
       .values({
         course_id: id,
-        title,
-        description,
-        deadline,
-        max_score: max_score || 100
+        title: title,
+        description: description,
+        deadline: deadline ? new Date(deadline) : null,
+        attachment_url: attachmentUrl,
+        max_score: max_score ? parseInt(max_score) : 100
       })
       .returning();
 

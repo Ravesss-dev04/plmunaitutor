@@ -3,6 +3,43 @@ import { studentProgressTable, enrollmentsTable, lessonsTable, quizzesTable, ass
 import { eq, and } from 'drizzle-orm';
 import { NextResponse } from 'next/server';
 import { getAuth } from '@clerk/nextjs/server';
+import { writeFile, mkdir } from 'fs/promises';
+import { join } from 'path';
+
+export async function GET(request) {
+  try {
+    const { userId } = getAuth(request);
+    
+    if (!userId) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    }
+
+    const { searchParams } = new URL(request.url);
+    const course_id = searchParams.get('course_id');
+    const assignment_id = searchParams.get('assignment_id');
+
+    if (!course_id || !assignment_id) {
+      return NextResponse.json({ error: 'Course ID and Assignment ID are required' }, { status: 400 });
+    }
+
+    const progress = await db
+      .select()
+      .from(studentProgressTable)
+      .where(
+        and(
+          eq(studentProgressTable.student_id, userId),
+          eq(studentProgressTable.course_id, parseInt(course_id)),
+          eq(studentProgressTable.assignment_id, parseInt(assignment_id))
+        )
+      )
+      .then(rows => rows[0]);
+
+    return NextResponse.json(progress || null);
+  } catch (error) {
+    console.error('Error fetching progress:', error);
+    return NextResponse.json({ error: error.message }, { status: 500 });
+  }
+}
 
 export async function POST(request) {
   try {
@@ -12,7 +49,31 @@ export async function POST(request) {
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const { course_id, lesson_id, quiz_id, assignment_id, completed, score, answers } = await request.json();
+    // Check if request is FormData (for file uploads) or JSON
+    const contentType = request.headers.get('content-type');
+    let course_id, lesson_id, quiz_id, assignment_id, completed, score, answers, submissionFile;
+
+    if (contentType?.includes('multipart/form-data')) {
+      const formData = await request.formData();
+      course_id = formData.get('course_id');
+      lesson_id = formData.get('lesson_id');
+      quiz_id = formData.get('quiz_id');
+      assignment_id = formData.get('assignment_id');
+      completed = formData.get('completed') === 'true';
+      score = formData.get('score') ? parseInt(formData.get('score')) : null;
+      const answersStr = formData.get('answers');
+      answers = answersStr ? JSON.parse(answersStr) : null;
+      submissionFile = formData.get('submission_file');
+    } else {
+      const body = await request.json();
+      course_id = body.course_id;
+      lesson_id = body.lesson_id;
+      quiz_id = body.quiz_id;
+      assignment_id = body.assignment_id;
+      completed = body.completed;
+      score = body.score;
+      answers = body.answers;
+    }
 
     console.log("📝 Student progress update:", {
       userId,
@@ -50,33 +111,86 @@ export async function POST(request) {
       .where(and(...whereConditions))
       .then(rows => rows[0]);
 
+    // Handle file upload for assignments
+    let submissionFileUrl = null;
+    if (submissionFile && submissionFile instanceof File && assignment_id) {
+      const bytes = await submissionFile.arrayBuffer();
+      const buffer = Buffer.from(bytes);
+
+      // Create uploads directory if it doesn't exist
+      const uploadsDir = join(process.cwd(), 'public', 'uploads', 'submissions');
+      try {
+        await mkdir(uploadsDir, { recursive: true });
+      } catch (error) {
+        // Directory might already exist
+      }
+
+      // Generate unique filename
+      const timestamp = Date.now();
+      const filename = `${userId}-${assignment_id}-${timestamp}-${submissionFile.name}`;
+      const filepath = join(uploadsDir, filename);
+
+      // Save file
+      await writeFile(filepath, buffer);
+
+      // Store URL path (relative to public folder)
+      submissionFileUrl = `/uploads/submissions/${filename}`;
+    }
+
     let result;
 
     if (existingProgress) {
       // Update existing progress - always update if new submission
+      const updateData = {
+        completed: completed !== undefined ? completed : existingProgress.completed,
+        score: score !== undefined ? score : existingProgress.score,
+        submitted_at: new Date()
+      };
+
+      if (answers) {
+        updateData.answers = answers;
+      }
+
+      if (submissionFileUrl) {
+        updateData.answers = {
+          ...(existingProgress.answers || {}),
+          answer: answers?.answer || existingProgress.answers?.answer || '',
+          submission_file: submissionFileUrl
+        };
+      }
+
       result = await db
         .update(studentProgressTable)
-        .set({
-          completed: completed !== undefined ? completed : existingProgress.completed,
-          score: score !== undefined ? score : existingProgress.score,
-          submitted_at: new Date()
-        })
+        .set(updateData)
         .where(eq(studentProgressTable.id, existingProgress.id))
         .returning();
     } else {
       // Create new progress record
+      const insertData = {
+        student_id: userId,
+        course_id: parseInt(course_id),
+        lesson_id: lesson_id ? parseInt(lesson_id) : null,
+        quiz_id: quiz_id ? parseInt(quiz_id) : null,
+        assignment_id: assignment_id ? parseInt(assignment_id) : null,
+        completed: completed !== undefined ? completed : true,
+        score: score !== undefined ? score : null,
+        submitted_at: new Date()
+      };
+
+      if (answers) {
+        insertData.answers = answers;
+      }
+
+      if (submissionFileUrl) {
+        insertData.answers = {
+          answer: answers?.answer || '',
+          submission_file: submissionFileUrl
+        };
+      }
+
       result = await db
         .insert(studentProgressTable)
-        .values({
-          student_id: userId,
-          course_id: parseInt(course_id),
-          lesson_id: lesson_id ? parseInt(lesson_id) : null,
-          quiz_id: quiz_id ? parseInt(quiz_id) : null,
-          assignment_id: assignment_id ? parseInt(assignment_id) : null,
-          completed: completed !== undefined ? completed : true,
-          score: score !== undefined ? score : null,
-          submitted_at: new Date()
-        })
+        .values(insertData)
         .returning();
     }
 

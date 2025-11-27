@@ -9,7 +9,7 @@ export function useAdminShortcut() {
   useEffect(() => {
     const handleKeyPress = (event) => {
       // Ctrl + A shortcut
-      if (event.ctrlKey && event.key === 'a') {
+      if (event.ctrlKey && event.key === 'p') {
         event.preventDefault();
         router.push('/admin');
       }
@@ -21,3 +21,4 @@ export function useAdminShortcut() {
     };
   }, [router]);
 }
+

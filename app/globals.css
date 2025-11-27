@@ -156,6 +156,165 @@
   font-weight: 600 !important;
 }
 
+/* Clerk UserButton Menu Styling */
+.cl-userButtonPopoverCard {
+  background-color: #161b22 !important;
+  border-color: #30363d !important;
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverActions {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverActionButton {
+  color: #ffffff !important;
+  background-color: transparent !important;
+}
+
+.cl-userButtonPopoverActionButton:hover {
+  background-color: #1f2937 !important;
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverActionButtonText {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverActionButtonIcon {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverFooter {
+  color: #9ca3af !important;
+}
+
+/* Target all text elements in the user menu */
+.cl-userButtonPopoverCard * {
+  color: #ffffff !important;
+}
+
+/* Specific targeting for menu items */
+.cl-userButtonPopoverCard button,
+.cl-userButtonPopoverCard a,
+.cl-userButtonPopoverCard span,
+.cl-userButtonPopoverCard p,
+.cl-userButtonPopoverCard div {
+  color: #ffffff !important;
+}
+
+/* User info section */
+.cl-userButtonPopoverIdentity {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverIdentityText {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverIdentityTextPrimary {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverIdentityTextSecondary {
+  color: #9ca3af !important;
+}
+
+/* Sign out button specific styling */
+.cl-userButtonPopoverActionButton[data-localization-key="userButtonPopover.signOut"],
+.cl-userButtonPopoverActionButton[aria-label*="Sign out"],
+.cl-userButtonPopoverActionButton[aria-label*="sign out"] {
+  color: #ef4444 !important;
+}
+
+.cl-userButtonPopoverActionButton[data-localization-key="userButtonPopover.signOut"]:hover,
+.cl-userButtonPopoverActionButton[aria-label*="Sign out"]:hover,
+.cl-userButtonPopoverActionButton[aria-label*="sign out"]:hover {
+  color: #f87171 !important;
+  background-color: rgba(239, 68, 68, 0.1) !important;
+}
+
+/* Manage account button */
+.cl-userButtonPopoverActionButton[data-localization-key="userButtonPopover.manageAccount"],
+.cl-userButtonPopoverActionButton[aria-label*="Manage account"],
+.cl-userButtonPopoverActionButton[aria-label*="manage account"] {
+  color: #ffffff !important;
+}
+
+.cl-userButtonPopoverActionButton[data-localization-key="userButtonPopover.manageAccount"]:hover,
+.cl-userButtonPopoverActionButton[aria-label*="Manage account"]:hover,
+.cl-userButtonPopoverActionButton[aria-label*="manage account"]:hover {
+  color: #ffffff !important;
+  background-color: #1f2937 !important;
+}
+
+/* Ensure all text in the popover is white */
+[data-clerk-element="userButtonPopover"] * {
+  color: #ffffff !important;
+}
+
+[data-clerk-element="userButtonPopover"] button {
+  color: #ffffff !important;
+}
+
+[data-clerk-element="userButtonPopover"] span {
+  color: #ffffff !important;
+}
+
+/* Hide Clerk watermark and branding */
+.cl-userButtonPopoverFooter {
+  display: none !important;
+  visibility: hidden !important;
+  height: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  overflow: hidden !important;
+}
+
+/* Hide "Secured by Clerk" text - target footer and all its children */
+.cl-userButtonPopoverFooter *,
+[data-clerk-element="userButtonPopover"] footer,
+[data-clerk-element="userButtonPopover"] [class*="footer"],
+[data-clerk-element="userButtonPopover"] [class*="Footer"],
+.cl-userButtonPopoverCard footer,
+.cl-userButtonPopoverCard [class*="footer"],
+.cl-userButtonPopoverCard [class*="Footer"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide "Development mode" text - target various possible class patterns */
+[data-clerk-element="userButtonPopover"] [class*="development"],
+[data-clerk-element="userButtonPopover"] [class*="Development"],
+[data-clerk-element="userButtonPopover"] [class*="mode"],
+[data-clerk-element="userButtonPopover"] [class*="Mode"],
+.cl-userButtonPopoverCard [class*="development"],
+.cl-userButtonPopoverCard [class*="Development"],
+.cl-userButtonPopoverCard [class*="mode"],
+.cl-userButtonPopoverCard [class*="Mode"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide Clerk branding elements */
+.cl-userButtonPopoverCard [class*="clerk"],
+.cl-userButtonPopoverCard [class*="Clerk"],
+.cl-userButtonPopoverCard [class*="branding"],
+.cl-userButtonPopoverCard [class*="Branding"],
+.cl-userButtonPopoverCard [class*="secured"],
+.cl-userButtonPopoverCard [class*="Secured"] {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+/* Hide any text nodes that might contain these strings - using more specific targeting */
+.cl-userButtonPopoverCard > div:last-child,
+.cl-userButtonPopoverCard > section:last-child,
+.cl-userButtonPopoverActions + * {
+  display: none !important;
+  visibility: hidden !important;
+}
+
 /* Custom animations for Analytics component */
 @keyframes shimmer {
   0% {

@@ -104,12 +104,56 @@ const DashboardView = () => {
   const approvalsChange = calculateChange(summaryData.pendingApprovals, 2);
   const studentChange = calculateChange(summaryData.totalStudents, 185)
 
+  const [monthlyActiveLearners, setMonthlyActiveLearners] = useState([]);
+  const [popularCourses, setPopularCourses] = useState([]);
+  const [recentActivities, setRecentActivities] = useState([]);
+
+  // Fetch monthly active learners, popular courses, and recent activity
+  useEffect(() => {
+    const fetchDashboardCharts = async () => {
+      try {
+        // Fetch monthly active learners
+        const learnersResponse = await fetch('/api/admin/monthly-active-learners');
+        if (learnersResponse.ok) {
+          const learnersData = await learnersResponse.json();
+          setMonthlyActiveLearners(learnersData);
+        }
+
+        // Fetch popular courses
+        const coursesResponse = await fetch('/api/admin/popular-courses');
+        if (coursesResponse.ok) {
+          const coursesData = await coursesResponse.json();
+          setPopularCourses(coursesData);
+        }
+
+        // Fetch recent activity
+        const activityResponse = await fetch('/api/admin/recent-activity');
+        if (activityResponse.ok) {
+          const activityData = await activityResponse.json();
+          setRecentActivities(activityData);
+        }
+      } catch (error) {
+        console.error('Error fetching dashboard charts:', error);
+      }
+    };
+
+    fetchDashboardCharts();
+    
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchDashboardCharts, 30000);
+    return () => clearInterval(interval);
+  }, []);
+
   const lineData = {
-    labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
+    labels: monthlyActiveLearners.length > 0 
+      ? monthlyActiveLearners.map(m => m.month)
+      : ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep"],
     datasets: [
       {
         label: "Active Learners",
-        data: [200, 400, 350, 500, 700, 900, 850, 1000, 1200],
+        data: monthlyActiveLearners.length > 0
+          ? monthlyActiveLearners.map(m => m.count)
+          : [200, 400, 350, 500, 700, 900, 850, 1000, 1200],
         fill: true,
         backgroundColor: "rgba(34,197,94,0.2)",
         borderColor: "#22c55e",
@@ -119,11 +163,15 @@ const DashboardView = () => {
   };
 
   const barData = {
-    labels: ["Python", "React", "Java", "C++", "AI Fundamentals"],
+    labels: popularCourses.length > 0
+      ? popularCourses.map(c => c.title.length > 15 ? c.title.substring(0, 15) + '...' : c.title)
+      : ["Python", "React", "Java", "C++", "AI Fundamentals"],
     datasets: [
       {
         label: "Popularity",
-        data: [95, 80, 60, 55, 45],
+        data: popularCourses.length > 0
+          ? popularCourses.map(c => c.enrollments)
+          : [95, 80, 60, 55, 45],
         backgroundColor: "#22c55e",
       },
     ],
@@ -170,28 +218,31 @@ const DashboardView = () => {
     },
   ];
 
-  const activities = [
-    {
-      icon: "📩",
-      text: "New student John Doe enrolled in AI Fundamentals.",
-      time: "2 hours ago",
-    },
-    {
-      icon: "📘",
-      text: `Course ${courses.length > 0 ? `'${courses[0]?.title}'` : 'new course'} updated with new module.`,
-      time: "5 hours ago",
-    },
-    {
-      icon: "👩‍🏫",
-      text: `${teachers.length} teacher${teachers.length !== 1 ? 's' : ''} in the system.`,
-      time: "Live data",
-    },
-    {
-      icon: "⏳",
-      text: `${summaryData.pendingApprovals} teacher request${summaryData.pendingApprovals !== 1 ? 's' : ''} waiting for approval.`,
-      time: "Live data",
-    },
-  ];
+  // Use real-time activities if available, otherwise show default
+  const activities = recentActivities.length > 0 
+    ? recentActivities.slice(0, 5) // Show top 5 most recent
+    : [
+        {
+          icon: "📩",
+          text: "New student John Doe enrolled in AI Fundamentals.",
+          time: "2 hours ago",
+        },
+        {
+          icon: "📘",
+          text: `Course ${courses.length > 0 ? `'${courses[0]?.title}'` : 'new course'} updated with new module.`,
+          time: "5 hours ago",
+        },
+        {
+          icon: "👩‍🏫",
+          text: `${teachers.length} teacher${teachers.length !== 1 ? 's' : ''} in the system.`,
+          time: "Live data",
+        },
+        {
+          icon: "⏳",
+          text: `${summaryData.pendingApprovals} teacher request${summaryData.pendingApprovals !== 1 ? 's' : ''} waiting for approval.`,
+          time: "Live data",
+        },
+      ];
 
   if (loading) {
     return (
