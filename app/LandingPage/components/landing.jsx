@@ -123,20 +123,20 @@ export default function LandingHome({ setShowSignIn }) {
 
   return (
     <div className="w-full relative text-white min-h-screen overflow-hidden">
-      {/* Animated Background with Purple/Blue Theme */}
-      <div className="fixed inset-0 bg-gradient-to-b from-[#1a0b2e] via-[#16213e] to-[#0f3460] z-0 overflow-hidden">
+      {/* Animated Background with Green/Black Theme */}
+      <div className="fixed inset-0 bg-gradient-to-b from-black via-[#0a0a0a] to-[#050505] z-0 overflow-hidden">
         {/* Animated Glowing Lines */}
         <svg className="absolute inset-0 w-full h-full opacity-40" preserveAspectRatio="none" style={{ minHeight: '100vh' }}>
           <defs>
             <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#a855f7" stopOpacity="0.8" />
-              <stop offset="50%" stopColor="#6366f1" stopOpacity="0.6" />
-              <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.4" />
+              <stop offset="0%" stopColor="#22c55e" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#16a34a" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#10b981" stopOpacity="0.4" />
             </linearGradient>
             <linearGradient id="lineGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" stopColor="#6366f1" stopOpacity="0.6" />
-              <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.5" />
-              <stop offset="100%" stopColor="#a855f7" stopOpacity="0.3" />
+              <stop offset="0%" stopColor="#16a34a" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#10b981" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#22c55e" stopOpacity="0.3" />
             </linearGradient>
             <filter id="glow">
               <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
@@ -208,7 +208,7 @@ export default function LandingHome({ setShowSignIn }) {
           {[...Array(5)].map((_, i) => (
             <motion.div
               key={i}
-              className="absolute w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+              className="absolute w-full h-px bg-gradient-to-r from-transparent via-green-500 to-transparent"
               style={{ top: `${20 + i * 20}%` }}
               animate={{
                 opacity: [0.1, 0.3, 0.1],
@@ -228,7 +228,7 @@ export default function LandingHome({ setShowSignIn }) {
         {[...Array(20)].map((_, i) => (
           <motion.div
             key={i}
-            className="absolute rounded-full bg-purple-500/40 blur-sm"
+            className="absolute rounded-full bg-green-500/40 blur-sm"
             style={{
               width: Math.random() * 8 + 4,
               height: Math.random() * 8 + 4,
@@ -251,15 +251,15 @@ export default function LandingHome({ setShowSignIn }) {
         ))}
 
         {/* Additional Glowing Orbs */}
-        <div className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
-        <div className="absolute bottom-40 left-10 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-3xl" />
+        <div className="absolute top-20 right-20 w-96 h-96 bg-green-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-40 left-10 w-80 h-80 bg-green-600/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-green-500/10 rounded-full blur-3xl" />
       </div>
 
       {/* Content Container */}
       <div className="relative z-10">
       {/* NAVBAR */}
-      <nav className="sticky top-0 z-40 bg-[#1a0b2e]/80 backdrop-blur-md border-b border-purple-500/20">
+      <nav className="sticky top-0 z-40 bg-black/80 backdrop-blur-md border-b border-green-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
@@ -318,7 +318,7 @@ export default function LandingHome({ setShowSignIn }) {
               initial={{ opacity: 0, x: 100 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: 100 }}
-              className="mobile-menu-container fixed right-0 top-16 h-[calc(100vh-4rem)] w-64 bg-[#161b22] border-l border-gray-800 z-50 p-6 md:hidden overflow-y-auto"
+              className="mobile-menu-container fixed right-0 top-16 h-[calc(100vh-4rem)] w-64 bg-black/95 backdrop-blur-md border-l border-green-500/20 z-50 p-6 md:hidden overflow-y-auto"
             >
               <div className="flex flex-col gap-4">
                 <Button
@@ -369,7 +369,7 @@ export default function LandingHome({ setShowSignIn }) {
         {/* Hero Background Glow */}
         <div className="absolute inset-0 -z-10">
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" />
-          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-green-600/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
         </div>
         
         <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 relative z-10">
@@ -450,16 +450,16 @@ export default function LandingHome({ setShowSignIn }) {
                   handleRoleSelection('teacher');
                   setShowSignIn("sign-up");
                 }}
-                className="group relative bg-gradient-to-br from-blue-600/20 to-blue-700/10 border-2 border-blue-500/30 rounded-xl p-6 cursor-pointer hover:border-blue-500 transition-all duration-300"
+                className="group relative bg-gradient-to-br from-green-600/20 to-green-700/10 border-2 border-green-500/30 rounded-xl p-6 cursor-pointer hover:border-green-500 transition-all duration-300"
               >
                 <div className="flex items-start gap-4">
-                  <div className="p-3 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
-                    <UserCog className="w-8 h-8 text-blue-400" />
+                  <div className="p-3 bg-green-500/20 rounded-lg group-hover:bg-green-500/30 transition-colors">
+                    <UserCog className="w-8 h-8 text-green-400" />
                   </div>
                   <div className="flex-1">
                     <h3 className="text-xl font-bold text-white mb-2">Apply as a Teacher</h3>
                     <p className="text-sm text-gray-400 mb-4">Create and share your courses</p>
-                    <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white">
+                    <Button className="w-full bg-green-600 hover:bg-green-700 text-white">
                       Start Teaching
                     </Button>
                   </div>
@@ -501,7 +501,7 @@ export default function LandingHome({ setShowSignIn }) {
                 }}
               />
               <motion.div 
-                className="absolute inset-0 bg-purple-500/20 blur-2xl rounded-full"
+                className="absolute inset-0 bg-green-600/20 blur-2xl rounded-full"
                 animate={{ 
                   scale: [1.2, 1, 1.2],
                   opacity: [0.2, 0.4, 0.2]
@@ -545,7 +545,7 @@ export default function LandingHome({ setShowSignIn }) {
       >
         {/* Section Background Glow */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-purple-500/5 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-green-500/5 rounded-full blur-3xl" />
         </div>
         
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative z-10">
@@ -568,7 +568,7 @@ export default function LandingHome({ setShowSignIn }) {
                   y: -5,
                   boxShadow: "0 20px 40px rgba(34, 197, 94, 0.2)"
                 }}
-                className="text-center p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm rounded-xl border border-purple-500/30 hover:border-green-500/50 transition-all duration-300 relative overflow-hidden group"
+                className="text-center p-6 bg-gradient-to-br from-black/40 to-[#0a0a0a]/40 backdrop-blur-sm rounded-xl border border-green-500/30 hover:border-green-500/50 transition-all duration-300 relative overflow-hidden group"
               >
                 {/* Hover Glow Effect */}
                 <div className="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/10 transition-colors duration-300 rounded-xl" />
@@ -607,7 +607,7 @@ export default function LandingHome({ setShowSignIn }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative">
         {/* Section Background Glow */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" />
         </div>
         
         <motion.div 
@@ -617,7 +617,7 @@ export default function LandingHome({ setShowSignIn }) {
           transition={{ duration: 0.8 }}
           className="text-center mb-12 relative z-10"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-green-300 to-white bg-clip-text text-transparent">
             Featured Courses
           </h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
@@ -665,7 +665,7 @@ export default function LandingHome({ setShowSignIn }) {
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: i * 0.1 }}
                 whileHover={{ scale: 1.05, y: -10, rotateY: 5 }}
-                className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-500/30 shadow-xl hover:border-green-500/50 hover:shadow-green-500/20 transition-all duration-300 h-full flex flex-col relative group"
+                className="bg-gradient-to-br from-black/40 to-[#0a0a0a]/40 backdrop-blur-sm rounded-xl overflow-hidden border border-green-500/30 shadow-xl hover:border-green-500/50 hover:shadow-green-500/20 transition-all duration-300 h-full flex flex-col relative group"
               >
                 {/* Hover Glow */}
                 <div className="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/10 transition-colors duration-300 rounded-xl" />
@@ -710,7 +710,7 @@ export default function LandingHome({ setShowSignIn }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative">
         {/* Section Background Glow */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" />
         </div>
         
         <motion.div 
@@ -720,7 +720,7 @@ export default function LandingHome({ setShowSignIn }) {
           transition={{ duration: 0.8 }}
           className="text-center mb-12 relative z-10"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-green-300 to-white bg-clip-text text-transparent">
             How It Works
           </h2>
           <p className="text-gray-300 text-lg max-w-2xl mx-auto">
@@ -740,13 +740,13 @@ export default function LandingHome({ setShowSignIn }) {
               icon: Sparkles,
               title: "Learn With AI",
               text: "Get instant help and personalized study guidance from our AI tutor.",
-              color: "blue",
+              color: "green",
             },
             {
               icon: TrendingUp,
               title: "Track Progress",
               text: "Monitor your learning journey with detailed analytics and achievements.",
-              color: "purple",
+              color: "green",
             },
           ].map((item, index) => (
             <motion.div
@@ -756,10 +756,10 @@ export default function LandingHome({ setShowSignIn }) {
               viewport={{ once: true }}
               transition={{ duration: 0.6, delay: index * 0.15 }}
               whileHover={{ scale: 1.08, y: -12, rotateY: 5 }}
-              className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-sm p-8 rounded-xl border border-purple-500/30 shadow-xl hover:border-green-500/50 hover:shadow-green-500/20 transition-all duration-300 text-center relative group overflow-hidden"
+              className="bg-gradient-to-br from-black/40 to-[#0a0a0a]/40 backdrop-blur-sm p-8 rounded-xl border border-green-500/30 shadow-xl hover:border-green-500/50 hover:shadow-green-500/20 transition-all duration-300 text-center relative group overflow-hidden"
             >
               {/* Animated Background Gradient */}
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-green-500/10 group-hover:via-purple-500/10 group-hover:to-blue-500/10 transition-all duration-500" />
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 via-green-600/0 to-green-500/0 group-hover:from-green-500/10 group-hover:via-green-600/10 group-hover:to-green-500/10 transition-all duration-500" />
               
               <motion.div 
                 className={`inline-flex p-4 rounded-full bg-${item.color}-500/20 mb-6 relative z-10`}
@@ -786,7 +786,7 @@ export default function LandingHome({ setShowSignIn }) {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
         {/* CTA Background Glow */}
         <div className="absolute inset-0 -z-10">
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-green-500/10 via-purple-500/10 to-blue-500/10 rounded-full blur-3xl" />
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-green-500/10 via-green-600/10 to-green-500/10 rounded-full blur-3xl" />
         </div>
         
         <motion.div
@@ -794,12 +794,12 @@ export default function LandingHome({ setShowSignIn }) {
           whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.8 }}
-          className="bg-gradient-to-r from-green-600/20 via-purple-600/20 to-blue-600/20 backdrop-blur-md border-2 border-green-500/40 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden shadow-2xl"
+          className="bg-gradient-to-r from-green-600/20 via-green-700/20 to-green-600/20 backdrop-blur-md border-2 border-green-500/40 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden shadow-2xl"
         >
           {/* Animated Background Pattern */}
           <div className="absolute inset-0 opacity-20">
-            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.3),transparent_50%)]" />
-            <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(34,197,94,0.3),transparent_50%)]" />
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(34,197,94,0.3),transparent_50%)]" />
+            <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(22,163,74,0.3),transparent_50%)]" />
           </div>
           
           <motion.h2 
@@ -842,9 +842,9 @@ export default function LandingHome({ setShowSignIn }) {
                 }}
                 size="lg"
                 variant="outline"
-                className="border-2 border-blue-500/50 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400 px-8 py-6 text-lg backdrop-blur-sm relative overflow-hidden group"
+                className="border-2 border-green-500/50 text-green-400 hover:bg-green-500/20 hover:border-green-400 px-8 py-6 text-lg backdrop-blur-sm relative overflow-hidden group"
               >
-                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-green-500/10 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
                 <UserCog className="mr-2 w-5 h-5 relative z-10" />
                 <span className="relative z-10">Become a Teacher</span>
               </Button>
