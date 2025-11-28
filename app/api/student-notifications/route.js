@@ -113,6 +113,14 @@ export async function POST(request) {
     const itemTitle = quiz_title || lesson_title || assignment_title || 'New Item';
     const notificationMessage = message || `New ${type}: ${itemTitle}`;
 
+    // Log notification creation for debugging
+    console.log(`📬 Creating notification for course ${course_id}:`);
+    console.log(`   - Student: ${student_id}`);
+    console.log(`   - Course: ${course_title} (ID: ${course_id})`);
+    console.log(`   - Teacher: ${teacher_name}`);
+    console.log(`   - Type: ${type}`);
+    console.log(`   - Item: ${itemTitle}`);
+
     // If teacher_email not provided, try to fetch it from course
     let finalTeacherEmail = teacher_email;
     if (!finalTeacherEmail && course_id) {

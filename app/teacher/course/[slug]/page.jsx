@@ -57,26 +57,74 @@ const CoursePage = () => {
 
   const fetchCourseData = async () => {
     try {
+      setLoading(true);
+      console.log(`📚 Fetching course with slug: ${slug}`);
+      
       const courseResponse = await fetch(`/api/courses?slug=${slug}`);
-      if (courseResponse.ok) {
-        const courseData = await courseResponse.json();
-        setCourse(courseData[0]);
-        
-        const [lessonsRes, quizzesRes, assignmentsRes, announcementsRes, studentsRes] = await Promise.all([
-          fetch(`/api/courses/${courseData[0].id}/lessons`),
-          fetch(`/api/courses/${courseData[0].id}/quizzes`),
-          fetch(`/api/courses/${courseData[0].id}/assignments`),
-          fetch(`/api/courses/${courseData[0].id}/announcements`),
-          fetch(`/api/courses/${courseData[0].id}/students`)
-        ]);
-        if (lessonsRes.ok) setLessons(await lessonsRes.json());
-        if (quizzesRes.ok) setQuizzes(await quizzesRes.json());
-        if (assignmentsRes.ok) setAssignments(await assignmentsRes.json());
-        if (announcementsRes.ok) setAnnouncements(await announcementsRes.json());
-        if (studentsRes.ok) setStudents(await studentsRes.json());
+      
+      if (!courseResponse.ok) {
+        console.error(`❌ Failed to fetch course: ${courseResponse.status}`);
+        setLoading(false);
+        return;
       }
+      
+      const courseData = await courseResponse.json();
+      
+      if (!courseData || courseData.length === 0) {
+        console.error(`❌ No course found with slug: ${slug}`);
+        setLoading(false);
+        return;
+      }
+      
+      const fetchedCourse = courseData[0];
+      console.log(`✅ Found course: ${fetchedCourse.title} (ID: ${fetchedCourse.id})`);
+      console.log(`👨‍🏫 Assigned teacher: ${fetchedCourse.assigned_teacher_id || 'Not assigned'}`);
+      
+      setCourse(fetchedCourse);
+      
+      // Fetch course-specific content using the correct course ID
+      console.log(`📖 Fetching content for course ID: ${fetchedCourse.id}`);
+      const [lessonsRes, quizzesRes, assignmentsRes, announcementsRes, studentsRes] = await Promise.all([
+        fetch(`/api/courses/${fetchedCourse.id}/lessons`),
+        fetch(`/api/courses/${fetchedCourse.id}/quizzes`),
+        fetch(`/api/courses/${fetchedCourse.id}/assignments`),
+        fetch(`/api/courses/${fetchedCourse.id}/announcements`),
+        fetch(`/api/courses/${fetchedCourse.id}/students`)
+      ]);
+      
+      if (lessonsRes.ok) {
+        const lessonsData = await lessonsRes.json();
+        console.log(`✅ Found ${lessonsData.length} lessons for course ${fetchedCourse.id}`);
+        setLessons(lessonsData);
+      }
+      
+      if (quizzesRes.ok) {
+        const quizzesData = await quizzesRes.json();
+        console.log(`✅ Found ${quizzesData.length} quizzes for course ${fetchedCourse.id}`);
+        setQuizzes(quizzesData);
+      }
+      
+      if (assignmentsRes.ok) {
+        const assignmentsData = await assignmentsRes.json();
+        console.log(`✅ Found ${assignmentsData.length} assignments for course ${fetchedCourse.id}`);
+        setAssignments(assignmentsData);
+      }
+      
+      if (announcementsRes.ok) {
+        const announcementsData = await announcementsRes.json();
+        console.log(`✅ Found ${announcementsData.length} announcements for course ${fetchedCourse.id}`);
+        setAnnouncements(announcementsData);
+      }
+      
+      if (studentsRes.ok) {
+        const studentsData = await studentsRes.json();
+        console.log(`✅ Found ${studentsData.length} students enrolled in course ${fetchedCourse.id}`);
+        setStudents(studentsData);
+      }
+      
+      console.log(`✅ Course data loaded successfully for: ${fetchedCourse.title}`);
     } catch (error) {
-      console.error('Error fetching course data:', error);
+      console.error('❌ Error fetching course data:', error);
     } finally {
       setLoading(false);
     }
@@ -126,8 +174,10 @@ const CoursePage = () => {
   const notifyStudentsAboutNewLesson = async (lessonTitle) => {
     try {
       console.log(`📧 Starting notification process for lesson: ${lessonTitle}`);
+      console.log(`📚 Course: ${course.title} (ID: ${course.id})`);
+      console.log(`👨‍🏫 Teacher: ${course.teacher_name || 'Unknown'} (${course.assigned_teacher_id || 'No email'})`);
       
-      // Get all students enrolled in this course
+      // Get all students enrolled in THIS SPECIFIC COURSE ONLY
       const studentsResponse = await fetch(`/api/courses/${course.id}/students`);
       if (!studentsResponse.ok) {
         console.error('❌ Failed to fetch students:', studentsResponse.status);
@@ -135,10 +185,11 @@ const CoursePage = () => {
       }
       
       const students = await studentsResponse.json();
-      console.log(`📧 Found ${students.length} enrolled students to notify`);
+      console.log(`📧 Found ${students.length} enrolled students in course "${course.title}" to notify`);
+      console.log(`📋 Students: ${students.map(s => s.student_name).join(', ')}`);
       
       if (students.length === 0) {
-        console.log('⚠️ No enrolled students found for this course');
+        console.log(`⚠️ No enrolled students found for course "${course.title}"`);
         return;
       }
       
@@ -316,8 +367,10 @@ const CoursePage = () => {
  const notifyStudentsAboutNewQuiz = async (quizTitle) => {
   try {
     console.log(`📧 Starting notification process for quiz: ${quizTitle}`);
+    console.log(`📚 Course: ${course.title} (ID: ${course.id})`);
+    console.log(`👨‍🏫 Teacher: ${course.teacher_name || 'Unknown'} (${course.assigned_teacher_id || 'No email'})`);
     
-    // Get all students enrolled in this course
+    // Get all students enrolled in THIS SPECIFIC COURSE ONLY
     const studentsResponse = await fetch(`/api/courses/${course.id}/students`);
     if (!studentsResponse.ok) {
       console.error('❌ Failed to fetch students:', studentsResponse.status);
@@ -325,10 +378,11 @@ const CoursePage = () => {
     }
     
     const students = await studentsResponse.json();
-    console.log(`📧 Found ${students.length} enrolled students to notify`);
+    console.log(`📧 Found ${students.length} enrolled students in course "${course.title}" to notify`);
+    console.log(`📋 Students: ${students.map(s => s.student_name).join(', ')}`);
     
     if (students.length === 0) {
-      console.log('⚠️ No enrolled students found for this course');
+      console.log(`⚠️ No enrolled students found for course "${course.title}"`);
       return;
     }
     
@@ -497,7 +551,10 @@ const CoursePage = () => {
   const notifyStudentsAboutNewAssignment = async (assignmentTitle) => {
     try {
       console.log(`📧 Starting notification process for assignment: ${assignmentTitle}`);
+      console.log(`📚 Course: ${course.title} (ID: ${course.id})`);
+      console.log(`👨‍🏫 Teacher: ${course.teacher_name || 'Unknown'} (${course.assigned_teacher_id || 'No email'})`);
       
+      // Get all students enrolled in THIS SPECIFIC COURSE ONLY
       const studentsResponse = await fetch(`/api/courses/${course.id}/students`);
       if (!studentsResponse.ok) {
         console.error('❌ Failed to fetch students:', studentsResponse.status);
@@ -505,10 +562,11 @@ const CoursePage = () => {
       }
       
       const students = await studentsResponse.json();
-      console.log(`📧 Found ${students.length} enrolled students to notify`);
+      console.log(`📧 Found ${students.length} enrolled students in course "${course.title}" to notify`);
+      console.log(`📋 Students: ${students.map(s => s.student_name).join(', ')}`);
       
       if (students.length === 0) {
-        console.log('⚠️ No enrolled students found for this course');
+        console.log(`⚠️ No enrolled students found for course "${course.title}"`);
         return;
       }
       

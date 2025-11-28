@@ -7,24 +7,29 @@ import { join } from 'path';
 
 export async function GET(request, { params }) {
   try {
-    const { id } = await params; // Add await here
+    const { id } = await params;
+    const courseId = parseInt(id);
+    
+    console.log(`📋 Fetching assignments for course ID: ${courseId}`);
     
     const assignments = await db
       .select()
       .from(assignmentsTable)
-      .where(eq(assignmentsTable.course_id, id))
+      .where(eq(assignmentsTable.course_id, courseId))
       .orderBy(assignmentsTable.created_at);
 
+    console.log(`✅ Found ${assignments.length} assignments for course ${courseId}`);
     return NextResponse.json(assignments);
   } catch (error) {
-    console.error('Error fetching assignments:', error);
+    console.error('❌ Error fetching assignments:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
 
 export async function POST(request, { params }) {
   try {
-    const { id } = await params; // Add await here
+    const { id } = await params;
+    const courseId = parseInt(id);
     const formData = await request.formData();
     
     const title = formData.get('title');
@@ -32,6 +37,8 @@ export async function POST(request, { params }) {
     const deadline = formData.get('deadline');
     const max_score = formData.get('max_score');
     const file = formData.get('attachment');
+
+    console.log(`🆕 Creating assignment for course ID: ${courseId}`);
 
     let attachmentUrl = null;
 
@@ -63,7 +70,7 @@ export async function POST(request, { params }) {
     const newAssignment = await db
       .insert(assignmentsTable)
       .values({
-        course_id: id,
+        course_id: courseId,
         title: title,
         description: description,
         deadline: deadline ? new Date(deadline) : null,
@@ -72,9 +79,10 @@ export async function POST(request, { params }) {
       })
       .returning();
 
+    console.log(`✅ Assignment created successfully for course ${courseId}`);
     return NextResponse.json(newAssignment[0], { status: 201 });
   } catch (error) {
-    console.error('Error creating assignment:', error);
+    console.error('❌ Error creating assignment:', error);
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 }
