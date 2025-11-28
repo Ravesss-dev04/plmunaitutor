@@ -41,8 +41,8 @@ function LessonMaterials() {
   );
 
   return (
-    <div className="text-white w-full">
-      <div className="bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-2xl border border-gray-700/50 w-full overflow-hidden">
+    <div className="text-gray-900 dark:text-white w-full">
+      <div className="bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-sm rounded-xl p-4 sm:p-6 shadow-2xl border border-gray-200 dark:border-gray-700/50 w-full overflow-hidden">
         {/* Header Section */}
         <div className="mb-6 sm:mb-8">
           <div className="flex items-center gap-3 mb-2">
@@ -53,10 +53,10 @@ function LessonMaterials() {
               </div>
             </div>
             <div>
-              <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+              <h2 className="text-xl sm:text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 dark:from-white dark:via-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
                 All Lesson Materials
               </h2>
-              <p className="text-xs sm:text-sm text-gray-400 mt-0.5">
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5">
                 {allLessons.length} {allLessons.length === 1 ? 'lesson' : 'lessons'} available
               </p>
             </div>
@@ -64,7 +64,7 @@ function LessonMaterials() {
         </div>
 
         {/* Desktop Header - Hidden on mobile */}
-        <div className="hidden md:grid md:grid-cols-4 font-semibold text-gray-300 mb-4 border-b border-gray-700/50 pb-3 text-sm">
+        <div className="hidden md:grid md:grid-cols-4 font-semibold text-gray-700 dark:text-gray-300 mb-4 border-b border-gray-300 dark:border-gray-700/50 pb-3 text-sm">
           <div className="flex items-center gap-2">
             <FileText className="w-4 h-5 text-blue-400" /> LESSON
           </div>
@@ -91,27 +91,27 @@ function LessonMaterials() {
                 transition={{ duration: 0.3, delay: index * 0.05 }}
                 onMouseEnter={() => setHoveredIndex(index)}
                 onMouseLeave={() => setHoveredIndex(null)}
-                className="border-b border-gray-700/50 last:border-b-0"
+                className="border-b border-gray-200 dark:border-gray-700/50 last:border-b-0"
               >
                 {/* Mobile Layout - Card Style */}
                 <motion.div
                   whileHover={{ scale: 1.01 }}
-                  className="md:hidden bg-gradient-to-br from-gray-800/50 to-gray-900/50 rounded-xl p-4 border border-gray-700/30 hover:border-gray-600/50 transition-all duration-300"
+                  className="md:hidden bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/50 dark:to-gray-900/50 rounded-xl p-4 border border-gray-300 dark:border-gray-700/30 hover:border-gray-400 dark:hover:border-gray-600/50 transition-all duration-300"
                 >
                   <div className="flex items-start gap-3 mb-3">
                     {getIcon(lesson.type)}
                     <div className="flex-1 min-w-0">
-                      <h3 className="font-semibold text-white text-sm sm:text-base mb-1 wrap-break-word">
+                      <h3 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base mb-1 wrap-break-word">
                         {lesson.title}
                       </h3>
-                      <div className="flex items-center gap-2 text-gray-400 text-xs sm:text-sm">
+                      <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
                         <BookOpen className="w-3 h-3" />
                         <span className="truncate">{lesson.courseTitle}</span>
                       </div>
                     </div>
                   </div>
                   
-                  <div className="flex items-center justify-between pt-3 border-t border-gray-700/50">
+                  <div className="flex items-center justify-between pt-3 border-t border-gray-300 dark:border-gray-700/50">
                     <div>
                       {lesson.status === "viewed" ? (
                         <span className="inline-flex items-center gap-1.5 bg-gradient-to-r from-green-600 to-emerald-600 px-3 py-1.5 rounded-full text-xs font-medium text-white shadow-lg shadow-green-500/20">
@@ -149,17 +149,17 @@ function LessonMaterials() {
                 {/* Desktop Layout - Grid Style */}
                 <motion.div
                   whileHover={{ x: 4 }}
-                  className="hidden md:grid md:grid-cols-4 items-center gap-4 p-4 text-sm text-white bg-gradient-to-r from-gray-800/30 to-gray-900/30 rounded-lg border border-gray-700/30 hover:border-gray-600/50 hover:from-gray-800/50 hover:to-gray-900/50 transition-all duration-300 cursor-pointer"
+                  className="hidden md:grid md:grid-cols-4 items-center gap-4 p-4 text-sm text-gray-900 dark:text-white bg-gradient-to-r from-gray-100 to-gray-200 dark:from-gray-800/30 dark:to-gray-900/30 rounded-lg border border-gray-300 dark:border-gray-700/30 hover:border-gray-400 dark:hover:border-gray-600/50 hover:from-gray-200 hover:to-gray-300 dark:hover:from-gray-800/50 dark:hover:to-gray-900/50 transition-all duration-300 cursor-pointer"
                 >
                   {/* Lesson */}
                   <div className="flex items-center gap-3 min-w-0">
                     {getIcon(lesson.type)}
-                    <span className="font-semibold text-white truncate">{lesson.title}</span>
+                    <span className="font-semibold text-gray-900 dark:text-white truncate">{lesson.title}</span>
                   </div>
 
                   {/* Course */}
-                  <div className="flex items-center gap-2 text-gray-300 truncate">
-                    <BookOpen className="w-4 h-4 text-green-400 shrink-0" />
+                  <div className="flex items-center gap-2 text-gray-700 dark:text-gray-300 truncate">
+                    <BookOpen className="w-4 h-4 text-green-600 dark:text-green-400 shrink-0" />
                     <span className="truncate">{lesson.courseTitle}</span>
                   </div>
 
@@ -193,7 +193,7 @@ function LessonMaterials() {
                         <ExternalLink className="w-3 h-3" />
                       </motion.a>
                     ) : (
-                      <span className="text-gray-500 text-xs">N/A</span>
+                      <span className="text-gray-500 dark:text-gray-500 text-xs">N/A</span>
                     )}
                   </div>
                 </motion.div>
@@ -211,12 +211,12 @@ function LessonMaterials() {
           >
             <div className="relative inline-block mb-4">
               <div className="absolute inset-0 bg-blue-500/20 rounded-full blur-xl"></div>
-              <div className="relative p-4 bg-gray-800/50 rounded-full border border-gray-700/50">
-                <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-500" />
+              <div className="relative p-4 bg-gray-100 dark:bg-gray-800/50 rounded-full border border-gray-300 dark:border-gray-700/50">
+                <FileText className="w-12 h-12 sm:w-16 sm:h-16 text-gray-500 dark:text-gray-500" />
               </div>
             </div>
-            <h3 className="text-lg sm:text-xl font-semibold text-gray-300 mb-2">No Lesson Materials Available</h3>
-            <p className="text-sm sm:text-base text-gray-500 max-w-md mx-auto">
+            <h3 className="text-lg sm:text-xl font-semibold text-gray-700 dark:text-gray-300 mb-2">No Lesson Materials Available</h3>
+            <p className="text-sm sm:text-base text-gray-600 dark:text-gray-500 max-w-md mx-auto">
               Lesson materials will appear here once your courses have published content.
             </p>
           </motion.div>

@@ -31,23 +31,23 @@ export default function CompletedTasksPage() {
 
   if (loading) {
     return (
-      <div className="bg-[#161B22] text-white min-h-screen p-4 flex items-center justify-center">
+      <div className="bg-white dark:bg-[#161B22] text-gray-900 dark:text-white min-h-screen p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
-          <p className="text-green-400">Loading completed tasks...</p>
+          <p className="text-green-600 dark:text-green-400">Loading completed tasks...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#161B22] text-white min-h-screen p-4">
+    <div className="bg-white dark:bg-[#161B22] text-gray-900 dark:text-white min-h-screen p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-4 mb-8">
           <button
             onClick={() => router.push('/workspace/study-plan')}
-            className="p-2 hover:bg-gray-700 rounded-lg transition-colors"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
           >
             <ArrowLeft size={20} />
           </button>
@@ -56,8 +56,8 @@ export default function CompletedTasksPage() {
               <Trophy size={24} className="text-white" />
             </div>
             <div>
-              <h1 className="text-2xl font-bold text-white">Completed Tasks</h1>
-              <p className="text-gray-400">Your learning accomplishments</p>
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Completed Tasks</h1>
+              <p className="text-gray-600 dark:text-gray-400">Your learning accomplishments</p>
             </div>
           </div>
         </div>
@@ -66,13 +66,13 @@ export default function CompletedTasksPage() {
         <div className="space-y-4">
           {completedTasks.length > 0 ? (
             completedTasks.map((task) => (
-              <div key={task.id} className="bg-[#1f2937] border border-green-500/30 rounded-lg p-4">
+              <div key={task.id} className="bg-gray-50 dark:bg-[#1f2937] border border-green-200 dark:border-green-500/30 rounded-lg p-4">
                 <div className="flex items-start justify-between">
                   <div className="flex items-start gap-3 flex-1">
-                    <CheckCircle2 size={20} className="text-green-400 mt-1 flex-shrink-0" />
+                    <CheckCircle2 size={20} className="text-green-600 dark:text-green-400 mt-1 flex-shrink-0" />
                     <div className="flex-1">
-                      <h3 className="text-white font-medium text-lg mb-2">{task.text}</h3>
-                      <div className="flex items-center gap-4 text-sm text-gray-400">
+                      <h3 className="text-gray-900 dark:text-white font-medium text-lg mb-2">{task.text}</h3>
+                      <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                         <div className="flex items-center gap-1">
                           <Calendar size={14} />
                           <span>Completed: {new Date(task.completedAt).toLocaleDateString()}</span>

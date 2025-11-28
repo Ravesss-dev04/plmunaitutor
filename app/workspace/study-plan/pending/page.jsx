@@ -42,23 +42,23 @@ export default function PendingTasksPage() {
 
   if (loading) {
     return (
-      <div className="bg-[#161B22] text-white min-h-screen p-4 flex items-center justify-center">
+      <div className="bg-white dark:bg-[#161B22] text-gray-900 dark:text-white min-h-screen p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
-          <p className="text-green-400">Loading pending tasks...</p>
+          <p className="text-green-600 dark:text-green-400">Loading pending tasks...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-[#161B22] text-white min-h-screen p-3 sm:p-4">
+    <div className="bg-white dark:bg-[#161B22] text-gray-900 dark:text-white min-h-screen p-3 sm:p-4">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="flex items-center gap-3 sm:gap-4 mb-6 sm:mb-8">
           <button
             onClick={() => router.push('/workspace/study-plan')}
-            className="p-2 hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
+            className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors flex-shrink-0"
           >
             <ArrowLeft size={18} className="sm:w-5 sm:h-5" />
           </button>
@@ -67,8 +67,8 @@ export default function PendingTasksPage() {
               <ListChecks size={20} className="text-white sm:w-6 sm:h-6" />
             </div>
             <div className="min-w-0 flex-1">
-              <h1 className="text-xl sm:text-2xl font-bold text-white truncate">Pending Tasks</h1>
-              <p className="text-gray-400 text-xs sm:text-sm">Tasks waiting to be completed</p>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white truncate">Pending Tasks</h1>
+              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">Tasks waiting to be completed</p>
             </div>
           </div>
         </div>
@@ -77,13 +77,13 @@ export default function PendingTasksPage() {
         <div className="space-y-3 sm:space-y-4">
           {pendingTasks.length > 0 ? (
             pendingTasks.map((task) => (
-              <div key={task.id} className="bg-[#1f2937] border border-blue-500/30 rounded-lg p-3 sm:p-4 hover:border-blue-500/50 transition-colors">
+              <div key={task.id} className="bg-gray-50 dark:bg-[#1f2937] border border-blue-200 dark:border-blue-500/30 rounded-lg p-3 sm:p-4 hover:border-blue-500/50 transition-colors">
                 <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                   <div className="flex items-start gap-2 sm:gap-3 flex-1 min-w-0">
                     <BookOpen size={18} className="text-blue-400 mt-0.5 sm:mt-1 shrink-0 sm:w-5 sm:h-5" />
                     <div className="flex-1 min-w-0">
-                      <h3 className="text-white font-medium text-base sm:text-lg mb-2 break-words">{task.text}</h3>
-                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-400">
+                      <h3 className="text-gray-900 dark:text-white font-medium text-base sm:text-lg mb-2 break-words">{task.text}</h3>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-4 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                         <div className="flex items-center gap-1">
                           <Calendar size={12} className="sm:w-3.5 sm:h-3.5 shrink-0" />
                           <span className="whitespace-nowrap">{task.day} {task.date}</span>

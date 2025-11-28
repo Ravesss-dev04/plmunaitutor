@@ -75,7 +75,7 @@ function AppSidebar() {
 
   return (
     <Sidebar data-sidebar="true" className="sidebar">
-      <SidebarHeader className={'p-4 bg-[#0D1117]'}>
+      <SidebarHeader className={'p-4 bg-white dark:bg-[#0D1117] border-b border-gray-200 dark:border-gray-800'}>
         <div className="flex items-center justify-start md:justify-start">
           <Image
             src="/plmunlogo.png"
@@ -85,22 +85,22 @@ function AppSidebar() {
             className="mx-auto md:mx-0"
           />
           <span className="ml-2 text-lg font-semibold hidden md:inline-block ">
-            <span className="text-white" > PLMun AI Tutor </span>
+            <span className="text-gray-900 dark:text-white" > PLMun AI Tutor </span>
           </span>
         </div>
       </SidebarHeader>
       
-      <SidebarContent className="bg-[#0D1117]">
+      <SidebarContent className="bg-white dark:bg-[#0D1117]">
         <SidebarGroup>
           <SidebarGroupContent>
             <SidebarMenu>
               {SideBarOptions.map((item, index) => (
                 <SidebarMenuItem key={index}>
-                  <SidebarMenuButton asChild className={'p-5'}>
+                  <SidebarMenuButton asChild className={'p-5 hover:bg-gray-100 dark:hover:bg-[#161B22]'}>
                     <Link  
                       href={item.path} 
                       onClick={handleLinkClick}
-                      className={`text-[15px] text-white ${isActive(item.path) ? 'text-primary ' : ''}`}
+                      className={`text-[15px] text-gray-700 dark:text-white ${isActive(item.path) ? 'text-green-600 dark:text-green-400 font-semibold' : ''}`}
                     >
                       <item.icon className='h-7 w-7' />
                       <span>{item.title}</span>
@@ -113,7 +113,7 @@ function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       
-      <SidebarFooter className="bg-[#0D1117]"/>
+      <SidebarFooter className="bg-white dark:bg-[#0D1117] border-t border-gray-200 dark:border-gray-800"/>
     </Sidebar>
   )
 }

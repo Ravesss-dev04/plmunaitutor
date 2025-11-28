@@ -17,30 +17,30 @@ const PracticeExerciseModal = ({ exercise, isOpen, onClose, onComplete }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-3 sm:p-4">
-      <div className="bg-[#161b22] border border-gray-700 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
+      <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-700 rounded-lg w-full max-w-2xl max-h-[90vh] overflow-hidden flex flex-col">
         {/* Modal Header */}
-        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-700 flex-shrink-0">
+        <div className="flex items-center justify-between p-4 sm:p-6 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
           <div className="min-w-0 flex-1 pr-2">
-            <h2 className="text-lg sm:text-xl font-bold text-white truncate">{exercise.title}</h2>
-            <p className="text-gray-400 text-xs sm:text-sm mt-1">Practice Exercise</p>
+            <h2 className="text-lg sm:text-xl font-bold text-gray-900 dark:text-white truncate">{exercise.title}</h2>
+            <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mt-1">Practice Exercise</p>
           </div>
           <button 
             onClick={onClose}
-            className="text-gray-400 hover:text-white transition-colors flex-shrink-0 p-1"
+            className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors flex-shrink-0 p-1"
           >
             <ArrowLeft size={20} className="sm:w-6 sm:h-6" />
           </button>
         </div>
         
         {/* Modal Body */}
-        <div className="p-4 sm:p-6 overflow-y-auto max-h-[60vh] flex-1">
-          <div className="prose prose-invert max-w-none">
-            <div className="text-gray-300 leading-relaxed space-y-4">
+        <div className="p-4 sm:p-6 overflow-y-auto max-h-[60vh] flex-1 bg-white dark:bg-[#161b22]">
+          <div className="prose dark:prose-invert max-w-none">
+            <div className="text-gray-700 dark:text-gray-300 leading-relaxed space-y-4">
               {exercise.content}
               
               {exercise.questions && exercise.questions.map((question, index) => (
-                <div key={index} className="bg-[#1a1f29] p-4 rounded-lg mt-4">
-                  <h4 className="font-semibold text-white mb-3">
+                <div key={index} className="bg-gray-50 dark:bg-[#1a1f29] p-4 rounded-lg mt-4 border border-gray-200 dark:border-gray-700">
+                  <h4 className="font-semibold text-gray-900 dark:text-white mb-3">
                     Question {index + 1}: {question.question}
                   </h4>
                   <div className="space-y-2">
@@ -51,7 +51,7 @@ const PracticeExerciseModal = ({ exercise, isOpen, onClose, onComplete }) => {
                           name={`question-${index}`}
                           className="text-green-500 focus:ring-green-500"
                         />
-                        <span className="text-gray-300">{option}</span>
+                        <span className="text-gray-700 dark:text-gray-300">{option}</span>
                       </label>
                     ))}
                   </div>
@@ -62,10 +62,10 @@ const PracticeExerciseModal = ({ exercise, isOpen, onClose, onComplete }) => {
         </div>
         
         {/* Modal Footer */}
-        <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 p-4 sm:p-6 border-t border-gray-700 flex-shrink-0">
+        <div className="flex flex-col sm:flex-row justify-end gap-2 sm:gap-3 p-4 sm:p-6 border-t border-gray-200 dark:border-gray-700 flex-shrink-0 bg-white dark:bg-[#161b22]">
           <button
             onClick={onClose}
-            className="px-4 py-2 text-gray-300 hover:text-white transition-colors text-sm sm:text-base order-2 sm:order-1"
+            className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors text-sm sm:text-base order-2 sm:order-1"
           >
             Close
           </button>
@@ -337,11 +337,11 @@ function UserProfile(props) {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d1117] text-white p-6">
+      <div className="min-h-screen bg-white dark:bg-[#0d1117] text-gray-900 dark:text-white p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-700 rounded w-1/4 mb-4"></div>
-          <div className="h-4 bg-gray-700 rounded w-3/4 mb-2"></div>
-          <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
         </div>
       </div>
     );
@@ -349,13 +349,13 @@ function UserProfile(props) {
 
   if (!lesson) {
     return (
-      <div className="min-h-screen bg-[#0d1117] text-white p-6">
-        <div className="text-red-500">
+      <div className="min-h-screen bg-white dark:bg-[#0d1117] text-gray-900 dark:text-white p-6">
+        <div className="text-red-600 dark:text-red-500">
           <h2 className="text-xl font-bold">Lesson Not Found</h2>
           <p>The lesson you're looking for doesn't exist.</p>
           <Link 
             href={`/workspace/my-courses/${courseId}?tab=lessons`}
-            className="text-green-500 hover:underline mt-4 inline-block"
+            className="text-green-600 dark:text-green-500 hover:underline mt-4 inline-block"
           >
             ← Back to Lessons
           </Link>
@@ -365,7 +365,7 @@ function UserProfile(props) {
   }
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-white">
+    <div className="min-h-screen bg-white dark:bg-[#0d1117] text-gray-900 dark:text-white">
       {/* Header */}
       <div className="bg-green-600 text-white p-4 sm:p-6 border-b border-green-700">
         <div className="container mx-auto">
@@ -415,15 +415,15 @@ function UserProfile(props) {
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4 sm:gap-6">
           {/* Main Content */}
           <div className="lg:col-span-3">
-            <div className="bg-[#161b22] rounded-lg border border-gray-700 p-4 sm:p-6">
+            <div className="bg-white dark:bg-[#161b22] rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
               {/* Lesson Type Icon */}
               <div className="flex items-center gap-3 mb-4 sm:mb-6">
                 {lesson.video_url ? (
-                  <Video className="text-red-500 w-6 h-6 sm:w-8 sm:h-8" />
+                  <Video className="text-red-600 dark:text-red-500 w-6 h-6 sm:w-8 sm:h-8" />
                 ) : (
-                  <BookOpen className="text-blue-500 w-6 h-6 sm:w-8 sm:h-8" />
+                  <BookOpen className="text-blue-600 dark:text-blue-500 w-6 h-6 sm:w-8 sm:h-8" />
                 )}
-                <span className="text-gray-400 uppercase text-xs sm:text-sm font-semibold">
+                <span className="text-gray-600 dark:text-gray-400 uppercase text-xs sm:text-sm font-semibold">
                   {lesson.video_url ? 'Video Lesson' : 'Text Lesson'}
                 </span>
               </div>
@@ -445,10 +445,10 @@ function UserProfile(props) {
               )}
 
               {/* Lesson Content */}
-              <div className="prose prose-invert max-w-none mb-8">
-                <div className="text-gray-300 leading-relaxed whitespace-pre-wrap">
+              <div className="prose prose-invert dark:prose-invert max-w-none mb-8">
+                <div className="text-gray-700 dark:text-gray-300 leading-relaxed whitespace-pre-wrap">
                   {lesson.content || (
-                    <div className="text-center py-12 text-gray-500">
+                    <div className="text-center py-12 text-gray-500 dark:text-gray-500">
                       <FileText size={48} className="mx-auto mb-4 opacity-50" />
                       <p>No content available for this lesson yet.</p>
                       <p className="text-sm mt-2">Check back later for updates.</p>
@@ -458,19 +458,19 @@ function UserProfile(props) {
               </div>
 
               {/* Practice Exercises Section */}
-              <div className="mt-8 pt-6 border-t border-gray-700">
+              <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-700">
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-start flex-wrap gap-3 sm:gap-4 mb-4">
-                  <h3 className="text-xl sm:text-2xl font-bold text-white">Practice Exercises</h3>
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">Practice Exercises</h3>
                   {allExercisesCompleted && (
-                    <div className="flex items-center gap-2 text-green-500">
+                    <div className="flex items-center gap-2 text-green-600 dark:text-green-500">
                       <CheckCircle size={18} className="sm:w-5 sm:h-5" />
                       <span className="font-semibold text-sm sm:text-base">All exercises completed!</span>
                     </div>
                   )}
                 </div>
                 
-                <div className="bg-[#1a1f29] rounded-lg p-4 sm:p-6">
-                  <p className="text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">
+                <div className="bg-gray-50 dark:bg-[#1a1f29] rounded-lg p-4 sm:p-6 border border-gray-200 dark:border-gray-700">
+                  <p className="text-gray-600 dark:text-gray-400 mb-4 sm:mb-6 text-sm sm:text-base">
                     Complete the following exercises to practice what you've learned about React:
                   </p>
                   
@@ -478,7 +478,7 @@ function UserProfile(props) {
                     {practiceExercises.map((exercise, index) => (
                       <div 
                         key={exercise.id}
-                        className="bg-[#0d1117] rounded-lg p-4 sm:p-5 border border-gray-700 hover:border-green-500 transition-colors"
+                        className="bg-white dark:bg-[#0d1117] rounded-lg p-4 sm:p-5 border border-gray-200 dark:border-gray-700 hover:border-green-500 transition-colors"
                       >
                         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4">
                           <div className="flex items-center gap-3 sm:gap-4 flex-1 min-w-0">
@@ -494,8 +494,8 @@ function UserProfile(props) {
                               )}
                             </div>
                             <div className="min-w-0 flex-1">
-                              <h4 className="font-semibold text-white text-sm sm:text-base break-words">{exercise.title}</h4>
-                              <p className="text-gray-400 text-xs sm:text-sm mt-1">
+                              <h4 className="font-semibold text-gray-900 dark:text-white text-sm sm:text-base break-words">{exercise.title}</h4>
+                              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm mt-1">
                                 {completedExercises.has(exercise.id) 
                                   ? 'Completed' 
                                   : 'Click to start practice'
@@ -509,7 +509,7 @@ function UserProfile(props) {
                             className={`flex items-center justify-center gap-2 px-3 py-2 sm:px-4 sm:py-2 rounded-lg transition-colors w-full sm:w-auto flex-shrink-0 ${
                               completedExercises.has(exercise.id)
                                 ? 'bg-green-500 text-white'
-                                : 'bg-gray-600 text-gray-300 hover:bg-gray-500'
+                                : 'bg-gray-200 dark:bg-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-300 dark:hover:bg-gray-500'
                             }`}
                           >
                             {completedExercises.has(exercise.id) ? (
@@ -537,21 +537,21 @@ function UserProfile(props) {
           {/* Sidebar */}
           <div className="lg:col-span-1 space-y-4 sm:space-y-6">
             {/* Progress Card */}
-            <div className="bg-[#161b22] rounded-lg border border-gray-700 p-4 sm:p-6">
-              <h3 className="font-semibold text-white mb-3 sm:mb-4 text-sm sm:text-base">Lesson Progress</h3>
+            <div className="bg-white dark:bg-[#161b22] rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4 text-sm sm:text-base">Lesson Progress</h3>
               <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 sm:w-12 sm:h-12 ${isCompleted ? 'bg-green-500' : 'bg-gray-600'} rounded-full flex items-center justify-center flex-shrink-0`}>
+                <div className={`w-10 h-10 sm:w-12 sm:h-12 ${isCompleted ? 'bg-green-500' : 'bg-gray-300 dark:bg-gray-600'} rounded-full flex items-center justify-center flex-shrink-0`}>
                   {isCompleted ? (
                     <CheckCircle size={20} className="text-white sm:w-6 sm:h-6" />
                   ) : (
-                    <BookOpen size={20} className="text-gray-400 sm:w-6 sm:h-6" />
+                    <BookOpen size={20} className="text-gray-600 dark:text-gray-400 sm:w-6 sm:h-6" />
                   )}
                 </div>
                 <div className="min-w-0">
-                  <p className="text-white font-semibold text-sm sm:text-base">
+                  <p className="text-gray-900 dark:text-white font-semibold text-sm sm:text-base">
                     {isCompleted ? 'Completed' : 'In Progress'}
                   </p>
-                  <p className="text-gray-400 text-xs sm:text-sm">
+                  <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">
                     {isCompleted ? 'You\'ve completed this lesson' : 'Continue learning'}
                   </p>
                 </div>
@@ -559,16 +559,16 @@ function UserProfile(props) {
             </div>
 
             {/* Exercises Progress */}
-            <div className="bg-[#161b22] rounded-lg border border-gray-700 p-4 sm:p-6">
-              <h3 className="font-semibold text-white mb-3 sm:mb-4 text-sm sm:text-base">Exercises Progress</h3>
+            <div className="bg-white dark:bg-[#161b22] rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4 text-sm sm:text-base">Exercises Progress</h3>
               <div className="space-y-2">
                 <div className="flex justify-between text-xs sm:text-sm">
-                  <span className="text-gray-400">Completed</span>
-                  <span className="text-white">
+                  <span className="text-gray-600 dark:text-gray-400">Completed</span>
+                  <span className="text-gray-900 dark:text-white">
                     {completedExercises.size}/{practiceExercises.length}
                   </span>
                 </div>
-                <div className="w-full bg-gray-700 rounded-full h-2">
+                <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                   <div 
                     className="bg-green-500 h-2 rounded-full transition-all duration-300"
                     style={{ 
@@ -580,12 +580,12 @@ function UserProfile(props) {
             </div>
 
             {/* Navigation Card */}
-            <div className="bg-[#161b22] rounded-lg border border-gray-700 p-4 sm:p-6">
-              <h3 className="font-semibold text-white mb-3 sm:mb-4 text-sm sm:text-base">Course Navigation</h3>
+            <div className="bg-white dark:bg-[#161b22] rounded-lg border border-gray-200 dark:border-gray-700 p-4 sm:p-6">
+              <h3 className="font-semibold text-gray-900 dark:text-white mb-3 sm:mb-4 text-sm sm:text-base">Course Navigation</h3>
               <div className="space-y-2 sm:space-y-3">
                 <Link
                   href={`/workspace/my-courses/${courseId}?tab=lessons`}
-                  className="block w-full text-center bg-gray-700 hover:bg-gray-600 text-white py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
+                  className="block w-full text-center bg-gray-200 dark:bg-gray-700 hover:bg-gray-300 dark:hover:bg-gray-600 text-gray-900 dark:text-white py-2 px-4 rounded-lg transition-colors text-sm sm:text-base"
                 >
                   Back to Lessons
                 </Link>

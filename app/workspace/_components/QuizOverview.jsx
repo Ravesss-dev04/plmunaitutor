@@ -97,13 +97,13 @@ function QuizOverview() {
 
   if (!performanceData) {
     return (
-      <div className="p-4 sm:p-6 rounded-xl shadow-sm bg-[#13181F] border border-[#232935] w-full">
+      <div className="p-4 sm:p-6 rounded-xl shadow-sm bg-white dark:bg-[#13181F] border border-gray-200 dark:border-[#232935] w-full">
         <div className="animate-pulse">
-          <div className="h-6 bg-gray-700 rounded w-3/4 mb-4"></div>
-          <div className="h-32 sm:h-48 bg-gray-700 rounded mb-4"></div>
+          <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+          <div className="h-32 sm:h-48 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
           <div className="space-y-2">
-            <div className="h-4 bg-gray-700 rounded"></div>
-            <div className="h-4 bg-gray-700 rounded w-1/2"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
           </div>
         </div>
       </div>
@@ -121,20 +121,19 @@ function QuizOverview() {
   const legendGap = isMobile ? 'gap-2' : 'gap-3';
 
   return (
-    <div className="p-4 sm:p-6 rounded-xl shadow-sm bg-[#13181F] border border-[#232935] w-full overflow-hidden">
+    <div className="p-4 sm:p-6 rounded-xl shadow-sm bg-white dark:bg-[#13181F] border border-gray-200 dark:border-[#232935] w-full overflow-hidden">
       {/* Header */}
       <div className="flex items-center justify-between mb-4 sm:mb-6">
         <div className="flex items-center gap-2">
-          <h3 className="text-lg font-semibold text-gray-100 flex items-center gap-2">
+          <h3 className="text-lg font-semibold text-gray-900 dark:text-gray-100 flex items-center gap-2">
             <BarChart3 size={20} />
             Weekly Performance
           </h3>
-          <div className="hidden sm:flex items-center gap-1 text-xs text-gray-500">
+          <div className="hidden sm:flex items-center gap-1 text-xs text-gray-500 dark:text-gray-500">
             
-           
           </div>
         </div>
-        <button className="text-xs text-blue-400 hover:text-blue-300 transition-colors flex items-center gap-1">
+        <button className="text-xs text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors flex items-center gap-1">
           <RefreshCw size={12} />
           Refresh
         </button>
@@ -143,14 +142,14 @@ function QuizOverview() {
       {/* Graph Container */}
       <div className="mb-4 sm:mb-6">
         {/* Y-axis labels */}
-        <div className="flex justify-between text-xs text-gray-500 mb-2 px-1">
+        <div className="flex justify-between text-xs text-gray-600 dark:text-gray-500 mb-2 px-1">
           <span>0%</span>
           <span>50%</span>
           <span>100%</span>
         </div>
 
         {/* Graph with vertical bars */}
-        <div className={`relative flex items-end justify-between ${graphHeight} border-b border-l border-gray-700 pb-3 pl-6 sm:pl-8`}>
+        <div className={`relative flex items-end justify-between ${graphHeight} border-b border-l border-gray-300 dark:border-gray-700 pb-3 pl-6 sm:pl-8`}>
           {weeklyData.map((week, weekIndex) => (
             <div 
               key={week.week} 
@@ -176,7 +175,7 @@ function QuizOverview() {
                       />
                       
                       {/* Score Tooltip */}
-                      <div className="absolute -top-8 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 text-white text-xs px-2 py-1 rounded border border-gray-600 whitespace-nowrap z-10 pointer-events-none">
+                      <div className="absolute -top-8 opacity-0 group-hover:opacity-100 transition-opacity bg-gray-800 dark:bg-gray-800 text-white text-xs px-2 py-1 rounded border border-gray-400 dark:border-gray-600 whitespace-nowrap z-10 pointer-events-none">
                         {subject}: {score}%
                       </div>
                     </div>
@@ -185,7 +184,7 @@ function QuizOverview() {
               </div>
               
               {/* Week Label */}
-              <div className={`${weekLabelSize} text-gray-400 mt-2 text-center truncate w-full px-1`}>
+              <div className={`${weekLabelSize} text-gray-600 dark:text-gray-400 mt-2 text-center truncate w-full px-1`}>
                 {week.weekLabel}
               </div>
             </div>
@@ -206,7 +205,7 @@ function QuizOverview() {
           return (
             <div key={subject} className="flex items-center gap-2 text-xs">
               <div className={`w-2 h-2 sm:w-3 sm:h-3 rounded ${getScoreColor(overallAverage)} flex-shrink-0`}></div>
-              <span className="text-gray-300 truncate max-w-[80px] sm:max-w-[100px]">{subject}</span>
+              <span className="text-gray-700 dark:text-gray-300 truncate max-w-[80px] sm:max-w-[100px]">{subject}</span>
               <span className={`${getScoreTextColor(overallAverage)} flex-shrink-0`}>
                 {overallAverage}%
               </span>
@@ -215,10 +214,14 @@ function QuizOverview() {
         })}
       </div>
 
+
+
+
+
       {/* Selected Week Details */}
       {selectedWeek && (
-        <div className="mt-4 p-3 sm:p-4 bg-[#1a202c] rounded-lg border border-gray-700">
-          <h4 className="font-semibold text-gray-100 mb-3 text-sm">
+        <div className="mt-4 p-3 sm:p-4 bg-gray-50 dark:bg-[#1a202c] rounded-lg border border-gray-200 dark:border-gray-700">
+          <h4 className="font-semibold text-gray-900 dark:text-gray-100 mb-3 text-sm">
             {selectedWeek.weekLabel} - Performance
           </h4>
           
@@ -229,11 +232,11 @@ function QuizOverview() {
               
               return (
                 <div key={subject} className="flex items-center justify-between">
-                  <span className="text-gray-300 truncate flex-1 mr-2 text-xs sm:text-sm">
+                  <span className="text-gray-700 dark:text-gray-300 truncate flex-1 mr-2 text-xs sm:text-sm">
                     {subject}
                   </span>
                   <div className="flex items-center gap-2">
-                    <div className="w-12 sm:w-16 bg-gray-700 rounded-full h-2">
+                    <div className="w-12 sm:w-16 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
                       <div 
                         className={`h-2 rounded-full ${getScoreColor(score)}`}
                         style={{ width: `${score}%` }}
@@ -251,8 +254,8 @@ function QuizOverview() {
       )}
 
       {/* Footer */}
-      <div className="mt-4 pt-3 border-t border-gray-700">
-        <div className="flex justify-between items-center text-xs text-gray-400">
+      <div className="mt-4 pt-3 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex justify-between items-center text-xs text-gray-600 dark:text-gray-400">
           <span className="truncate">
             {totalWeeks} weeks • {subjects.length} subjects
           </span>

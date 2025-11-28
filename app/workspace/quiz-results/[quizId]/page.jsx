@@ -151,24 +151,24 @@ useEffect(() => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d1117] p-6 text-white">
+      <div className="min-h-screen bg-white dark:bg-[#0d1117] p-6 text-gray-900 dark:text-white">
         <div className="max-w-6xl mx-auto">
           <div className="animate-pulse">
-            <div className="h-8 bg-gray-700 rounded w-1/4 mb-6"></div>
+            <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-6"></div>
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2 space-y-4">
                 {[1, 2, 3, 4, 5].map((n) => (
-                  <div key={n} className="bg-[#161b22] rounded-lg p-6 border border-gray-700">
-                    <div className="h-6 bg-gray-700 rounded mb-4"></div>
+                  <div key={n} className="bg-gray-50 dark:bg-[#161b22] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+                    <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-4"></div>
                     <div className="space-y-2">
                       {[1, 2, 3, 4].map((o) => (
-                        <div key={o} className="h-4 bg-gray-700 rounded"></div>
+                        <div key={o} className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
                       ))}
                     </div>
                   </div>
                 ))}
               </div>
-              <div className="bg-[#161b22] rounded-lg p-6 border border-gray-700 h-64"></div>
+              <div className="bg-gray-50 dark:bg-[#161b22] rounded-lg p-6 border border-gray-200 dark:border-gray-700 h-64"></div>
             </div>
           </div>
         </div>
@@ -178,11 +178,11 @@ useEffect(() => {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-[#0d1117] p-6 text-white">
+      <div className="min-h-screen bg-white dark:bg-[#0d1117] p-6 text-gray-900 dark:text-white">
         <div className="max-w-4xl mx-auto text-center">
-          <AlertCircle size={64} className="text-red-500 mx-auto mb-4" />
-          <h1 className="text-2xl font-bold text-red-400 mb-2">Error Loading Results</h1>
-          <p className="text-gray-300 mb-6">{error}</p>
+          <AlertCircle size={64} className="text-red-600 dark:text-red-500 mx-auto mb-4" />
+          <h1 className="text-2xl font-bold text-red-600 dark:text-red-400 mb-2">Error Loading Results</h1>
+          <p className="text-gray-700 dark:text-gray-300 mb-6">{error}</p>
           <div className="flex justify-center gap-4">
             <button
               onClick={fetchQuizResults}
@@ -205,18 +205,18 @@ useEffect(() => {
 
 if (error || !quizData || !studentAnswers) {
   return (
-    <div className="min-h-screen bg-[#0d1117] p-6 text-white">
+    <div className="min-h-screen bg-white dark:bg-[#0d1117] p-6 text-gray-900 dark:text-white">
       <div className="max-w-4xl mx-auto text-center">
-        <AlertCircle size={64} className="text-yellow-500 mx-auto mb-4" />
+        <AlertCircle size={64} className="text-yellow-600 dark:text-yellow-500 mx-auto mb-4" />
         <h1 className="text-2xl font-bold mb-2">
           {error ? 'Error Loading Results' : 'Quiz Results Not Found'}
         </h1>
-        <p className="text-gray-300 mb-4">
+        <p className="text-gray-700 dark:text-gray-300 mb-4">
           {error || 'The quiz results you\'re looking for don\'t exist or you don\'t have access to them.'}
         </p>
         
         {/* Debug Information */}
-        <div className="bg-gray-800 rounded-lg p-4 mb-6 text-left">
+        <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-4 mb-6 text-left">
           <h3 className="font-semibold mb-2">Debug Information:</h3>
           <div className="text-sm space-y-1">
             <p>Quiz Data: {quizData ? '✅ Loaded' : '❌ Missing'}</p>
@@ -262,20 +262,20 @@ if (error || !quizData || !studentAnswers) {
   const scoreBadge = getScoreBadge(percentage);
 
   return (
-    <div className="min-h-screen bg-[#0d1117] p-6 text-white">
+    <div className="min-h-screen bg-white dark:bg-[#0d1117] p-6 text-gray-900 dark:text-white">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
         <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between mb-6">
           <div>
             <Link 
               href="/workspace"
-              className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-2"
+              className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors mb-2"
             >
               <ArrowLeft size={20} />
               Back to Workspace
             </Link>
-            <h1 className="text-2xl lg:text-3xl font-bold">Quiz Results</h1>
-            <p className="text-gray-400 mt-1">{quizData.title}</p>
+            <h1 className="text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white">Quiz Results</h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-1">{quizData.title}</p>
           </div>
           
           <div className="flex items-center gap-4 mt-4 lg:mt-0">
@@ -289,8 +289,8 @@ if (error || !quizData || !studentAnswers) {
           {/* Main Content - Questions */}
           <div className="lg:col-span-2 space-y-6">
             {/* Quiz Info */}
-            <div className="bg-[#161b22] rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold mb-4">Quiz Summary</h2>
+            <div className="bg-white dark:bg-[#161b22] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Quiz Summary</h2>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
                 <div className="text-center">
                   <div className="text-2xl font-bold text-green-400">{score}/{total}</div>
@@ -316,8 +316,8 @@ if (error || !quizData || !studentAnswers) {
             </div>
 
             {/* Questions Review */}
-            <div className="bg-[#161b22] rounded-lg p-6 border border-gray-700">
-              <h2 className="text-xl font-semibold mb-4">Question Review</h2>
+            <div className="bg-white dark:bg-[#161b22] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+              <h2 className="text-xl font-semibold mb-4 text-gray-900 dark:text-white">Question Review</h2>
               <div className="space-y-6">
                 {quizData.questions.map((question, index) => {
                   const studentAnswer = studentAnswers?.answers?.[index];
@@ -395,13 +395,13 @@ if (error || !quizData || !studentAnswers) {
           {/* Sidebar */}
           <div className="space-y-6">
             {/* Score Card */}
-            <div className="bg-[#161b22] rounded-lg p-6 border border-gray-700">
+            <div className="bg-white dark:bg-[#161b22] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
               <div className="text-center">
                 <div className="w-20 h-20 mx-auto mb-4 rounded-full border-4 border-green-500 flex items-center justify-center">
-                  <span className="text-2xl font-bold text-green-400">{percentage}%</span>
+                  <span className="text-2xl font-bold text-green-600 dark:text-green-400">{percentage}%</span>
                 </div>
-                <h3 className="text-lg font-semibold mb-2">Overall Score</h3>
-                <p className="text-gray-400 text-sm mb-4">
+                <h3 className="text-lg font-semibold mb-2 text-gray-900 dark:text-white">Overall Score</h3>
+                <p className="text-gray-600 dark:text-gray-400 text-sm mb-4">
                   You answered {score} out of {total} questions correctly
                 </p>
                 <div className={`px-3 py-1 rounded-full text-sm font-medium ${scoreBadge.color} inline-block`}>
@@ -411,31 +411,31 @@ if (error || !quizData || !studentAnswers) {
             </div>
 
             {/* Quiz Details */}
-            <div className="bg-[#161b22] rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold mb-4">Quiz Details</h3>
+            <div className="bg-white dark:bg-[#161b22] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Quiz Details</h3>
               <div className="space-y-3">
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Course:</span>
-                  <span>{quizData.course}</span>
+                  <span className="text-gray-600 dark:text-gray-400">Course:</span>
+                  <span className="text-gray-900 dark:text-white">{quizData.course}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Completed:</span>
-                  <span>{studentAnswers?.submitted_at ? new Date(studentAnswers.submitted_at).toLocaleDateString() : 'N/A'}</span>
+                  <span className="text-gray-600 dark:text-gray-400">Completed:</span>
+                  <span className="text-gray-900 dark:text-white">{studentAnswers?.submitted_at ? new Date(studentAnswers.submitted_at).toLocaleDateString() : 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Time Taken:</span>
-                  <span>{quizData.timeSpent || 'N/A'}</span>
+                  <span className="text-gray-600 dark:text-gray-400">Time Taken:</span>
+                  <span className="text-gray-900 dark:text-white">{quizData.timeSpent || 'N/A'}</span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-gray-400">Difficulty:</span>
-                  <span className="capitalize">{quizData.difficulty || 'N/A'}</span>
+                  <span className="text-gray-600 dark:text-gray-400">Difficulty:</span>
+                  <span className="capitalize text-gray-900 dark:text-white">{quizData.difficulty || 'N/A'}</span>
                 </div>
               </div>
             </div>
 
             {/* Actions */}
-            <div className="bg-[#161b22] rounded-lg p-6 border border-gray-700">
-              <h3 className="text-lg font-semibold mb-4">Actions</h3>
+            <div className="bg-white dark:bg-[#161b22] rounded-lg p-6 border border-gray-200 dark:border-gray-700">
+              <h3 className="text-lg font-semibold mb-4 text-gray-900 dark:text-white">Actions</h3>
               <div className="space-y-3">
                 <button
                   onClick={() => window.print()}
@@ -445,13 +445,13 @@ if (error || !quizData || !studentAnswers) {
                 </button>
                 <Link
                   href={`/workspace/my-courses/${quizData.courseId}?tab=quizzes`}
-                  className="block w-full bg-gray-600 hover:bg-gray-700 text-white py-2 rounded-lg transition-colors text-center"
+                  className="block w-full bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white py-2 rounded-lg transition-colors text-center"
                 >
                   Back to Quizzes
                 </Link>
                 <Link
                   href="/workspace"
-                  className="block w-full border border-gray-600 hover:border-gray-500 text-gray-300 py-2 rounded-lg transition-colors text-center"
+                  className="block w-full border border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500 text-gray-700 dark:text-gray-300 py-2 rounded-lg transition-colors text-center"
                 >
                   Back to Workspace
                 </Link>

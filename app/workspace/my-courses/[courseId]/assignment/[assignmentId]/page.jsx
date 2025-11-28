@@ -90,12 +90,12 @@ export default function AssignmentPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[#0d1117] text-gray-100 p-6">
+      <div className="min-h-screen bg-white dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 p-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-700 rounded w-1/4 mb-4"></div>
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
           <div className="space-y-3">
-            <div className="h-4 bg-gray-700 rounded"></div>
-            <div className="h-4 bg-gray-700 rounded w-5/6"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
           </div>
         </div>
       </div>
@@ -104,8 +104,8 @@ export default function AssignmentPage() {
 
   if (!assignment) {
     return (
-      <div className="min-h-screen bg-[#0d1117] text-gray-100 p-6">
-        <div className="text-red-500">
+      <div className="min-h-screen bg-white dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 p-6">
+        <div className="text-red-600 dark:text-red-500">
           <h2 className="text-xl font-bold">Assignment Not Found</h2>
           <p>The assignment you're looking for doesn't exist or you don't have access to it.</p>
         </div>
@@ -117,27 +117,27 @@ export default function AssignmentPage() {
   const isOverdue = assignment.deadline && new Date(assignment.deadline) < new Date() && !isSubmitted;
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-gray-100 p-6">
+    <div className="min-h-screen bg-white dark:bg-[#0d1117] text-gray-900 dark:text-gray-100 p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
         <div className="mb-6">
           <button
             onClick={() => router.push(`/workspace/my-courses/${courseId}?tab=assignments`)}
-            className="flex items-center gap-2 text-gray-400 hover:text-white transition-colors mb-4"
+            className="flex items-center gap-2 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white transition-colors mb-4"
           >
             <ArrowLeft size={20} />
             Back to Assignments
           </button>
           
           <div className="flex items-center gap-3 mb-4">
-            <FileText size={32} className="text-green-500" />
-            <h1 className="text-3xl font-bold text-white">{assignment.title}</h1>
+            <FileText size={32} className="text-green-600 dark:text-green-500" />
+            <h1 className="text-3xl font-bold text-gray-900 dark:text-white">{assignment.title}</h1>
             {isSubmitted && (
-              <CheckCircle size={24} className="text-green-500" />
+              <CheckCircle size={24} className="text-green-600 dark:text-green-500" />
             )}
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-gray-400">
+          <div className="flex items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
             {assignment.deadline && (
               <div className={`flex items-center gap-1 ${isOverdue ? 'text-red-400' : ''}`}>
                 <Clock size={16} />
@@ -156,22 +156,22 @@ export default function AssignmentPage() {
         </div>
 
         {/* Assignment Description */}
-        <div className="bg-[#161b22] border border-gray-800 rounded-lg p-6 mb-6">
-          <h2 className="text-xl font-semibold text-white mb-4">Description</h2>
-          <div className="text-gray-300 whitespace-pre-wrap">
+        <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-lg p-6 mb-6">
+          <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Description</h2>
+          <div className="text-gray-700 dark:text-gray-300 whitespace-pre-wrap">
             {assignment.description}
           </div>
         </div>
 
         {/* Attachment */}
         {assignment.attachment_url && (
-          <div className="bg-[#161b22] border border-gray-800 rounded-lg p-6 mb-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Attachment</h2>
+          <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-lg p-6 mb-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Attachment</h2>
             <a
               href={assignment.attachment_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-blue-400 hover:text-blue-300 transition-colors"
+              className="flex items-center gap-2 text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 transition-colors"
             >
               <Download size={20} />
               <span>Download Attachment</span>
@@ -181,28 +181,28 @@ export default function AssignmentPage() {
 
         {/* Submission Form */}
         {!isSubmitted ? (
-          <div className="bg-[#161b22] border border-gray-800 rounded-lg p-6">
-            <h2 className="text-xl font-semibold text-white mb-4">Your Answer</h2>
+          <div className="bg-white dark:bg-[#161b22] border border-gray-200 dark:border-gray-800 rounded-lg p-6">
+            <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">Your Answer</h2>
             
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Answer / Response *
                 </label>
                 <textarea
                   value={answer}
                   onChange={(e) => setAnswer(e.target.value)}
-                  className="w-full bg-[#0d1117] border border-gray-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-green-500 min-h-[200px]"
+                  className="w-full bg-white dark:bg-[#0d1117] border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 text-gray-900 dark:text-white focus:outline-none focus:border-green-500 min-h-[200px]"
                   placeholder="Enter your answer or response here..."
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   Upload File (Optional)
                 </label>
-                <div className="border-2 border-dashed border-gray-600 rounded-lg p-4">
+                <div className="border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-4">
                   <input
                     type="file"
                     id="submission-file"
@@ -210,7 +210,7 @@ export default function AssignmentPage() {
                     className="hidden"
                     accept=".pdf,.doc,.docx,.txt,.png,.jpg,.jpeg"
                   />
-                  <label htmlFor="submission-file" className="cursor-pointer flex items-center gap-2 text-gray-300 hover:text-white transition-colors">
+                  <label htmlFor="submission-file" className="cursor-pointer flex items-center gap-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors">
                     <Upload size={20} />
                     <span>{submissionFile ? submissionFile.name : "Choose file to upload"}</span>
                   </label>
@@ -220,7 +220,7 @@ export default function AssignmentPage() {
               <div className="flex justify-end gap-3 pt-4">
                 <button
                   onClick={() => router.push(`/workspace/my-courses/${courseId}?tab=assignments`)}
-                  className="px-4 py-2 text-gray-300 hover:text-white transition-colors bg-[#0d1117] rounded-lg"
+                  className="px-4 py-2 text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white transition-colors bg-gray-100 dark:bg-[#0d1117] rounded-lg"
                 >
                   Cancel
                 </button>
@@ -229,7 +229,7 @@ export default function AssignmentPage() {
                   disabled={submitting || (!answer.trim() && !submissionFile)}
                   className={`px-4 py-2 rounded-lg transition-colors ${
                     submitting || (!answer.trim() && !submissionFile)
-                      ? 'bg-gray-600 cursor-not-allowed'
+                      ? 'bg-gray-400 dark:bg-gray-600 cursor-not-allowed'
                       : 'bg-green-600 hover:bg-green-700'
                   } text-white`}
                 >
@@ -239,17 +239,17 @@ export default function AssignmentPage() {
             </div>
           </div>
         ) : (
-          <div className="bg-[#161b22] border border-green-500 rounded-lg p-6">
+          <div className="bg-white dark:bg-[#161b22] border border-green-500 rounded-lg p-6">
             <div className="flex items-center gap-2 mb-4">
-              <CheckCircle size={24} className="text-green-500" />
-              <h2 className="text-xl font-semibold text-green-400">Submitted</h2>
+              <CheckCircle size={24} className="text-green-600 dark:text-green-500" />
+              <h2 className="text-xl font-semibold text-green-600 dark:text-green-400">Submitted</h2>
             </div>
-            <div className="text-gray-300">
+            <div className="text-gray-700 dark:text-gray-300">
               <p className="mb-2">You submitted this assignment on {new Date(submission.submitted_at).toLocaleDateString()}.</p>
               {answer && (
                 <div className="mt-4">
-                  <p className="text-sm text-gray-400 mb-2">Your Answer:</p>
-                  <div className="bg-[#0d1117] border border-gray-700 rounded-lg p-4 whitespace-pre-wrap">
+                  <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">Your Answer:</p>
+                  <div className="bg-gray-50 dark:bg-[#0d1117] border border-gray-200 dark:border-gray-700 rounded-lg p-4 whitespace-pre-wrap text-gray-900 dark:text-white">
                     {answer}
                   </div>
                 </div>

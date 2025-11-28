@@ -127,17 +127,17 @@ const QuizzessAssessment = () => {
 
   if (loading) {
     return (
-      <div className="p-6 min-h-screen bg-[#161B22] text-white md:w-full md:-ml-0 w-82 -ml-6">
+      <div className="p-6 min-h-screen bg-white dark:bg-[#161B22] text-gray-900 dark:text-white md:w-full md:-ml-0 w-82 -ml-6">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-700 rounded w-1/4 mb-6"></div>
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-6"></div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[1, 2, 3, 4, 5, 6].map((n) => (
-              <div key={n} className="bg-[#181e27] rounded-lg p-5 shadow-md border border-slate-700">
-                <div className="h-6 bg-gray-700 rounded mb-2"></div>
-                <div className="h-4 bg-gray-700 rounded mb-2"></div>
-                <div className="h-4 bg-gray-700 rounded w-3/4 mb-4"></div>
-                <div className="h-6 bg-gray-700 rounded w-1/3 mb-3"></div>
-                <div className="h-10 bg-gray-700 rounded"></div>
+              <div key={n} className="bg-gray-50 dark:bg-[#181e27] rounded-lg p-5 shadow-md border border-gray-200 dark:border-slate-700">
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+                <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-4"></div>
+                <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded w-1/3 mb-3"></div>
+                <div className="h-10 bg-gray-200 dark:bg-gray-700 rounded"></div>
               </div>
             ))}
           </div>
@@ -147,25 +147,25 @@ const QuizzessAssessment = () => {
   }
 
   return (
-    <div className="p-6 min-h-screen bg-[#161B22] text-white md:w-full md:-ml-0 w-82 -ml-6">
+    <div className="p-6 min-h-screen bg-white dark:bg-[#161B22] text-gray-900 dark:text-white md:w-full md:-ml-0 w-82 -ml-6">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-[22px] font-bold mb-2 lg:text-3xl">All Quizzes & Assessments</h1>
-        <p className="text-slate-400">Track your progress and manage your quizzes</p>
+        <h1 className="text-[22px] font-bold mb-2 lg:text-3xl text-gray-900 dark:text-white">All Quizzes & Assessments</h1>
+        <p className="text-gray-600 dark:text-slate-400">Track your progress and manage your quizzes</p>
       </div>
 
       {/* Filters */}
-      <div className="mb-6 bg-[#181e27] rounded-lg p-4 border border-slate-700">
+      <div className="mb-6 bg-gray-50 dark:bg-[#181e27] rounded-lg p-4 border border-gray-200 dark:border-slate-700">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
           {/* Search */}
           <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-slate-400" size={20} />
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 dark:text-slate-400" size={20} />
             <input
               type="text"
               placeholder="Search quizzes..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-10 pr-4 py-2 bg-[#0d1117] border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+              className="w-full pl-10 pr-4 py-2 bg-white dark:bg-[#0d1117] border border-gray-300 dark:border-slate-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-blue-500"
             />
           </div>
 
@@ -174,7 +174,7 @@ const QuizzessAssessment = () => {
             <select
               value={statusFilter}
               onChange={(e) => setStatusFilter(e.target.value)}
-              className="w-full px-4 py-2 bg-[#0d1117] border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 bg-white dark:bg-[#0d1117] border border-gray-300 dark:border-slate-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-blue-500"
             >
               <option value="all">All Status</option>
               <option value="Completed">Completed</option>
@@ -188,7 +188,7 @@ const QuizzessAssessment = () => {
             <select
               value={courseFilter}
               onChange={(e) => setCourseFilter(e.target.value)}
-              className="w-full px-4 py-2 bg-[#0d1117] border border-slate-600 rounded-lg text-white focus:outline-none focus:border-blue-500"
+              className="w-full px-4 py-2 bg-white dark:bg-[#0d1117] border border-gray-300 dark:border-slate-600 rounded-lg text-gray-900 dark:text-white focus:outline-none focus:border-blue-500"
             >
               <option value="all">All Courses</option>
               {uniqueCourses.map(course => (
@@ -199,7 +199,7 @@ const QuizzessAssessment = () => {
 
           {/* Results Count */}
           <div className="flex items-center justify-end">
-            <span className="text-slate-400">
+            <span className="text-gray-600 dark:text-slate-400">
               {filteredQuizzes.length} {filteredQuizzes.length === 1 ? 'quiz' : 'quizzes'} found
             </span>
           </div>
@@ -209,8 +209,8 @@ const QuizzessAssessment = () => {
       {/* Quizzes Grid */}
       {filteredQuizzes.length === 0 ? (
         <div className="text-center py-12">
-          <div className="text-slate-400 text-lg mb-2">No quizzes found</div>
-          <p className="text-slate-500 text-sm">
+          <div className="text-gray-600 dark:text-slate-400 text-lg mb-2">No quizzes found</div>
+          <p className="text-gray-500 dark:text-slate-500 text-sm">
             {searchTerm || statusFilter !== 'all' || courseFilter !== 'all' 
               ? 'Try adjusting your filters or search terms'
               : 'No quizzes available at the moment'}
@@ -222,15 +222,15 @@ const QuizzessAssessment = () => {
             const buttonConfig = getButtonConfig(quiz);
             
             return (
-              <div key={index} className="bg-[#181e27] rounded-lg p-5 shadow-md border border-slate-700 hover:border-slate-500 transition-colors duration-200 flex flex-col">
+              <div key={index} className="bg-gray-50 dark:bg-[#181e27] rounded-lg p-5 shadow-md border border-gray-200 dark:border-slate-700 hover:border-gray-300 dark:hover:border-slate-500 transition-colors duration-200 flex flex-col">
                 {/* Quiz Title */}
-                <h2 className="text-lg font-semibold mb-1 line-clamp-2">{quiz.title}</h2>
+                <h2 className="text-lg font-semibold mb-1 line-clamp-2 text-gray-900 dark:text-white">{quiz.title}</h2>
                 
                 {/* Course */}
-                <p className="text-sm text-slate-300 mb-2">Course: {quiz.course}</p>
+                <p className="text-sm text-gray-700 dark:text-slate-300 mb-2">Course: {quiz.course}</p>
                 
                 {/* Due Date */}
-                <p className="text-sm text-slate-400 mb-4">Due: {quiz.due}</p>
+                <p className="text-sm text-gray-600 dark:text-slate-400 mb-4">Due: {quiz.due}</p>
                 
                 {/* Status and Score */}
                 <div className="mb-4 flex items-center justify-between">

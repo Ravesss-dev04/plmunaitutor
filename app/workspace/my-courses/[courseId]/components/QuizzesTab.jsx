@@ -112,24 +112,24 @@ export default function QuizzesTab({ quizzes, courseId }) {
   return (
     <div className="space-y-4">
       {studentQuizzes.length === 0 ? (
-        <div className="text-center py-8 text-gray-500">
+        <div className="text-center py-8 text-gray-600 dark:text-gray-500">
           <FileText size={48} className="mx-auto mb-4 opacity-50" />
           <p>No quizzes available yet</p>
           <p className="text-sm mt-2">Your teacher hasn't created any quizzes for this course.</p>
         </div>
       ) : (
         studentQuizzes.map((quiz) => (
-          <div key={quiz.id} className="p-4 bg-gray-800 rounded-lg border border-gray-700 hover:border-blue-500 transition-colors">
+          <div key={quiz.id} className="p-4 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-blue-500 transition-colors">
             <div className="flex justify-between items-start">
               <div className="flex-1">
                 <div className="flex items-center gap-3 mb-2">
-                  <FileText size={20} className="text-blue-400" />
-                  <h3 className="text-lg font-semibold text-white">{quiz.title}</h3>
+                  <FileText size={20} className="text-blue-600 dark:text-blue-400" />
+                  <h3 className="text-lg font-semibold text-gray-900 dark:text-white">{quiz.title}</h3>
                 </div>
                 
-                <p className="text-gray-300 text-sm mb-3">{quiz.description}</p>
+                <p className="text-gray-700 dark:text-gray-300 text-sm mb-3">{quiz.description}</p>
                 
-                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-400">
+                <div className="flex flex-wrap items-center gap-4 text-sm text-gray-600 dark:text-gray-400">
                   <div className="flex items-center gap-1">
                     {getStatusIcon(quiz.status, quiz.isOverdue)}
                     <span className={getStatusColor(quiz.status, quiz.isOverdue)}>

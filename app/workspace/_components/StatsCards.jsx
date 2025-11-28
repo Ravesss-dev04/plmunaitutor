@@ -62,17 +62,17 @@ function StatsCards() {
   return (
     <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6 md:w-full md:ml-0 w-82 -ml-6">
       {statsConfig.map((stat, index) => (
-        <div key={index} className="bg-[#13181F] border border-[#232935] p-6 rounded-xl shadow-sm">
+        <div key={index} className="bg-white dark:bg-[#13181F] border border-gray-200 dark:border-[#232935] p-6 rounded-xl shadow-sm hover:shadow-md transition-shadow">
           <div className="flex items-center justify-between">
             <div>
-              <h3 className="text-sm text-gray-100">{stat.title}</h3>
+              <h3 className="text-sm text-gray-700 dark:text-gray-100">{stat.title}</h3>
               {loading ? (
-                <div className="h-9 w-12 bg-gray-700 rounded mt-1 animate-pulse"></div>
+                <div className="h-9 w-12 bg-gray-200 dark:bg-gray-700 rounded mt-1 animate-pulse"></div>
               ) : (
-                <p className="text-3xl text-green-500 font-bold mt-1">{stat.value}</p>
+                <p className="text-3xl text-green-600 dark:text-green-500 font-bold mt-1">{stat.value}</p>
               )}
             </div>
-            <div className={`p-3 rounded-full ${stat.bgColor}`}>
+            <div className={`p-3 rounded-full ${stat.bgColor} dark:bg-opacity-20`}>
               <stat.icon className={`w-6 h-6 ${stat.color}`} />
             </div>
           </div>

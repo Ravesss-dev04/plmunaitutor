@@ -40,10 +40,15 @@ Notifies: Only those specific students
 
 #### Step 1: Teacher Accesses Course
 ```javascript
-// Teacher navigates to: /teacher/course/web-development
+
+
+// Teacher navigates to: /teacher/course/web-development  
 // System loads course with ID: 5
 const course = { id: 5, title: "Web Development", teacher_name: "Anime" }
 ```
+
+
+
 
 #### Step 2: Teacher Creates Content
 ```javascript
@@ -69,6 +74,8 @@ students.forEach(student => {
   // Send email to student
 })
 ```
+
+
 
 ### 4. Database Filtering
 

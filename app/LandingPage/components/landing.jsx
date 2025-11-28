@@ -122,9 +122,144 @@ export default function LandingHome({ setShowSignIn }) {
   }, [showMobileOpen]);
 
   return (
-    <div className="w-full bg-gradient-to-b from-[#0d1117] via-[#0d1117] to-[#161b22] text-white min-h-screen">
+    <div className="w-full relative text-white min-h-screen overflow-hidden">
+      {/* Animated Background with Purple/Blue Theme */}
+      <div className="fixed inset-0 bg-gradient-to-b from-[#1a0b2e] via-[#16213e] to-[#0f3460] z-0 overflow-hidden">
+        {/* Animated Glowing Lines */}
+        <svg className="absolute inset-0 w-full h-full opacity-40" preserveAspectRatio="none" style={{ minHeight: '100vh' }}>
+          <defs>
+            <linearGradient id="lineGradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#a855f7" stopOpacity="0.8" />
+              <stop offset="50%" stopColor="#6366f1" stopOpacity="0.6" />
+              <stop offset="100%" stopColor="#8b5cf6" stopOpacity="0.4" />
+            </linearGradient>
+            <linearGradient id="lineGradient2" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stopColor="#6366f1" stopOpacity="0.6" />
+              <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.5" />
+              <stop offset="100%" stopColor="#a855f7" stopOpacity="0.3" />
+            </linearGradient>
+            <filter id="glow">
+              <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+              <feMerge>
+                <feMergeNode in="coloredBlur"/>
+                <feMergeNode in="SourceGraphic"/>
+              </feMerge>
+            </filter>
+          </defs>
+          
+          {/* Curved Lines Animation */}
+          <motion.path
+            d="M0,800 Q200,600 400,700 T800,650 T1200,600 T1600,550 T2000,500"
+            stroke="url(#lineGradient1)"
+            strokeWidth="2"
+            fill="none"
+            filter="url(#glow)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ 
+              pathLength: 1, 
+              opacity: [0.3, 0.6, 0.3],
+            }}
+            transition={{ 
+              duration: 8, 
+              repeat: Infinity,
+              ease: "linear"
+            }}
+          />
+          <motion.path
+            d="M0,700 Q300,500 600,600 T1200,550 T1800,500 T2400,450"
+            stroke="url(#lineGradient2)"
+            strokeWidth="2"
+            fill="none"
+            filter="url(#glow)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ 
+              pathLength: 1, 
+              opacity: [0.2, 0.5, 0.2],
+            }}
+            transition={{ 
+              duration: 10, 
+              repeat: Infinity,
+              ease: "linear",
+              delay: 1
+            }}
+          />
+          <motion.path
+            d="M0,600 Q250,400 500,500 T1000,450 T1500,400 T2000,350"
+            stroke="url(#lineGradient1)"
+            strokeWidth="1.5"
+            fill="none"
+            filter="url(#glow)"
+            initial={{ pathLength: 0, opacity: 0 }}
+            animate={{ 
+              pathLength: 1, 
+              opacity: [0.2, 0.4, 0.2],
+            }}
+            transition={{ 
+              duration: 12, 
+              repeat: Infinity,
+              ease: "linear",
+              delay: 2
+            }}
+          />
+        </svg>
+        
+        {/* Additional Animated Grid Lines */}
+        <div className="absolute inset-0 opacity-20">
+          {[...Array(5)].map((_, i) => (
+            <motion.div
+              key={i}
+              className="absolute w-full h-px bg-gradient-to-r from-transparent via-purple-500 to-transparent"
+              style={{ top: `${20 + i * 20}%` }}
+              animate={{
+                opacity: [0.1, 0.3, 0.1],
+                x: [0, 100, 0],
+              }}
+              transition={{
+                duration: 4 + i,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: i * 0.5,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Floating Glowing Dots */}
+        {[...Array(20)].map((_, i) => (
+          <motion.div
+            key={i}
+            className="absolute rounded-full bg-purple-500/40 blur-sm"
+            style={{
+              width: Math.random() * 8 + 4,
+              height: Math.random() * 8 + 4,
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+            }}
+            animate={{
+              y: [0, -30, 0],
+              x: [0, Math.random() * 20 - 10, 0],
+              opacity: [0.3, 0.7, 0.3],
+              scale: [1, 1.2, 1],
+            }}
+            transition={{
+              duration: Math.random() * 4 + 3,
+              repeat: Infinity,
+              ease: "easeInOut",
+              delay: Math.random() * 2,
+            }}
+          />
+        ))}
+
+        {/* Additional Glowing Orbs */}
+        <div className="absolute top-20 right-20 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse" />
+        <div className="absolute bottom-40 left-10 w-80 h-80 bg-blue-500/20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-purple-600/10 rounded-full blur-3xl" />
+      </div>
+
+      {/* Content Container */}
+      <div className="relative z-10">
       {/* NAVBAR */}
-      <nav className="sticky top-0 z-40 bg-[#0d1117]/95 backdrop-blur-sm border-b border-gray-800/50">
+      <nav className="sticky top-0 z-40 bg-[#1a0b2e]/80 backdrop-blur-md border-b border-purple-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16 md:h-20">
             {/* Logo */}
@@ -230,8 +365,14 @@ export default function LandingHome({ setShowSignIn }) {
       </nav>
 
       {/* HERO SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative">
+        {/* Hero Background Glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-green-500/10 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 right-1/4 w-80 h-80 bg-purple-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1.5s' }} />
+        </div>
+        
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-16 relative z-10">
           {/* LEFT CONTENT */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -239,19 +380,41 @@ export default function LandingHome({ setShowSignIn }) {
             transition={{ duration: 0.7 }}
             className="flex-1 text-center lg:text-left space-y-6"
           >
-            <div className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/20 rounded-full text-green-400 text-sm font-medium mb-4">
-              <Sparkles className="w-4 h-4" />
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.5, delay: 0.2 }}
+              className="inline-flex items-center gap-2 px-4 py-2 bg-green-500/10 border border-green-500/30 rounded-full text-green-400 text-sm font-medium mb-4 backdrop-blur-sm shadow-lg shadow-green-500/20"
+            >
+              <motion.div
+                animate={{ rotate: [0, 360] }}
+                transition={{ duration: 3, repeat: Infinity, ease: "linear" }}
+              >
+                <Sparkles className="w-4 h-4" />
+              </motion.div>
               <span>PLMun AI Tutor Learning Platform</span>
-            </div>
+            </motion.div>
             
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight">
+            <motion.h1 
+              initial={{ opacity: 0, y: 30 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold leading-tight"
+            >
               Learn Faster with
-              <span className="block text-green-400 mt-2">AI-Powered Courses</span>
-            </h1>
+              <span className="block mt-2 bg-gradient-to-r from-green-400 via-emerald-400 to-green-500 bg-clip-text text-transparent">
+                AI-Powered Courses
+              </span>
+            </motion.h1>
             
-            <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto lg:mx-0">
+            <motion.p 
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.5 }}
+              className="text-lg sm:text-xl text-gray-300 max-w-2xl mx-auto lg:mx-0 leading-relaxed"
+            >
               Join thousands of students learning with adaptive lessons, AI guidance, and expert teachers. Learn at your own pace with our AI-powered courses.
-            </p>
+            </motion.p>
             
             {/* Role Selection Cards */}
             <div className="grid sm:grid-cols-2 gap-4 mt-8 max-w-2xl mx-auto lg:mx-0">
@@ -321,29 +484,71 @@ export default function LandingHome({ setShowSignIn }) {
             initial={{ opacity: 0, x: 40 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.7, delay: 0.2 }}
-            className="flex-1 flex justify-center lg:justify-end"
+            className="flex-1 flex justify-center lg:justify-end relative"
           >
             <div className="relative">
-              <div className="absolute inset-0 bg-green-500/20 blur-3xl rounded-full" />
-              <Image
-                src="/plmun.png"
-                alt="Study Illustration"
-                width={600}
-                height={600}
-                className="relative w-[280px] sm:w-[380px] md:w-[480px] lg:w-[520px]"
-                priority
+              {/* Animated Glow Rings */}
+              <motion.div 
+                className="absolute inset-0 bg-green-500/30 blur-3xl rounded-full"
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                  opacity: [0.3, 0.5, 0.3]
+                }}
+                transition={{ 
+                  duration: 4, 
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
               />
+              <motion.div 
+                className="absolute inset-0 bg-purple-500/20 blur-2xl rounded-full"
+                animate={{ 
+                  scale: [1.2, 1, 1.2],
+                  opacity: [0.2, 0.4, 0.2]
+                }}
+                transition={{ 
+                  duration: 5, 
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                  delay: 1
+                }}
+              />
+              <motion.div
+                animate={{ 
+                  y: [0, -20, 0],
+                  rotate: [0, 5, -5, 0]
+                }}
+                transition={{ 
+                  duration: 6, 
+                  repeat: Infinity,
+                  ease: "easeInOut"
+                }}
+              >
+                <Image
+                  src="/plmun.png"
+                  alt="Study Illustration"
+                  width={600}
+                  height={600}
+                  className="relative w-[280px] sm:w-[380px] md:w-[480px] lg:w-[520px] drop-shadow-2xl"
+                  priority
+                  draggable={false}
+                />
+              </motion.div>
             </div>
           </motion.div>
         </div>
       </section>
-
       {/* STATS SECTION */}
       <section
         ref={statsRef}
-        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16"
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative"
       >
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8">
+        {/* Section Background Glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-purple-500/5 rounded-full blur-3xl" />
+        </div>
+        
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 relative z-10">
           {statsData.map((stat, index) => {
             const StatIcon = stat.icon;
             const displayValue = formatStatValue(
@@ -354,17 +559,44 @@ export default function LandingHome({ setShowSignIn }) {
             return (
               <motion.div
                 key={stat.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
+                initial={{ opacity: 0, y: 20, scale: 0.9 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="text-center p-6 bg-[#161b22]/50 rounded-xl border border-gray-800/50 hover:border-green-500/30 transition-colors"
+                whileHover={{ 
+                  scale: 1.05, 
+                  y: -5,
+                  boxShadow: "0 20px 40px rgba(34, 197, 94, 0.2)"
+                }}
+                className="text-center p-6 bg-gradient-to-br from-purple-900/20 to-blue-900/20 backdrop-blur-sm rounded-xl border border-purple-500/30 hover:border-green-500/50 transition-all duration-300 relative overflow-hidden group"
               >
-                <StatIcon className="w-8 h-8 text-green-400 mx-auto mb-3" />
-                <div className="text-3xl md:text-4xl font-bold text-white mb-1">
+                {/* Hover Glow Effect */}
+                <div className="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/10 transition-colors duration-300 rounded-xl" />
+                
+                <motion.div
+                  animate={{ 
+                    rotate: [0, 10, -10, 0],
+                    scale: [1, 1.1, 1]
+                  }}
+                  transition={{ 
+                    duration: 3, 
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                    delay: index * 0.2
+                  }}
+                >
+                  <StatIcon className="w-8 h-8 text-green-400 mx-auto mb-3 relative z-10" />
+                </motion.div>
+                <motion.div 
+                  className="text-3xl md:text-4xl font-bold text-white mb-1 relative z-10"
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.1 + 0.3 }}
+                >
                   {displayValue}
-                </div>
-                <div className="text-sm text-gray-400">{stat.label}</div>
+                </motion.div>
+                <div className="text-sm text-gray-300 relative z-10">{stat.label}</div>
               </motion.div>
             );
           })}
@@ -372,15 +604,26 @@ export default function LandingHome({ setShowSignIn }) {
       </section>
 
       {/* FEATURED COURSES — CAROUSEL */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative">
+        {/* Section Background Glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-0 right-1/4 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" />
+        </div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12 relative z-10"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
             Featured Courses
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
             Explore our most popular courses designed by expert teachers
           </p>
-        </div>
+        </motion.div>
 
         <Swiper
           slidesPerView={1}
@@ -417,10 +660,15 @@ export default function LandingHome({ setShowSignIn }) {
           ].map((course, i) => (
             <SwiperSlide key={i}>
               <motion.div
-                whileHover={{ scale: 1.03, y: -8 }}
-                transition={{ duration: 0.3 }}
-                className="bg-[#161b22] rounded-xl overflow-hidden border border-gray-700 shadow-lg hover:border-green-500/50 transition-all duration-300 h-full flex flex-col"
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                whileHover={{ scale: 1.05, y: -10, rotateY: 5 }}
+                className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-sm rounded-xl overflow-hidden border border-purple-500/30 shadow-xl hover:border-green-500/50 hover:shadow-green-500/20 transition-all duration-300 h-full flex flex-col relative group"
               >
+                {/* Hover Glow */}
+                <div className="absolute inset-0 bg-green-500/0 group-hover:bg-green-500/10 transition-colors duration-300 rounded-xl" />
                 <div className="relative h-48 overflow-hidden">
                   <Image
                     src={course.img}
@@ -428,6 +676,7 @@ export default function LandingHome({ setShowSignIn }) {
                     width={400}
                     height={200}
                     className="h-full w-full object-cover"
+                    draggable={false}
                   />
                   <div className="absolute top-3 right-3">
                     <span className="bg-green-600 text-white px-3 py-1 rounded-full text-xs font-medium">
@@ -436,18 +685,20 @@ export default function LandingHome({ setShowSignIn }) {
                   </div>
                 </div>
 
-                <div className="p-6 flex-1 flex flex-col">
-                  <h4 className="text-xl font-semibold mb-2">{course.title}</h4>
-                  <p className="text-gray-400 text-sm mb-4 flex-1">{course.level} Level Course</p>
-                  <Button 
-                    className="w-full bg-green-600 hover:bg-green-700 text-white"
-                    onClick={() => {
-                      handleRoleSelection('student');
-                      setShowSignIn("sign-up");
-                    }}
-                  >
-                    Enroll Now
-                  </Button>
+                <div className="p-6 flex-1 flex flex-col relative z-10">
+                  <h4 className="text-xl font-semibold mb-2 text-white">{course.title}</h4>
+                  <p className="text-gray-300 text-sm mb-4 flex-1">{course.level} Level Course</p>
+                  <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                    <Button 
+                      className="w-full bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white shadow-lg shadow-green-500/30"
+                      onClick={() => {
+                        handleRoleSelection('student');
+                        setShowSignIn("sign-up");
+                      }}
+                    >
+                      Enroll Now
+                    </Button>
+                  </motion.div>
                 </div>
               </motion.div>
             </SwiperSlide>
@@ -456,15 +707,26 @@ export default function LandingHome({ setShowSignIn }) {
       </section>
 
       {/* HOW IT WORKS */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20">
-        <div className="text-center mb-12">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-20 relative">
+        {/* Section Background Glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute bottom-0 left-1/4 w-96 h-96 bg-purple-500/10 rounded-full blur-3xl animate-pulse" />
+        </div>
+        
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.8 }}
+          className="text-center mb-12 relative z-10"
+        >
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-purple-200 to-white bg-clip-text text-transparent">
             How It Works
           </h2>
-          <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+          <p className="text-gray-300 text-lg max-w-2xl mx-auto">
             Get started in three simple steps
           </p>
-        </div>
+        </motion.div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
           {[
@@ -489,64 +751,108 @@ export default function LandingHome({ setShowSignIn }) {
           ].map((item, index) => (
             <motion.div
               key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 30, rotateX: -15 }}
+              whileInView={{ opacity: 1, y: 0, rotateX: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: index * 0.1 }}
-              whileHover={{ scale: 1.05, y: -8 }}
-              className="bg-[#161b22] p-8 rounded-xl border border-gray-700 shadow-lg hover:border-green-500/50 transition-all duration-300 text-center"
+              transition={{ duration: 0.6, delay: index * 0.15 }}
+              whileHover={{ scale: 1.08, y: -12, rotateY: 5 }}
+              className="bg-gradient-to-br from-purple-900/30 to-blue-900/30 backdrop-blur-sm p-8 rounded-xl border border-purple-500/30 shadow-xl hover:border-green-500/50 hover:shadow-green-500/20 transition-all duration-300 text-center relative group overflow-hidden"
             >
-              <div className={`inline-flex p-4 rounded-full bg-${item.color}-500/20 mb-6`}>
+              {/* Animated Background Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-green-500/0 via-purple-500/0 to-blue-500/0 group-hover:from-green-500/10 group-hover:via-purple-500/10 group-hover:to-blue-500/10 transition-all duration-500" />
+              
+              <motion.div 
+                className={`inline-flex p-4 rounded-full bg-${item.color}-500/20 mb-6 relative z-10`}
+                animate={{ 
+                  rotate: [0, 360],
+                  scale: [1, 1.1, 1]
+                }}
+                transition={{ 
+                  duration: 8, 
+                  repeat: Infinity,
+                  ease: "linear"
+                }}
+              >
                 <item.icon className={`w-8 h-8 text-${item.color}-400`} />
-              </div>
-              <h3 className="text-xl font-semibold text-white mb-3">{item.title}</h3>
-              <p className="text-gray-400">{item.text}</p>
+              </motion.div>
+              <h3 className="text-xl font-semibold text-white mb-3 relative z-10">{item.title}</h3>
+              <p className="text-gray-300 relative z-10">{item.text}</p>
             </motion.div>
           ))}
         </div>
       </section>
 
       {/* CTA SECTION */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 md:py-24 relative">
+        {/* CTA Background Glow */}
+        <div className="absolute inset-0 -z-10">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-full h-full bg-gradient-to-r from-green-500/10 via-purple-500/10 to-blue-500/10 rounded-full blur-3xl" />
+        </div>
+        
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          whileInView={{ opacity: 1, y: 0, scale: 1 }}
           viewport={{ once: true }}
-          className="bg-gradient-to-r from-green-600/20 to-blue-600/20 border-2 border-green-500/30 rounded-2xl p-8 md:p-12 text-center"
+          transition={{ duration: 0.8 }}
+          className="bg-gradient-to-r from-green-600/20 via-purple-600/20 to-blue-600/20 backdrop-blur-md border-2 border-green-500/40 rounded-2xl p-8 md:p-12 text-center relative overflow-hidden shadow-2xl"
         >
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4">
+          {/* Animated Background Pattern */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="absolute top-0 left-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(168,85,247,0.3),transparent_50%)]" />
+            <div className="absolute bottom-0 right-0 w-full h-full bg-[radial-gradient(circle_at_50%_50%,rgba(34,197,94,0.3),transparent_50%)]" />
+          </div>
+          
+          <motion.h2 
+            className="text-3xl sm:text-4xl md:text-5xl font-bold mb-4 relative z-10 bg-gradient-to-r from-white via-green-300 to-white bg-clip-text text-transparent"
+            animate={{ 
+              backgroundPosition: ['0%', '100%'],
+            }}
+            transition={{ 
+              duration: 5, 
+              repeat: Infinity, 
+              repeatType: "reverse",
+              ease: "linear"
+            }}
+          >
             Ready to Start Learning?
-          </h2>
-          <p className="text-gray-300 text-lg mb-8 max-w-2xl mx-auto">
-            Join thousands of students and teachers on our AI-powered learning platform
+          </motion.h2>
+          <p className="text-gray-200 text-lg mb-8 max-w-2xl mx-auto relative z-10">
+            Join on our AI-powered learning platform to Personalize your learning experience.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={() => {
-                handleRoleSelection('student');
-                setShowSignIn("sign-up");
-              }}
-              size="lg"
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-6 text-lg"
-            >
-              <GraduationCap className="mr-2 w-5 h-5" />
-              Join as Student
-            </Button>
-            <Button
-              onClick={() => {
-                handleRoleSelection('teacher');
-                setShowSignIn("sign-up");
-              }}
-              size="lg"
-              variant="outline"
-              className="border-2 border-blue-500 text-blue-400 hover:bg-blue-500/10 px-8 py-6 text-lg"
-            >
-              <UserCog className="mr-2 w-5 h-5" />
-              Become a Teacher
-            </Button>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center relative z-10">
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={() => {
+                  handleRoleSelection('student');
+                  setShowSignIn("sign-up");
+                }}
+                size="lg"
+                className="bg-gradient-to-r from-green-600 to-emerald-600 hover:from-green-700 hover:to-emerald-700 text-white px-8 py-6 text-lg shadow-lg shadow-green-500/40 relative overflow-hidden group"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-1000" />
+                <GraduationCap className="mr-2 w-5 h-5 relative z-10" />
+                <span className="relative z-10">Join as Student</span>
+              </Button>
+            </motion.div>
+            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+              <Button
+                onClick={() => {
+                  handleRoleSelection('teacher');
+                  setShowSignIn("sign-up");
+                }}
+                size="lg"
+                variant="outline"
+                className="border-2 border-blue-500/50 text-blue-400 hover:bg-blue-500/20 hover:border-blue-400 px-8 py-6 text-lg backdrop-blur-sm relative overflow-hidden group"
+              >
+                <span className="absolute inset-0 bg-gradient-to-r from-transparent via-blue-500/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000" />
+                <UserCog className="mr-2 w-5 h-5 relative z-10" />
+                <span className="relative z-10">Become a Teacher</span>
+              </Button>
+            </motion.div>
           </div>
         </motion.div>
       </section>
+      </div>
     </div>
   );
 }

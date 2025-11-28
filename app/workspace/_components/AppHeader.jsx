@@ -2,10 +2,12 @@ import { SidebarTrigger } from '@/components/ui/sidebar'
 import { UserButton, useUser } from '@clerk/nextjs'
 import React, { useEffect, useRef, useState } from 'react'
 import { IoNotifications } from 'react-icons/io5'
-import { BookOpen, FileText, ClipboardList, X, Mail } from 'lucide-react'
+import { BookOpen, FileText, ClipboardList, X, Mail, Sun, Moon } from 'lucide-react'
+import { useTheme } from './ThemeProvider'
 
 function AppHeader () {
     const { user } = useUser();
+    const { theme, toggleTheme } = useTheme();
     const [showNotif, setShowNotif] = useState(false);
     const [notifications, setNotifications] = useState([]);
     const [unreadCount, setUnreadCount] = useState(0);
@@ -112,15 +114,29 @@ function AppHeader () {
     }
 
     return (
-        <div className='p-4 flex justify-between items-center shadow-sm'>
-            <SidebarTrigger className='text-green-400'/> 
-            <span className='md:hidden visible text-white text-1xl'>
-                <span className='text-green-500'>PLMun</span> 
-                <span className='text-gray-300'> AI - Tutor</span>
+        <div className='p-4 flex justify-between items-center shadow-sm bg-white dark:bg-[#0D1117] border-b border-gray-200 dark:border-gray-800'>
+            <SidebarTrigger className='text-green-600 dark:text-green-400'/> 
+            <span className='md:hidden visible text-gray-900 dark:text-white text-1xl'>
+                <span className='text-green-600 dark:text-green-500'>PLMun</span> 
+                <span className='text-gray-600 dark:text-gray-300'> AI - Tutor</span>
             </span>
             <div className='relative flex items-center gap-3 ml-auto' ref={notifRef}>
+                {/* Theme Toggle Button */}
+                <button
+                    onClick={toggleTheme}
+                    className='p-2 rounded-lg bg-gray-100 dark:bg-[#161B22] hover:bg-gray-200 dark:hover:bg-[#1E242B] transition-colors border border-gray-200 dark:border-gray-700'
+                    aria-label='Toggle theme'
+                    title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}
+                >
+                    {theme === 'dark' ? (
+                        <Sun className='w-5 h-5 text-yellow-500' />
+                    ) : (
+                        <Moon className='w-5 h-5 text-gray-700' />
+                    )}
+                </button>
+                
                 <div className='relative' onClick={() => setShowNotif(!showNotif)}>
-                    <IoNotifications className='text-white hover:text-green-500 md:w-5 cursor-pointer transition-colors' />
+                    <IoNotifications className='text-gray-700 dark:text-white hover:text-green-600 dark:hover:text-green-500 md:w-5 cursor-pointer transition-colors' />
                     {unreadCount > 0 && (
                         <span className='absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center font-bold'>
                             {unreadCount > 9 ? '9+' : unreadCount}
@@ -130,19 +146,19 @@ function AppHeader () {
                 
                 {/* Notification Dropdown */}
                 {showNotif && (
-                    <div className='absolute right-0 top-12 w-80 md:w-96 text-white bg-[#161B22] rounded-xl shadow-lg z-50 border border-gray-700 max-h-96 overflow-y-auto'>
-                        <div className='p-4 border-b border-gray-700 flex justify-between items-center'>
-                            <p className='font-semibold text-sm text-green-400'>🔔 Notifications</p>
+                    <div className='absolute right-0 top-12 w-80 md:w-96 text-gray-900 dark:text-white bg-white dark:bg-[#161B22] rounded-xl shadow-lg z-50 border border-gray-200 dark:border-gray-700 max-h-96 overflow-y-auto'>
+                        <div className='p-4 border-b border-gray-200 dark:border-gray-700 flex justify-between items-center'>
+                            <p className='font-semibold text-sm text-green-600 dark:text-green-400'>🔔 Notifications</p>
                             <button 
                                 onClick={() => setShowNotif(false)}
-                                className='text-gray-400 hover:text-white'
+                                className='text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-white'
                             >
                                 <X size={18} />
                             </button>
                         </div>
                         <div className='p-2'>
                             {notifications.length === 0 ? (
-                                <div className='text-center py-8 text-gray-400 text-sm'>
+                                <div className='text-center py-8 text-gray-500 dark:text-gray-400 text-sm'>
                                     <IoNotifications size={32} className='mx-auto mb-2 opacity-50' />
                                     <p>No notifications yet</p>
                                 </div>
@@ -151,7 +167,7 @@ function AppHeader () {
                                     {notifications.map((notification) => (
                                         <li 
                                             key={notification.id}
-                                            className={`bg-[#0d1117] p-3 rounded-lg hover:bg-[#1E242B] transition ${
+                                            className={`bg-gray-50 dark:bg-[#0d1117] p-3 rounded-lg hover:bg-gray-100 dark:hover:bg-[#1E242B] transition ${
                                                 !notification.is_read ? 'border-l-2 border-green-500' : ''
                                             }`}
                                         >
@@ -160,13 +176,13 @@ function AppHeader () {
                                                     {getNotificationIcon(notification.type)}
                                                 </div>
                                                 <div className='flex-1 min-w-0' onClick={() => markAsRead(notification.id)}>
-                                                    <p className='text-sm text-white cursor-pointer'>
-                                                        <span className='font-semibold text-green-400'>
+                                                    <p className='text-sm text-gray-900 dark:text-white cursor-pointer'>
+                                                        <span className='font-semibold text-green-600 dark:text-green-400'>
                                                             {notification.teacher_name || 'Teacher'}
                                                         </span>{' '}
                                                         {notification.message}
                                                     </p>
-                                                    <p className='text-xs text-gray-500 mt-1'>
+                                                    <p className='text-xs text-gray-500 dark:text-gray-500 mt-1'>
                                                         {getTimeAgo(notification.created_at)}
                                                     </p>
                                                 </div>
@@ -178,10 +194,10 @@ function AppHeader () {
                                                         <a
                                                             href={createMailtoLink(notification)}
                                                             onClick={(e) => e.stopPropagation()}
-                                                            className='p-1.5 rounded hover:bg-[#1E242B] transition-colors'
+                                                            className='p-1.5 rounded hover:bg-gray-100 dark:hover:bg-[#1E242B] transition-colors'
                                                             title='Open email client to contact teacher'
                                                         >
-                                                            <Mail size={16} className='text-blue-400 hover:text-blue-300' />
+                                                            <Mail size={16} className='text-blue-500 dark:text-blue-400 hover:text-blue-600 dark:hover:text-blue-300' />
                                                         </a>
                                                     )}
                                                 </div>

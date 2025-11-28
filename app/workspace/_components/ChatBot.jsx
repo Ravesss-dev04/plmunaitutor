@@ -117,21 +117,21 @@ const ChatBot = () => {
                         animate={{ opacity: 1, y: 0, scale: 1 }}
                         exit={{ opacity: 0, y: 40, scale: 0.9 }}
                         transition={{ duration: 0.3 }}
-                        className='fixed bottom-20 right-6 bg-[#1d1f2b] border border-[#2a2d3c] text-white w-80 h-96 rounded-2xl shadow-xl z-50 flex flex-col overflow-hidden'
+                        className='fixed bottom-20 right-6 bg-white dark:bg-[#1d1f2b] border border-gray-200 dark:border-[#2a2d3c] text-gray-900 dark:text-white w-80 h-96 rounded-2xl shadow-xl z-50 flex flex-col overflow-hidden'
                     >
                         {/* Header */}
-                        <div className='flex justify-between items-center p-4 border-b border-[#2a2d3c] bg-[#13181f]'>
+                        <div className='flex justify-between items-center p-4 border-b border-gray-200 dark:border-[#2a2d3c] bg-gray-50 dark:bg-[#13181f]'>
                             <div className='flex items-center gap-2'>
-                                <BotIcon className='w-5 h-5 text-green-400' />
-                                <h3 className='text-sm font-semibold'>PLMun AI Tutor</h3>
+                                <BotIcon className='w-5 h-5 text-green-600 dark:text-green-400' />
+                                <h3 className='text-sm font-semibold text-gray-900 dark:text-white'>PLMun AI Tutor</h3>
                             </div>
                             <button onClick={() => setIsOpen(false)}>
-                                <X className='w-5 h-5 text-gray-400 hover:text-white' />
+                                <X className='w-5 h-5 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white' />
                             </button>
                         </div>
 
                         {/* Messages Container */}
-                        <div className='flex-1 p-4 overflow-y-auto space-y-3'>
+                        <div className='flex-1 p-4 overflow-y-auto space-y-3 bg-white dark:bg-[#1d1f2b]'>
                             {messages.map((msg, idx) => (
                                 <div
                                     key={idx}
@@ -140,8 +140,8 @@ const ChatBot = () => {
                                     <div
                                         className={`max-w-[80%] p-3 rounded-lg ${
                                             msg.role === "user"
-                                                ? "bg-[#238636] text-white"
-                                                : "bg-[#232935] text-gray-100"
+                                                ? "bg-green-600 dark:bg-[#238636] text-white"
+                                                : "bg-gray-100 dark:bg-[#232935] text-gray-900 dark:text-gray-100"
                                         }`}
                                     >
                                         {msg.content}
@@ -150,12 +150,12 @@ const ChatBot = () => {
                             ))}
                             {loading && (
                                 <div className="flex justify-start">
-                                    <div className="bg-[#232935] p-3 rounded-lg max-w-[80%]">
-                                        <div className="flex items-center gap-2 text-gray-400">
+                                    <div className="bg-gray-100 dark:bg-[#232935] p-3 rounded-lg max-w-[80%]">
+                                        <div className="flex items-center gap-2 text-gray-600 dark:text-gray-400">
                                             <div className="flex space-x-1">
-                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce"></div>
-                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
-                                                <div className="w-2 h-2 bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
+                                                <div className="w-2 h-2 bg-gray-500 dark:bg-gray-400 rounded-full animate-bounce"></div>
+                                                <div className="w-2 h-2 bg-gray-500 dark:bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.2s" }}></div>
+                                                <div className="w-2 h-2 bg-gray-500 dark:bg-gray-400 rounded-full animate-bounce" style={{ animationDelay: "0.4s" }}></div>
                                             </div>
                                             Thinking...
                                         </div>
@@ -165,7 +165,7 @@ const ChatBot = () => {
                         </div>
 
                         {/* Input Form */}
-                        <div className='p-4 border-t border-[#2a2d3c] bg-[#13181f]'>
+                        <div className='p-4 border-t border-gray-200 dark:border-[#2a2d3c] bg-gray-50 dark:bg-[#13181f]'>
                             <form onSubmit={sendMessage} className="flex items-center gap-2">
                                 <input
                                     type="text"
@@ -173,12 +173,12 @@ const ChatBot = () => {
                                     value={input}
                                     onChange={(e) => setInput(e.target.value)}
                                     disabled={loading}
-                                    className="flex-1 bg-[#232935] border border-[#2a2d3c] rounded-lg px-3 py-2 text-sm text-white placeholder-gray-400 outline-none focus:border-green-500 transition-colors"
+                                    className="flex-1 bg-white dark:bg-[#232935] border border-gray-300 dark:border-[#2a2d3c] rounded-lg px-3 py-2 text-sm text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 outline-none focus:border-green-500 transition-colors"
                                 />
                                 <button
                                     type="submit"
                                     disabled={loading || !input.trim()}
-                                    className="bg-[#238636] hover:bg-[#2EA043] disabled:bg-gray-600 disabled:cursor-not-allowed p-2 rounded-lg transition-all duration-200 text-white font-semibold text-sm"
+                                    className="bg-green-600 dark:bg-[#238636] hover:bg-green-700 dark:hover:bg-[#2EA043] disabled:bg-gray-400 dark:disabled:bg-gray-600 disabled:cursor-not-allowed p-2 rounded-lg transition-all duration-200 text-white font-semibold text-sm"
                                 >
                                     ➤
                                 </button>

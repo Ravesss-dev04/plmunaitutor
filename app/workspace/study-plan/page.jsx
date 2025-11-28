@@ -706,10 +706,10 @@ const createFallbackWeeklyPlan = (weakAreas) => {
 
   if (loading) {
     return (
-      <div className="bg-[#161B22] text-white min-h-screen p-4 flex items-center justify-center">
+      <div className="bg-white dark:bg-[#161B22] text-gray-900 dark:text-white min-h-screen p-4 flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-500 mx-auto mb-4"></div>
-          <p className="text-green-400">Loading your study plan...</p>
+          <p className="text-green-600 dark:text-green-400">Loading your study plan...</p>
         </div>
       </div>
     );
@@ -720,17 +720,17 @@ const createFallbackWeeklyPlan = (weakAreas) => {
   const totalCompleted = completedTasks.length;
 
   return (
-    <div className="bg-[#161B22] text-white min-h-screen p-3 sm:p-4">
+    <div className="bg-white dark:bg-[#161B22] text-gray-900 dark:text-white min-h-screen p-3 sm:p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-8">
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl sm:text-2xl font-bold text-white">📚 Study Plan</h1>
-            <p className="text-gray-400 mt-1 text-xs sm:text-sm md:text-base">{getWeekRange()}</p>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white">📚 Study Plan</h1>
+            <p className="text-gray-600 dark:text-gray-400 mt-1 text-xs sm:text-sm md:text-base">{getWeekRange()}</p>
           </div>
           <div className="text-left sm:text-right">
-            <p className="text-xs sm:text-sm text-gray-300">Hello, {user?.firstName || 'Student'}!</p>
-            <p className="text-xs text-gray-500">Your AI-powered study companion</p>
+            <p className="text-xs sm:text-sm text-gray-700 dark:text-gray-300">Hello, {user?.firstName || 'Student'}!</p>
+            <p className="text-xs text-gray-500 dark:text-gray-500">Your AI-powered study companion</p>
           </div>
         </div>
 
@@ -738,71 +738,71 @@ const createFallbackWeeklyPlan = (weakAreas) => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-4 mb-6 sm:mb-8">
           <div 
             onClick={navigateToPending}
-            className="bg-[#1f2937] p-4 sm:p-6 rounded-lg border border-gray-700 hover:border-green-500 cursor-pointer transition-colors group"
+            className="bg-gray-50 dark:bg-[#1f2937] p-4 sm:p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-green-500 cursor-pointer transition-colors group"
           >
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="p-1.5 sm:p-2 bg-blue-600 rounded-lg group-hover:bg-blue-700 transition-colors shrink-0">
                 <ListChecks size={18} className="text-white sm:w-5 sm:h-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-xl sm:text-2xl font-bold text-blue-400">{totalTasks}</p>
-                <p className="text-gray-400 text-xs sm:text-sm">Pending Tasks</p>
-                <p className="text-gray-500 text-xs mt-1 hidden sm:block">Click to view details →</p>
+                <p className="text-xl sm:text-2xl font-bold text-blue-600 dark:text-blue-400">{totalTasks}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">Pending Tasks</p>
+                <p className="text-gray-500 dark:text-gray-500 text-xs mt-1 hidden sm:block">Click to view details →</p>
               </div>
             </div>
           </div>
 
           <div 
             onClick={navigateToFocusAreas}
-            className="bg-[#1f2937] p-4 sm:p-6 rounded-lg border border-gray-700 hover:border-green-500 cursor-pointer transition-colors group"
+            className="bg-gray-50 dark:bg-[#1f2937] p-4 sm:p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-green-500 cursor-pointer transition-colors group"
           >
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="p-1.5 sm:p-2 bg-purple-600 rounded-lg group-hover:bg-purple-700 transition-colors shrink-0">
                 <Target size={18} className="text-white sm:w-5 sm:h-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-xl sm:text-2xl font-bold text-purple-400">{focusAreasCount}</p>
-                <p className="text-gray-400 text-xs sm:text-sm">Focus Areas</p>
-                <p className="text-gray-500 text-xs mt-1 hidden sm:block">Click to view details →</p>
+                <p className="text-xl sm:text-2xl font-bold text-purple-600 dark:text-purple-400">{focusAreasCount}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">Focus Areas</p>
+                <p className="text-gray-500 dark:text-gray-500 text-xs mt-1 hidden sm:block">Click to view details →</p>
               </div>
             </div>
           </div>
 
           <div 
             onClick={navigateToCompleted}
-            className="bg-[#1f2937] p-4 sm:p-6 rounded-lg border border-gray-700 hover:border-green-500 cursor-pointer transition-colors group"
+            className="bg-gray-50 dark:bg-[#1f2937] p-4 sm:p-6 rounded-lg border border-gray-200 dark:border-gray-700 hover:border-green-500 cursor-pointer transition-colors group"
           >
             <div className="flex items-center gap-2 sm:gap-3">
               <div className="p-1.5 sm:p-2 bg-green-600 rounded-lg group-hover:bg-green-700 transition-colors shrink-0">
                 <Trophy size={18} className="text-white sm:w-5 sm:h-5" />
               </div>
               <div className="min-w-0 flex-1">
-                <p className="text-xl sm:text-2xl font-bold text-green-400">{totalCompleted}</p>
-                <p className="text-gray-400 text-xs sm:text-sm">Completed Tasks</p>
-                <p className="text-gray-500 text-xs mt-1 hidden sm:block">Click to view details →</p>
+                <p className="text-xl sm:text-2xl font-bold text-green-600 dark:text-green-400">{totalCompleted}</p>
+                <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">Completed Tasks</p>
+                <p className="text-gray-500 dark:text-gray-500 text-xs mt-1 hidden sm:block">Click to view details →</p>
               </div>
             </div>
           </div>
         </div>
 
         {/* AI Recommendation Card */}
-        <div className="bg-gradient-to-r from-green-900/30 to-blue-900/30 border border-green-700/50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 backdrop-blur-sm">
+        <div className="bg-gradient-to-r from-green-50 to-blue-50 dark:from-green-900/30 dark:to-blue-900/30 border border-green-200 dark:border-green-700/50 rounded-xl p-4 sm:p-6 mb-6 sm:mb-8 backdrop-blur-sm">
           <div className="flex flex-col sm:flex-row sm:items-center gap-3 mb-4">
             <div className="p-2 bg-green-600 rounded-lg w-fit">
               <Brain size={20} className="text-white" />
             </div>
             <div className="flex-1">
-              <h3 className="text-lg font-semibold text-white">AI Recommendation</h3>
-              <p className="text-green-300 text-sm">Personalized based on your progress</p>
+              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">AI Recommendation</h3>
+              <p className="text-green-700 dark:text-green-300 text-sm">Personalized based on your progress</p>
             </div>
           </div>
-          <p className="text-green-100 text-base sm:text-lg leading-relaxed mb-4 sm:mb-0">{studyPlan?.recommendation}</p>
+          <p className="text-gray-800 dark:text-green-100 text-base sm:text-lg leading-relaxed mb-4 sm:mb-0">{studyPlan?.recommendation}</p>
           
           <div className="flex flex-wrap gap-2 mt-4">
             {studyPlan?.focusAreas?.map((area, idx) => (
               <span 
                 key={idx} 
-                className="bg-green-800/50 text-green-300 text-xs sm:text-sm px-3 py-2 rounded-full flex items-center gap-2 border border-green-700/30"
+                className="bg-green-100 dark:bg-green-800/50 text-green-700 dark:text-green-300 text-xs sm:text-sm px-3 py-2 rounded-full flex items-center gap-2 border border-green-300 dark:border-green-700/30"
               >
                 <Target size={14} />
                 {area}
@@ -821,22 +821,22 @@ const createFallbackWeeklyPlan = (weakAreas) => {
             return (
               <div 
                 key={dayIndex} 
-                className={`bg-[#1f2937] rounded-xl p-3 sm:p-4 border transition-all duration-300 min-w-0 w-full flex flex-col ${
+                className={`bg-gray-50 dark:bg-[#1f2937] rounded-xl p-3 sm:p-4 border transition-all duration-300 min-w-0 w-full flex flex-col ${
                   dayItem.isToday 
                     ? 'border-green-500 ring-2 ring-green-500/20' 
-                    : 'border-gray-700 hover:border-green-500/30'
+                    : 'border-gray-200 dark:border-gray-700 hover:border-green-500/30'
                 }`}
               >
                 <div className="flex justify-between items-center mb-3 sm:mb-4 flex-shrink-0">
                   <h3 className={`font-semibold text-sm sm:text-base ${
-                    dayItem.isToday ? 'text-green-400' : 'text-white'
+                    dayItem.isToday ? 'text-green-600 dark:text-green-400' : 'text-gray-900 dark:text-white'
                   }`}>
                     {dayItem.day}
                   </h3>
                   <div className="text-right flex-shrink-0">
-                    <span className="text-sm font-medium text-gray-300">{dayItem.date}</span>
+                    <span className="text-sm font-medium text-gray-700 dark:text-gray-300">{dayItem.date}</span>
                     {dayItem.isToday && (
-                      <span className="block text-xs text-green-400 font-medium">Today</span>
+                      <span className="block text-xs text-green-600 dark:text-green-400 font-medium">Today</span>
                     )}
                   </div>
                 </div>
@@ -872,9 +872,9 @@ const createFallbackWeeklyPlan = (weakAreas) => {
                   </div>
                 ) : (
                   <div className="text-center py-4 sm:py-6">
-                    <Clock size={20} className="mx-auto text-gray-500 mb-2" />
-                    <p className="text-xs sm:text-sm text-gray-500 italic">No study tasks scheduled</p>
-                    <p className="text-xs text-gray-600 mt-1">Rest day</p>
+                    <Clock size={20} className="mx-auto text-gray-400 dark:text-gray-500 mb-2" />
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-500 italic">No study tasks scheduled</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-600 mt-1">Rest day</p>
                   </div>
                 )}
               </div>
@@ -985,15 +985,15 @@ const LessonModal = ({ lesson, onClose, onMarkAsDone, userId }) => {
 
   return (
     <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-3 sm:p-4 z-50">
-      <div className="bg-[#1f2937] rounded-xl border border-green-700/50 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
+      <div className="bg-white dark:bg-[#1f2937] rounded-xl border border-gray-200 dark:border-green-700/50 w-full max-w-4xl max-h-[90vh] overflow-y-auto">
         <div className="p-4 sm:p-6">
           {/* Header */}
           <div className="flex justify-between items-start mb-4">
             <div className="flex-1 min-w-0">
-              <h2 className="text-xl sm:text-2xl font-bold text-white mb-1">
+              <h2 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-1">
                 {lesson.title}
               </h2>
-              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-400">
+              <div className="flex items-center gap-2 text-xs sm:text-sm text-gray-600 dark:text-gray-400">
                 <span>Page {currentPage + 1} of {totalPages}</span>
                 <span>•</span>
                 <span className="capitalize">{currentPageData.type}</span>
@@ -1003,16 +1003,16 @@ const LessonModal = ({ lesson, onClose, onMarkAsDone, userId }) => {
             </div>
             <button
               onClick={onClose}
-              className="p-1 hover:bg-gray-600 rounded-lg transition-colors"
+              className="p-1 hover:bg-gray-200 dark:hover:bg-gray-600 rounded-lg transition-colors"
             >
-              <svg className="w-5 h-5 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-5 h-5 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
               </svg>
             </button>
           </div>
 
           {/* Progress Bar */}
-          <div className="w-full bg-gray-700 rounded-full h-2 mb-6">
+          <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2 mb-6">
             <div 
               className="bg-green-500 h-2 rounded-full transition-all duration-300"
               style={{ width: `${((currentPage + 1) / totalPages) * 100}%` }}
@@ -1021,22 +1021,22 @@ const LessonModal = ({ lesson, onClose, onMarkAsDone, userId }) => {
 
           {/* Lesson Content */}
           <div className="mb-6">
-            <h3 className="text-lg font-semibold text-white mb-3">
+            <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-3">
               {currentPageData.title}
             </h3>
             
-            <div className="bg-gray-800/50 rounded-lg p-4 mb-4">
-              <p className="text-gray-300 leading-relaxed">
+            <div className="bg-gray-50 dark:bg-gray-800/50 rounded-lg p-4 mb-4">
+              <p className="text-gray-700 dark:text-gray-300 leading-relaxed">
                 {currentPageData.content}
               </p>
             </div>
 
             {/* Examples */}
             {currentPageData.examples && (
-              <div className="bg-blue-900/20 border border-blue-700/30 rounded-lg p-4 mb-4">
-                <h4 className="text-blue-300 font-semibold mb-2">Examples:</h4>
+              <div className="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-700/30 rounded-lg p-4 mb-4">
+                <h4 className="text-blue-700 dark:text-blue-300 font-semibold mb-2">Examples:</h4>
                 {currentPageData.examples.map((example, idx) => (
-                  <pre key={idx} className="bg-black/30 p-3 rounded text-sm text-green-300 mb-2 overflow-x-auto">
+                  <pre key={idx} className="bg-gray-100 dark:bg-black/30 p-3 rounded text-sm text-green-700 dark:text-green-300 mb-2 overflow-x-auto">
                     {example}
                   </pre>
                 ))}
@@ -1045,14 +1045,14 @@ const LessonModal = ({ lesson, onClose, onMarkAsDone, userId }) => {
 
             {/* Exercise */}
             {currentPageData.exercise && (
-              <div className="bg-purple-900/20 border border-purple-700/30 rounded-lg p-4">
-                <h4 className="text-purple-300 font-semibold mb-2">
+              <div className="bg-purple-50 dark:bg-purple-900/20 border border-purple-200 dark:border-purple-700/30 rounded-lg p-4">
+                <h4 className="text-purple-700 dark:text-purple-300 font-semibold mb-2">
                   {currentPageData.type === 'project' ? '🎯 Final Project:' : '💻 Exercise:'}
                 </h4>
-                <p className="text-gray-300 mb-3">{currentPageData.exercise}</p>
-                <div className="mt-3 p-3 bg-black/30 rounded">
+                <p className="text-gray-700 dark:text-gray-300 mb-3">{currentPageData.exercise}</p>
+                <div className="mt-3 p-3 bg-gray-100 dark:bg-black/30 rounded">
                   <textarea 
-                    className="w-full bg-transparent text-gray-300 border border-gray-600 rounded p-2 text-sm"
+                    className="w-full bg-transparent text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 rounded p-2 text-sm"
                     rows="4"
                     placeholder="Write your solution here..."
                   />
@@ -1062,14 +1062,14 @@ const LessonModal = ({ lesson, onClose, onMarkAsDone, userId }) => {
           </div>
 
           {/* Navigation Buttons */}
-          <div className="flex justify-between items-center pt-4 border-t border-gray-700">
+          <div className="flex justify-between items-center pt-4 border-t border-gray-200 dark:border-gray-700">
             <button
               onClick={prevPage}
               disabled={currentPage === 0}
               className={`px-4 py-2 rounded-lg font-semibold text-sm ${
                 currentPage === 0 
-                  ? 'bg-gray-600 text-gray-400 cursor-not-allowed' 
-                  : 'bg-gray-600 hover:bg-gray-700 text-white'
+                  ? 'bg-gray-300 dark:bg-gray-600 text-gray-500 dark:text-gray-400 cursor-not-allowed' 
+                  : 'bg-gray-200 dark:bg-gray-600 hover:bg-gray-300 dark:hover:bg-gray-700 text-gray-900 dark:text-white'
               }`}
             >
               ← Previous

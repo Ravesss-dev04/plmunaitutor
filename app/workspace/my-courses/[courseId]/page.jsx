@@ -119,12 +119,12 @@ export default function CourseDetailPage() {
 
   if (loading) {
     return (
-      <div className="p-6 text-white">
+      <div className="p-6 text-gray-900 dark:text-white bg-white dark:bg-[#0D1117] min-h-screen">
         <div className="animate-pulse">
-          <div className="h-8 bg-gray-700 rounded w-1/4 mb-4"></div>
+          <div className="h-8 bg-gray-200 dark:bg-gray-700 rounded w-1/4 mb-4"></div>
           <div className="space-y-3">
-            <div className="h-4 bg-gray-700 rounded"></div>
-            <div className="h-4 bg-gray-700 rounded w-5/6"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
           </div>
         </div>
       </div>
@@ -133,7 +133,7 @@ export default function CourseDetailPage() {
 
   if (error) {
     return (
-      <div className="p-6 text-red-500">
+      <div className="p-6 text-red-600 dark:text-red-500 bg-white dark:bg-[#0D1117] min-h-screen">
         <h2 className="text-xl font-bold mb-2">Error Loading Course</h2>
         <p>{error}</p>
         <button 
@@ -148,14 +148,14 @@ export default function CourseDetailPage() {
 
   if (!course) {
     return (
-      <div className="p-6 text-red-500">
+      <div className="p-6 text-red-600 dark:text-red-500 bg-white dark:bg-[#0D1117] min-h-screen">
         Course not found. Please check if the course exists and you are enrolled.
       </div>
     );
   }
 
   return (
-    <div className="p-6 text-white">
+    <div className="p-6 text-gray-900 dark:text-white bg-white dark:bg-[#0D1117] min-h-screen">
       {/* Header */}
       <div className="bg-green-600 text-white p-8 w-80 md:w-full md:ml-0 -ml-11 rounded-lg mb-6">
         <Link href={`/workspace/my-courses/`}>
@@ -212,7 +212,7 @@ export default function CourseDetailPage() {
       </div>
 
       {/* Mobile Footer Tabs */}
-      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-[#111827] border-t border-gray-700">
+      <div className="lg:hidden fixed bottom-0 left-0 right-0 bg-white dark:bg-[#111827] border-t border-gray-200 dark:border-gray-700">
         <div className="flex justify-around py-3">
           <Tabs courseId={courseId} activeTab={activeTab} />
         </div>

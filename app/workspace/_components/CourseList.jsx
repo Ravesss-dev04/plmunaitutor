@@ -144,11 +144,11 @@ function CourseList() {
       <div className="mt-4 sm:mt-6 px-2 sm:px-0">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
           {[1, 2, 3].map((n) => (
-            <div key={n} className="bg-[#13181F] rounded-lg shadow-md p-4 sm:p-5 md:p-6 animate-pulse">
-              <div className="h-5 sm:h-6 bg-gray-700 rounded mb-3 sm:mb-4"></div>
-              <div className="h-3 sm:h-4 bg-gray-700 rounded mb-2"></div>
-              <div className="h-3 sm:h-4 bg-gray-700 rounded w-3/4 mb-3 sm:mb-4"></div>
-              <div className="h-10 sm:h-12 bg-gray-700 rounded"></div>
+            <div key={n} className="bg-gray-50 dark:bg-[#13181F] rounded-lg shadow-md p-4 sm:p-5 md:p-6 animate-pulse">
+              <div className="h-5 sm:h-6 bg-gray-200 dark:bg-gray-700 rounded mb-3 sm:mb-4"></div>
+              <div className="h-3 sm:h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
+              <div className="h-3 sm:h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-3 sm:mb-4"></div>
+              <div className="h-10 sm:h-12 bg-gray-200 dark:bg-gray-700 rounded"></div>
             </div>
           ))}
         </div>
@@ -159,7 +159,7 @@ function CourseList() {
   return (
     <div className='mt-2 sm:mt-6 px-0 sm:px-6 md:px-0'>
       <div className='flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4 sm:mb-6 px-2 sm:px-0'>
-        <h2 className='font-bold text-xl sm:text-2xl md:text-3xl text-gray-300'>Available Courses</h2>
+        <h2 className='font-bold text-xl sm:text-2xl md:text-3xl text-gray-900 dark:text-gray-300'>Available Courses</h2>
         
       </div>
       
@@ -171,14 +171,14 @@ function CourseList() {
           const isRejected = course.enrollment_status === 'rejected';
           
           return (
-            <div key={course.id} className='bg-[#13181F] rounded-xl shadow-lg w-full p-4 sm:p-5 md:p-6 border border-gray-800 hover:border-green-500 transition-all duration-300'>
+            <div key={course.id} className='bg-white dark:bg-[#13181F] rounded-xl shadow-lg w-full p-4 sm:p-5 md:p-6 border border-gray-200 dark:border-gray-800 hover:border-green-500 transition-all duration-300'>
               {/* Course Header */}
               <div className='flex flex-col sm:flex-row sm:justify-between sm:items-start mb-4 gap-2 sm:gap-3'>
                 <div className="flex-1 min-w-0">
-                  <h3 className='text-xl sm:text-xl md:text-2xl font-bold text-gray-300 mb-2 line-clamp-2 break-words'>
+                  <h3 className='text-xl sm:text-xl md:text-2xl font-bold text-gray-900 dark:text-gray-300 mb-2 line-clamp-2 break-words'>
                     {course.title}
                   </h3>
-                  <div className="flex items-center gap-2 text-sm sm:text-sm text-gray-400">
+                  <div className="flex items-center gap-2 text-sm sm:text-sm text-gray-600 dark:text-gray-400">
                     <User size={16} className="w-4 h-4 shrink-0" />
                     <span className="break-words">By {course.teacher_name || 'No teacher assigned'}</span>
                   </div>
@@ -190,17 +190,17 @@ function CourseList() {
               </div>
 
               {/* Course Description */}
-              <p className='text-gray-400 text-sm sm:text-sm mb-4 line-clamp-3 leading-relaxed'>
+              <p className='text-gray-600 dark:text-gray-400 text-sm sm:text-sm mb-4 line-clamp-3 leading-relaxed'>
                 {course.description || "No description available"}
               </p>
               {/* Progress Bar (only for enrolled students) */}
               {isEnrolled && (
                 <div className='mb-4'>
                   <div className='flex justify-between items-center mb-2'>
-                    <span className='text-sm sm:text-sm text-gray-300 font-semibold'>Your Progress</span>
-                    <span className='text-sm sm:text-sm text-green-400 font-bold'>{course.progress}%</span>
+                    <span className='text-sm sm:text-sm text-gray-700 dark:text-gray-300 font-semibold'>Your Progress</span>
+                    <span className='text-sm sm:text-sm text-green-600 dark:text-green-400 font-bold'>{course.progress}%</span>
                   </div>
-                  <div className='w-full bg-gray-700 rounded-full h-2.5 sm:h-2.5'>
+                  <div className='w-full bg-gray-200 dark:bg-gray-700 rounded-full h-2.5 sm:h-2.5'>
                     <div 
                       className='bg-green-600 h-2.5 sm:h-2.5 rounded-full transition-all duration-500'
                       style={{ width: `${course.progress}%` }}
@@ -210,12 +210,12 @@ function CourseList() {
               )}
 
               {/* Last Access & Course Info */}
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm text-gray-500 mb-4">
+              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-0 text-xs sm:text-sm text-gray-600 dark:text-gray-500 mb-4">
                 <div className="flex items-center gap-1.5 min-w-0">
                   <Clock size={12} className="w-3 h-3 sm:w-4 sm:h-4 shrink-0" />
                   <span className="break-words">Last access: {formatDate(course.last_accessed)}</span>
                 </div>
-                <span className="bg-gray-800 px-2 py-1 rounded text-gray-400 text-xs flex-shrink-0 self-start sm:self-auto font-medium">
+                <span className="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded text-gray-700 dark:text-gray-400 text-xs flex-shrink-0 self-start sm:self-auto font-medium">
                   {course.category || 'Uncategorized'}
                 </span>
               </div>
@@ -273,8 +273,8 @@ function CourseList() {
 
       {courses.length === 0 && (
         <div className="text-center py-8 sm:py-12 px-4">
-          <div className="text-gray-400 text-base sm:text-lg mb-2">No Courses Available</div>
-          <p className="text-gray-500 text-xs sm:text-sm">
+          <div className="text-gray-600 dark:text-gray-400 text-base sm:text-lg mb-2">No Courses Available</div>
+          <p className="text-gray-500 dark:text-gray-500 text-xs sm:text-sm">
             There are currently no courses available for enrollment.
           </p>
         </div>

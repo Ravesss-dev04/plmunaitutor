@@ -149,10 +149,10 @@ export default function AITutorPage() {
   };
 
   return (
-    <div className="min-h-screen w-full  flex flex-col items-center justify-center bg-gradient-to-br from-[#0D1117] via-[#161B22] to-[#0D1117] px-1 md:px-3 sm:px-6 py-4 sm:py-6">
-      <div className="w-full max-w-4xl bg-gradient-to-br from-gray-900/90 to-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-700/50 flex flex-col h-[85vh]  sm:h-[82vh] overflow-hidden">
+    <div className="min-h-screen w-full  flex flex-col items-center justify-center bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-[#0D1117] dark:via-[#161B22] dark:to-[#0D1117] px-1 md:px-3 sm:px-6 py-4 sm:py-6">
+      <div className="w-full max-w-4xl bg-gradient-to-br from-white to-gray-50 dark:from-gray-900/90 dark:to-gray-800/90 backdrop-blur-sm rounded-2xl shadow-2xl border border-gray-200 dark:border-gray-700/50 flex flex-col h-[85vh]  sm:h-[82vh] overflow-hidden">
         {/* Header Section */}
-        <div className="bg-gradient-to-r from-green-600/20 via-emerald-600/20 to-green-500/20 border-b border-gray-700/50 px-4 sm:px-6 py-4 sm:py-5">
+        <div className="bg-gradient-to-r from-green-50 via-emerald-50 to-green-100 dark:from-green-600/20 dark:via-emerald-600/20 dark:to-green-500/20 border-b border-gray-200 dark:border-gray-700/50 px-4 sm:px-6 py-4 sm:py-5">
           <div className="flex items-center justify-center gap-3">
             <div className="relative">
               <div className="absolute inset-0 bg-green-500/30 rounded-full blur-lg animate-pulse"></div>
@@ -161,16 +161,16 @@ export default function AITutorPage() {
               </div>
             </div>
             <div>
-              <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-white via-gray-100 to-gray-300 bg-clip-text text-transparent">
+              <h1 className="text-lg sm:text-xl md:text-2xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 dark:from-white dark:via-gray-100 dark:to-gray-300 bg-clip-text text-transparent">
                 Your Personal AI Tutor
               </h1>
-              <p className="text-xs sm:text-sm text-gray-400 mt-0.5">Ask anything about your courses</p>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mt-0.5">Ask anything about your courses</p>
             </div>
           </div>
         </div>
 
         {/* Messages Container */}
-        <div className="flex-1 overflow-y-auto space-y-4 px-3 sm:px-4 md:px-6 py-4 sm:py-6 scrollbar-thin scrollbar-thumb-gray-700 scrollbar-track-transparent">
+        <div className="flex-1 overflow-y-auto space-y-4 px-3 sm:px-4 md:px-6 py-4 sm:py-6 scrollbar-thin scrollbar-thumb-gray-300 dark:scrollbar-thumb-gray-700 scrollbar-track-transparent">
           <AnimatePresence>
             {messages.map((msg, idx) => (
               <motion.div
@@ -197,7 +197,7 @@ export default function AITutorPage() {
                   animate={{ scale: 1 }}
                   className={`px-4 sm:px-5 py-2.5 sm:py-3 rounded-2xl text-sm sm:text-base leading-relaxed max-w-[85%] sm:max-w-[75%] md:max-w-[70%] break-words shadow-lg ${
                     msg.role === "assistant"
-                      ? "bg-gradient-to-br from-gray-800 to-gray-900 text-gray-100 border border-gray-700/50 text-left"
+                      ? "bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 text-gray-900 dark:text-gray-100 border border-gray-300 dark:border-gray-700/50 text-left"
                       : "bg-gradient-to-br from-green-600 to-emerald-600 text-white text-right shadow-green-500/20"
                   }`}
                 >
@@ -236,11 +236,11 @@ export default function AITutorPage() {
                   <FaRobot className="text-white text-sm sm:text-base" />
                 </div>
               </div>
-              <div className="bg-gradient-to-br from-gray-800 to-gray-900 border border-gray-700/50 rounded-2xl px-4 py-3 shadow-lg">
+              <div className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800 dark:to-gray-900 border border-gray-300 dark:border-gray-700/50 rounded-2xl px-4 py-3 shadow-lg">
                 <div className="flex gap-1.5">
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  <div className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                  <div className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                  <div className="w-2 h-2 bg-green-500 dark:bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                 </div>
               </div>
             </motion.div>
@@ -253,7 +253,7 @@ export default function AITutorPage() {
               animate={{ opacity: 1, y: 0 }}
               className="mt-4"
             >
-              <p className="text-xs sm:text-sm text-gray-400 mb-3 text-center">Try asking:</p>
+              <p className="text-xs sm:text-sm text-gray-600 dark:text-gray-400 mb-3 text-center">Try asking:</p>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-3">
                 {suggestedQuestions.map((suggestion, idx) => {
                   const Icon = suggestion.icon;
@@ -263,10 +263,10 @@ export default function AITutorPage() {
                       onClick={() => handleSuggestedQuestion(suggestion.text)}
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
-                      className="flex items-center gap-2 sm:gap-3 bg-gray-800/50 hover:bg-gray-700/50 border border-gray-700/50 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-left transition-all duration-200 group"
+                      className="flex items-center gap-2 sm:gap-3 bg-gray-100 dark:bg-gray-800/50 hover:bg-gray-200 dark:hover:bg-gray-700/50 border border-gray-300 dark:border-gray-700/50 rounded-xl px-3 sm:px-4 py-2 sm:py-2.5 text-left transition-all duration-200 group"
                     >
-                      <Icon className="text-green-400 text-base sm:text-lg shrink-0 group-hover:text-green-300 transition-colors" />
-                      <span className="text-xs sm:text-sm text-gray-300 group-hover:text-white transition-colors truncate">
+                      <Icon className="text-green-600 dark:text-green-400 text-base sm:text-lg shrink-0 group-hover:text-green-700 dark:group-hover:text-green-300 transition-colors" />
+                      <span className="text-xs sm:text-sm text-gray-700 dark:text-gray-300 group-hover:text-gray-900 dark:group-hover:text-white transition-colors truncate">
                         {suggestion.text}
                       </span>
                     </motion.button>
@@ -282,9 +282,9 @@ export default function AITutorPage() {
         {/* Input Form */}
         <form
           onSubmit={sendMessage}
-          className="border-t border-gray-700/50 bg-gradient-to-r from-gray-900/50 to-gray-800/50 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-3 sm:py-4"
+          className="border-t border-gray-200 dark:border-gray-700/50 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-900/50 dark:to-gray-800/50 backdrop-blur-sm px-3 sm:px-4 md:px-6 py-3 sm:py-4"
         >
-          <div className="flex items-center gap-2 sm:gap-3 bg-gray-800/50 rounded-xl p-2 sm:p-3 border border-gray-700/50 focus-within:border-green-500/50 focus-within:ring-2 focus-within:ring-green-500/20 transition-all duration-200">
+          <div className="flex items-center gap-2 sm:gap-3 bg-white dark:bg-gray-800/50 rounded-xl p-2 sm:p-3 border border-gray-300 dark:border-gray-700/50 focus-within:border-green-500/50 focus-within:ring-2 focus-within:ring-green-500/20 transition-all duration-200">
             <input
               ref={inputRef}
               type="text"
@@ -292,17 +292,17 @@ export default function AITutorPage() {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               disabled={loading}
-              className="flex-1 bg-transparent text-white placeholder-gray-400 outline-none px-2 text-sm sm:text-base disabled:opacity-50"
+              className="flex-1 bg-transparent text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 outline-none px-2 text-sm sm:text-base disabled:opacity-50"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="p-2 sm:p-2.5 bg-gradient-to-br from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 disabled:from-gray-700 disabled:to-gray-600 disabled:cursor-not-allowed rounded-lg transition-all duration-200 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 disabled:shadow-none group"
+              className="p-2 sm:p-2.5 bg-gradient-to-br from-green-600 to-emerald-600 hover:from-green-500 hover:to-emerald-500 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed rounded-lg transition-all duration-200 shadow-lg shadow-green-500/20 hover:shadow-green-500/30 disabled:shadow-none group"
             >
               <FaPaperPlane className="text-white text-sm sm:text-base group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </button>
           </div>
-          <p className="text-xs text-gray-500 mt-2 text-center">Press Enter to send • AI responses are generated in real-time</p>
+          <p className="text-xs text-gray-600 dark:text-gray-500 mt-2 text-center">Press Enter to send • AI responses are generated in real-time</p>
         </form>
       </div>
     </div>

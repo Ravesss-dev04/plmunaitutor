@@ -13,25 +13,25 @@ Chart.register(ArcElement, Tooltip, Legend, DoughnutController);
 
 // Loading Skeleton Component
 const LoadingSkeleton = () => (
-  <div className="min-h-screen bg-[#13181F] text-white p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 w-full">
+  <div className="min-h-screen bg-white dark:bg-[#13181F] text-gray-900 dark:text-white p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 w-full">
     <div className="animate-pulse">
       {/* Header Skeleton */}
-      <div className="h-8 bg-gray-800 rounded-lg w-48 mb-6"></div>
+      <div className="h-8 bg-gray-200 dark:bg-gray-800 rounded-lg w-48 mb-6"></div>
       
       {/* Top Section Skeleton */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         {/* Subject Mastery Skeleton */}
-        <div className="bg-gray-800/50 rounded-xl p-4 sm:p-5 md:p-6 border border-gray-700/50">
-          <div className="h-6 bg-gray-700/50 rounded w-40 mb-4"></div>
+        <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 sm:p-5 md:p-6 border border-gray-200 dark:border-gray-700/50">
+          <div className="h-6 bg-gray-200 dark:bg-gray-700/50 rounded w-40 mb-4"></div>
           <div className="space-y-4">
             {[1, 2, 3].map((i) => (
               <div key={i} className="space-y-2">
                 <div className="flex justify-between">
-                  <div className="h-4 bg-gray-700/50 rounded w-32"></div>
-                  <div className="h-4 bg-gray-700/50 rounded w-12"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700/50 rounded w-32"></div>
+                  <div className="h-4 bg-gray-200 dark:bg-gray-700/50 rounded w-12"></div>
                 </div>
-                <div className="h-3 bg-gray-700/50 rounded-full overflow-hidden">
-                  <div className="h-full bg-gradient-to-r from-gray-700/50 via-gray-600/50 to-gray-700/50 animate-shimmer"></div>
+                <div className="h-3 bg-gray-200 dark:bg-gray-700/50 rounded-full overflow-hidden">
+                  <div className="h-full bg-gradient-to-r from-gray-200 dark:from-gray-700/50 via-gray-300 dark:via-gray-600/50 to-gray-200 dark:to-gray-700/50 animate-shimmer"></div>
                 </div>
               </div>
             ))}
@@ -39,27 +39,27 @@ const LoadingSkeleton = () => (
         </div>
         
         {/* Completion Rate Skeleton */}
-        <div className="bg-gray-800/50 rounded-xl p-4 sm:p-5 md:p-6 border border-gray-700/50 flex flex-col items-center justify-center min-h-[280px] sm:min-h-[320px]">
-          <div className="h-6 bg-gray-700/50 rounded w-48 mb-6"></div>
-          <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 bg-gray-700/50 rounded-full animate-pulse"></div>
+        <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 sm:p-5 md:p-6 border border-gray-200 dark:border-gray-700/50 flex flex-col items-center justify-center min-h-[280px] sm:min-h-[320px]">
+          <div className="h-6 bg-gray-200 dark:bg-gray-700/50 rounded w-48 mb-6"></div>
+          <div className="w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 bg-gray-200 dark:bg-gray-700/50 rounded-full animate-pulse"></div>
           <div className="flex gap-4 mt-6">
-            <div className="h-4 bg-gray-700/50 rounded w-24"></div>
-            <div className="h-4 bg-gray-700/50 rounded w-24"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700/50 rounded w-24"></div>
+            <div className="h-4 bg-gray-200 dark:bg-gray-700/50 rounded w-24"></div>
           </div>
         </div>
       </div>
       
       {/* Daily Study Time Skeleton */}
-      <div className="bg-gray-800/50 rounded-xl p-4 sm:p-5 md:p-6 border border-gray-700/50">
-        <div className="h-6 bg-gray-700/50 rounded w-56 mb-4"></div>
+      <div className="bg-gray-50 dark:bg-gray-800/50 rounded-xl p-4 sm:p-5 md:p-6 border border-gray-200 dark:border-gray-700/50">
+        <div className="h-6 bg-gray-200 dark:bg-gray-700/50 rounded w-56 mb-4"></div>
         <div className="flex items-end gap-3 h-40 justify-center">
           {[1, 2, 3, 4, 5, 6, 7].map((i) => (
             <div key={i} className="flex flex-col items-center gap-2">
               <div 
-                className="w-8 bg-gray-700/50 rounded-t animate-pulse"
+                className="w-8 bg-gray-200 dark:bg-gray-700/50 rounded-t animate-pulse"
                 style={{ height: `${Math.random() * 60 + 20}px` }}
               ></div>
-              <div className="h-3 bg-gray-700/50 rounded w-8"></div>
+              <div className="h-3 bg-gray-200 dark:bg-gray-700/50 rounded w-8"></div>
             </div>
           ))}
         </div>
@@ -172,7 +172,7 @@ const Analytics = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#13181F] via-[#1a2332] to-[#13181F] text-white p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 w-full">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-white to-gray-100 dark:from-[#13181F] dark:via-[#1a2332] dark:to-[#13181F] text-gray-900 dark:text-white p-4 sm:p-6 md:p-8 space-y-6 sm:space-y-8 w-full">
       {/* Header with Icon */}
       <div className={`transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-4'}`}>
         <div className="flex items-center gap-3 mb-4 sm:mb-6">
@@ -181,7 +181,7 @@ const Analytics = () => {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
             </svg>
           </div>
-          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+          <h1 className="text-xl sm:text-2xl md:text-3xl font-bold bg-gradient-to-r from-gray-900 via-gray-800 to-gray-700 dark:from-white dark:to-gray-300 bg-clip-text text-transparent">
             Analytics Dashboard
           </h1>
         </div>
@@ -190,14 +190,14 @@ const Analytics = () => {
       {/* Top Section: Mastery & Completion Rate */}
       <div className={`grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 w-full transition-all duration-700 delay-100 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
         {/* Subject Mastery */}
-        <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 md:p-6 border border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-green-500/30 transition-all duration-300 group">
+        <div className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 md:p-6 border border-gray-200 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-green-500/30 transition-all duration-300 group">
           <div className="flex items-center gap-2 mb-4 sm:mb-5">
             <div className="p-1.5 bg-green-500/20 rounded-lg group-hover:bg-green-500/30 transition-colors">
-              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <svg className="w-4 h-4 sm:w-5 sm:h-5 text-green-600 dark:text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
               </svg>
             </div>
-            <h2 className="text-base sm:text-lg font-semibold">Subject Mastery</h2>
+            <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">Subject Mastery</h2>
           </div>
           {analyticsData.subjectMastery.length > 0 ? (
             <div className="space-y-3 sm:space-y-4">
@@ -208,14 +208,14 @@ const Analytics = () => {
                   style={{ animationDelay: `${i * 100}ms` }}
                 >
                   <div className="flex justify-between items-center text-xs sm:text-sm mb-2 gap-2">
-                    <span className="truncate flex-1 min-w-0 font-medium group-hover/item:text-green-400 transition-colors">
+                    <span className="truncate flex-1 min-w-0 font-medium text-gray-900 dark:text-white group-hover/item:text-green-600 dark:group-hover/item:text-green-400 transition-colors">
                       {subject.title}
                     </span>
-                    <span className="shrink-0 font-bold text-green-400 bg-green-500/10 px-2 py-0.5 rounded-md">
+                    <span className="shrink-0 font-bold text-green-600 dark:text-green-400 bg-green-100 dark:bg-green-500/10 px-2 py-0.5 rounded-md">
                       {subject.percent}%
                     </span>
                   </div>
-                  <div className="w-full h-2.5 sm:h-3 bg-gray-700/50 rounded-full overflow-hidden shadow-inner">
+                  <div className="w-full h-2.5 sm:h-3 bg-gray-200 dark:bg-gray-700/50 rounded-full overflow-hidden shadow-inner">
                     <div
                       className="h-full bg-gradient-to-r from-green-500 via-emerald-500 to-green-400 rounded-full transition-all duration-1000 ease-out shadow-lg shadow-green-500/30 relative overflow-hidden"
                       style={{ 
@@ -231,18 +231,18 @@ const Analytics = () => {
             </div>
           ) : (
             <div className="text-center py-8">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gray-700/30 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-gray-700/30 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-500 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
                 </svg>
               </div>
-              <p className="text-gray-400 text-xs sm:text-sm">No enrolled courses yet</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">No enrolled courses yet</p>
             </div>
           )}
         </div>
         
         {/* Lesson Completion Rate (Donut Chart) */}
-        <div className="bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center min-h-[280px] sm:min-h-[320px] border border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-yellow-500/30 transition-all duration-300 group">
+        <div className="bg-gradient-to-br from-gray-100 to-gray-200 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 md:p-6 flex flex-col items-center justify-center min-h-[280px] sm:min-h-[320px] border border-gray-300 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-yellow-500/30 transition-all duration-300 group">
           <div className="flex items-center gap-2 mb-4 sm:mb-5">
             <div className="p-1.5 bg-yellow-500/20 rounded-lg group-hover:bg-yellow-500/30 transition-colors">
               <svg className="w-4 h-4 sm:w-5 sm:h-5 text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -257,10 +257,10 @@ const Analytics = () => {
                 <canvas ref={donutChartRef}></canvas>
                 <div className="absolute inset-0 flex items-center justify-center">
                   <div className="text-center">
-                    <div className="text-2xl sm:text-3xl font-bold text-white">
+                    <div className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
                       {Math.round((analyticsData.lessonCompletionRate.completed / analyticsData.lessonCompletionRate.total) * 100)}%
                     </div>
-                    <div className="text-xs sm:text-sm text-gray-400">Complete</div>
+                    <div className="text-xs sm:text-sm text-gray-600 dark:text-gray-400">Complete</div>
                   </div>
                 </div>
               </div>
@@ -277,26 +277,26 @@ const Analytics = () => {
             </>
           ) : (
             <div className="text-center py-8">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gray-700/30 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-gray-700/30 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-500 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                 </svg>
               </div>
-              <p className="text-gray-400 text-xs sm:text-sm">No lessons, quizzes, or assignments yet</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">No lessons, quizzes, or assignments yet</p>
             </div>
           )}
         </div>
       </div>
 
       {/* Bottom Section: Daily Study Time */}
-      <div className={`bg-gradient-to-br from-gray-800/90 to-gray-900/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 md:p-6 w-full border border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-300 group ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '200ms' }}>
+      <div className={`bg-gradient-to-br from-white to-gray-50 dark:from-gray-800/90 dark:to-gray-900/90 backdrop-blur-sm rounded-xl p-4 sm:p-5 md:p-6 w-full border border-gray-200 dark:border-gray-700/50 shadow-xl hover:shadow-2xl hover:border-blue-500/30 transition-all duration-300 group ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`} style={{ transitionDelay: '200ms' }}>
         <div className="flex items-center gap-2 mb-4 sm:mb-5">
           <div className="p-1.5 bg-blue-500/20 rounded-lg group-hover:bg-blue-500/30 transition-colors">
-            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600 dark:text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h2 className="text-base sm:text-lg font-semibold">Daily Study Time (Last 7 Days)</h2>
+          <h2 className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">Daily Study Time (Last 7 Days)</h2>
         </div>
         <div className="flex items-end gap-2 sm:gap-3 md:gap-4 h-32 sm:h-40 justify-center overflow-x-auto pb-2">
           {analyticsData.dailyStudyTime.length > 0 ? (
@@ -319,19 +319,19 @@ const Analytics = () => {
                   >
                     <div className="absolute inset-0 bg-gradient-to-t from-transparent via-white/20 to-transparent opacity-0 group-hover/bar:opacity-100 transition-opacity"></div>
                   </div>
-                  <span className="text-xs mt-2 font-medium group-hover/bar:text-green-400 transition-colors">{entry.day}</span>
-                  <span className="text-xs text-gray-400 mt-0.5 hidden sm:block">{entry.hours.toFixed(1)}h</span>
+                  <span className="text-xs mt-2 font-medium group-hover/bar:text-green-600 dark:group-hover/bar:text-green-400 transition-colors text-gray-700 dark:text-gray-300">{entry.day}</span>
+                  <span className="text-xs text-gray-600 dark:text-gray-400 mt-0.5 hidden sm:block">{entry.hours.toFixed(1)}h</span>
                 </div>
               );
             })
           ) : (
             <div className="text-center py-8 w-full">
-              <div className="w-16 h-16 mx-auto mb-4 bg-gray-700/30 rounded-full flex items-center justify-center">
-                <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-16 h-16 mx-auto mb-4 bg-gray-200 dark:bg-gray-700/30 rounded-full flex items-center justify-center">
+                <svg className="w-8 h-8 text-gray-500 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <p className="text-gray-400 text-xs sm:text-sm">No study time recorded yet</p>
+              <p className="text-gray-600 dark:text-gray-400 text-xs sm:text-sm">No study time recorded yet</p>
             </div>
           )}
         </div>
